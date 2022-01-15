@@ -10,6 +10,7 @@ class Collection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
+      margin: EdgeInsets.all(5),
       alignment: Alignment.center,
       child: SingleChildScrollView(
           child: Text(

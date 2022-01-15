@@ -9,12 +9,14 @@ class CreateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 20,
-      height: 20,
+      width: 200,
+      height: 200,
       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
       child: Column(
         children: [
-          TextBox(title: "Collection name"),
+          TextBox(
+            title: "Collection name",
+          ),
           TextBox(title: "Symbol"),
           TextBox(title: "Base URI"),
           Text(
