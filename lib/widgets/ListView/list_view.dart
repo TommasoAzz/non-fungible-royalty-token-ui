@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/widgets/Collections/collections.dart';
 
 final List<int> colorCodes = <int>[600, 500, 100];
 
@@ -11,19 +12,17 @@ class ListsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: ListView.builder(
-            shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            itemCount: entries.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                width: 80,
-                height: 80,
-                margin: EdgeInsets.all(5),
-                color: Colors.blue[colorCodes[index]],
-                child: Center(child: Text('Entry ${entries[index]}')),
-              );
-            }));
+        child: SizedBox(
+            height: 100,
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: entries.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return const Collection(
+                      text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"],
+                      color: 100);
+                })));
   }
 }
