@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'views/Layout%20Tamplate/layout_template.dart';
+import 'views/LayoutTamplate/layout_template.dart';
 import 'views/home/home_view.dart';
 
 import 'locator.dart';

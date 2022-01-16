@@ -55,7 +55,7 @@ class _DropzoneState extends State<Dropzone> {
         ],
       ),
       decoration: BoxDecoration(
-        color: secondaryyColor,
+        color: secondaryColor,
         borderRadius: BorderRadius.circular(10),
       ),
     );

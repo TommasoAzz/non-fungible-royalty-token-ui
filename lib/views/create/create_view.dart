@@ -28,7 +28,7 @@ class CreateView extends StatelessWidget {
         ],
       ),
       decoration: BoxDecoration(
-        color: secondaryyColor,
+        color: secondaryColor,
         borderRadius: BorderRadius.circular(10),
       ),
     );

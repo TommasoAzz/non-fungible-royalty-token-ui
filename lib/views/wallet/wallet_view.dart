@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/widgets/Token/token_view.dart';
 
@@ -6,9 +7,13 @@ class WalletView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: const Token(
+    return Container(
+        child: new SingleChildScrollView(
+            child: new Column(children: [
+      const Token(
           text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100),
-    );
+      const Token(
+          text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100),
+    ])));
   }
 }
