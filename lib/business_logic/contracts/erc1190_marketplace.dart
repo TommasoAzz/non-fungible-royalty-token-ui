@@ -43,9 +43,6 @@ class ERC1190Marketplace {
   ) async {
     _logger.v("deployNewCollection");
 
-    final tx = await contract.send("deployNewCollection", [name, symbol, baseURI]);
-    await tx.wait();
-
     final completer = Completer<EthAddress>();
 
     contract.once("CollectionDeployed", (event) {
@@ -54,7 +51,10 @@ class ERC1190Marketplace {
       completer.complete("");
     });
 
-    return completer.future;
+    final tx = await contract.send("deployNewCollection", [name, symbol, baseURI]);
+    await tx.wait();
+
+    return await completer.future;
   }
 
   Future<void> requireOwnershipLicenseTransferApproval(
