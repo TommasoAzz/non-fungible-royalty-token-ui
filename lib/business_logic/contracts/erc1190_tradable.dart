@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:flutter_web3/flutter_web3.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/logger/logger.dart';
@@ -58,16 +57,18 @@ class ERC1190Tradable {
 
     final completer = Completer<int>();
 
-    final tx = await contract.send(
-      "mint",
-      [creator, royaltyForRental, royaltyForOwnershipTransfer],
-    );
-    await tx.wait();
     contract.once("TokenMinted", (event) {
       // TODO Finish managing event.
       dartify(event);
       completer.complete(0);
     });
+
+    final tx = await contract.send(
+      "mint",
+      [creator, royaltyForRental, royaltyForOwnershipTransfer],
+    );
+    await tx.wait();
+
     return await completer.future;
   }
 
@@ -102,9 +103,6 @@ class ERC1190Tradable {
   Future<void> transferOwnershipLicense(final int tokenId, final EthAddress to) async {
     _logger.v("transferOwnershipLicense");
 
-    final tx = await contract.send("transferOwnershipLicense", [tokenId, to]);
-    await tx.wait();
-
     final completer = Completer<void>();
 
     contract.once("TransferOwnershipLicense", (event) {
@@ -112,6 +110,9 @@ class ERC1190Tradable {
       dartify(event);
       completer.complete();
     });
+
+    final tx = await contract.send("transferOwnershipLicense", [tokenId, to]);
+    await tx.wait();
 
     await completer.future;
   }
@@ -119,9 +120,6 @@ class ERC1190Tradable {
   Future<void> obtainOwnershipLicense(final int tokenId) async {
     _logger.v("obtainOwnershipLicense");
 
-    final tx = await contract.send("obtainOwnershipLicense", [tokenId]);
-    await tx.wait();
-
     final completer = Completer<void>();
 
     contract.once("TransferOwnershipLicense", (event) {
@@ -130,14 +128,14 @@ class ERC1190Tradable {
       completer.complete();
     });
 
+    final tx = await contract.send("obtainOwnershipLicense", [tokenId]);
+    await tx.wait();
+
     await completer.future;
   }
 
   Future<void> transferCreativeLicense(final int tokenId, final EthAddress to) async {
     _logger.v("transferCreativeLicense");
-
-    final tx = await contract.send("transferCreativeLicense", [tokenId, to]);
-    await tx.wait();
 
     final completer = Completer<void>();
 
@@ -146,6 +144,9 @@ class ERC1190Tradable {
       dartify(event);
       completer.complete();
     });
+
+    final tx = await contract.send("transferCreativeLicense", [tokenId, to]);
+    await tx.wait();
 
     await completer.future;
   }
@@ -153,9 +154,6 @@ class ERC1190Tradable {
   Future<void> obtainCreativeLicense(final int tokenId) async {
     _logger.v("obtainCreativeLicense");
 
-    final tx = await contract.send("obtainCreativeLicense", [tokenId]);
-    await tx.wait();
-
     final completer = Completer<void>();
 
     contract.once("TransferCreativeLicense", (event) {
@@ -163,6 +161,9 @@ class ERC1190Tradable {
       dartify(event);
       completer.complete();
     });
+
+    final tx = await contract.send("obtainCreativeLicense", [tokenId]);
+    await tx.wait();
 
     await completer.future;
   }
@@ -226,9 +227,6 @@ class ERC1190Tradable {
   Future<void> approve(final EthAddress to, final int tokenId) async {
     _logger.v("approve");
 
-    final tx = await contract.send("approve", [to, tokenId]);
-    await tx.wait();
-
     final completer = Completer<void>();
 
     contract.once('Approval', (event) {
@@ -236,6 +234,9 @@ class ERC1190Tradable {
       dartify(event);
       completer.complete();
     });
+
+    final tx = await contract.send("approve", [to, tokenId]);
+    await tx.wait();
 
     await completer.future;
   }

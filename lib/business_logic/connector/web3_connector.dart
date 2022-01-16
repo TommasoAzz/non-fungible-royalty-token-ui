@@ -1,5 +1,7 @@
 import 'package:flutter_web3/flutter_web3.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/exception/wallet_not_loaded.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/exception/wallet_not_loaded_exception.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/exception/wallet_not_supported_exception.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/exception/wallet_rejected_exception.dart';
 import '../../logger/logger.dart';
 
 typedef EthAddress = String;
@@ -27,11 +29,15 @@ class Web3Connector {
         _walletConnected = true;
       } on EthereumUserRejected {
         _logger.e("User rejected the wallet modal.");
+        throw const WalletRejectedException();
       }
     } else {
       _logger.e("Wallet not supported!");
+      throw const WalletNotSupportedException();
     }
   }
+
+  bool get connectedToWallet => _walletConnected;
 
   Contract loadContract(final EthAddress address, final List<String> abi) {
     _logger.v("loadContract");
