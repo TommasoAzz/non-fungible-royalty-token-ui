@@ -9,21 +9,12 @@ class CreateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
-      height: 200,
       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
       child: Column(
-        children: [
-          const TextBox(
-            title: "Collection name",
-          ),
+        children: <Widget>[
+          const TextBox(title: "Collection name"),
           const TextBox(title: "Symbol"),
           const TextBox(title: "Base URI"),
-          const Text(
-            "Upload ",
-            textAlign: TextAlign.left,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
           Dropzone(),
         ],
       ),
