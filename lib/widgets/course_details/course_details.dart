@@ -15,14 +15,10 @@ class CourseDetails extends StatelessWidget {
 
       double titleSize =
           // ignore: deprecated_member_use
-          sizingInformation.deviceScreenType == DeviceScreenType.Mobile
-              ? 50
-              : 80;
+          sizingInformation.deviceScreenType == DeviceScreenType.Mobile ? 50 : 80;
       double descriptionSize =
           // ignore: deprecated_member_use
-          sizingInformation.deviceScreenType == DeviceScreenType.Mobile
-              ? 16
-              : 21;
+          sizingInformation.deviceScreenType == DeviceScreenType.Mobile ? 16 : 21;
       return SizedBox(
         width: 600,
         child: Column(
@@ -43,7 +39,7 @@ class CourseDetails extends StatelessWidget {
               height: 30,
             ),
             Text(
-              'In this course we will go over the basics .agdhjgas hjfg hdghjga hjgsjf gdkgh hwejh gjkh wtetj hg wkght  tkgw hkwj  jkh.wj kwhj jhl ,wjeh gkj hgjgj',
+              'Project on the ERC-1190 proposal "Non-Fungible Royalty Token". Made for the course "Blockchain and Cryptocurrencies", University of Bologna, A.Y. 2021/2022.',
               style: TextStyle(
                 fontSize: descriptionSize,
                 height: 1.7,

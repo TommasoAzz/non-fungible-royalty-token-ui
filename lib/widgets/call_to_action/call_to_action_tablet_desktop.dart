@@ -8,19 +8,27 @@ class CallToActionTabletDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w800,
-          color: Colors.white,
+    return ElevatedButton(
+      onPressed: () => {
+        // TODO(dominego): Connect to wallet.
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
+          ),
         ),
       ),
-      decoration: BoxDecoration(
-        color: primaryColor,
-        borderRadius: BorderRadius.circular(10),
+      style: ElevatedButton.styleFrom(
+        primary: primaryColor,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: primaryColor),
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
     );
   }

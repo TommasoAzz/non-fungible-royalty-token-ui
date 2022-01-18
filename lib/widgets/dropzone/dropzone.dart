@@ -32,7 +32,10 @@ class _DropzoneState extends State<Dropzone> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     primary: colorButton,
-                    shape: const RoundedRectangleBorder(),
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: primaryColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                   icon: const Icon(Icons.search, size: 32),
                   label: const Text(
