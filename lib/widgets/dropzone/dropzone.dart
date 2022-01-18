@@ -17,7 +17,9 @@ class _DropzoneState extends State<Dropzone> {
       //color: primaryColor,
       child: Stack(
         children: [
-          DropzoneView(onCreated: (controller) => this.controller = controller, onDrop: acceptFile),
+          DropzoneView(
+              onCreated: (controller) => this.controller = controller,
+              onDrop: acceptFile),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
