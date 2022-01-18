@@ -18,7 +18,7 @@ class TextBox extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+          padding: EdgeInsets.symmetric(vertical: 16),
           child: TextField(
             decoration: InputDecoration(
               border: OutlineInputBorder(),
