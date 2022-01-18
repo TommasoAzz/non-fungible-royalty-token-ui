@@ -8,7 +8,7 @@ class HomeContentDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: <Widget>[
+      children: const <Widget>[
         CourseDetails(),
         Expanded(
           child: Center(

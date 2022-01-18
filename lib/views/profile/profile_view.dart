@@ -6,140 +6,60 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      child: new SingleChildScrollView(
-        child: new Column(
-          children: [
-            Text(
-              "My Profile",
-              textAlign: TextAlign.left,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+    return SingleChildScrollView(
+      child: Column(
+        children: const <Widget>[
+          Text(
+            "My Profile",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          Text(
+            "Created",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          SizedBox(
+            height: 270,
+            child: ListsView(
+              entries: ['A', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
+              colorCodes: [100, 200, 300, 100, 200, 300, 100, 200, 300, 100, 200, 300],
             ),
-            Text(
-              "Created",
-              textAlign: TextAlign.left,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          Text(
+            "Owned",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          SizedBox(
+            height: 270,
+            child: ListsView(entries: ['A', 'F', 'D'], colorCodes: [100, 200, 300]),
+          ),
+          Text(
+            "Created",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          SizedBox(
+            height: 270,
+            child: ListsView(
+              entries: ['A', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
+              colorCodes: [100, 200, 300, 100, 200, 300, 100, 200, 300, 100, 200, 300],
             ),
-            Container(
-              height: 270,
-              child: ListsView(
-                entries: [
-                  'A',
-                  'B',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C'
-                ],
-                colorCodes: [
-                  100,
-                  200,
-                  300,
-                  100,
-                  200,
-                  300,
-                  100,
-                  200,
-                  300,
-                  100,
-                  200,
-                  300
-                ],
-              ),
+          ),
+          Text(
+            "Created",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          SizedBox(
+            height: 270,
+            child: ListsView(
+              entries: ['A', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
+              colorCodes: [100, 200, 300, 100, 200, 300, 100, 200, 300, 100, 200, 300],
             ),
-            Text(
-              "Owned",
-              textAlign: TextAlign.left,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            Container(
-                height: 270,
-                child: ListsView(
-                    entries: ['A', 'F', 'D'], colorCodes: [100, 200, 300])),
-            Text(
-              "Created",
-              textAlign: TextAlign.left,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            Container(
-              height: 270,
-              child: ListsView(
-                entries: [
-                  'A',
-                  'B',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C'
-                ],
-                colorCodes: [
-                  100,
-                  200,
-                  300,
-                  100,
-                  200,
-                  300,
-                  100,
-                  200,
-                  300,
-                  100,
-                  200,
-                  300
-                ],
-              ),
-            ),
-            Text(
-              "Created",
-              textAlign: TextAlign.left,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            Container(
-              height: 270,
-              child: ListsView(
-                entries: [
-                  'A',
-                  'B',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C',
-                  'C'
-                ],
-                colorCodes: [
-                  100,
-                  200,
-                  300,
-                  100,
-                  200,
-                  300,
-                  100,
-                  200,
-                  300,
-                  100,
-                  200,
-                  300
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

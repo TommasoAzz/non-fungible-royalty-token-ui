@@ -14,15 +14,15 @@ class CreateView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
       child: Column(
         children: [
-          TextBox(
+          const TextBox(
             title: "Collection name",
           ),
-          TextBox(title: "Symbol"),
-          TextBox(title: "Base URI"),
-          Text(
+          const TextBox(title: "Symbol"),
+          const TextBox(title: "Base URI"),
+          const Text(
             "Upload ",
             textAlign: TextAlign.left,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           Dropzone(),
         ],

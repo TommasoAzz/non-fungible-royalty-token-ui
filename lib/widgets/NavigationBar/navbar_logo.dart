@@ -13,7 +13,7 @@ class NavBarLogo extends StatelessWidget {
       onTap: () {
         locator<NavigationService>().navigateTo(HomeRoute);
       },
-      child: Text(
+      child: const Text(
         "ERC1190 \nMARKETPLACE",
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),

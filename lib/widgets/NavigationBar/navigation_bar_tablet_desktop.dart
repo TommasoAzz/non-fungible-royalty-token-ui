@@ -13,7 +13,7 @@ class NavigationBarTabletDesktop extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          NavBarLogo(),
+          const NavBarLogo(),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: const <Widget>[
@@ -31,7 +31,7 @@ class NavigationBarTabletDesktop extends StatelessWidget {
               ),
               NavBarItem('Wallet', WalletRoute),
             ],
-          )
+          ),
         ],
       ),
     );

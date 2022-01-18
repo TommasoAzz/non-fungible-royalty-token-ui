@@ -7,13 +7,13 @@ class WalletView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: new SingleChildScrollView(
-            child: new Column(children: [
-      const Token(
-          text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100),
-      const Token(
-          text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100),
-    ])));
+    return SingleChildScrollView(
+      child: Column(
+        children: const <Widget>[
+          Token(text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100),
+          Token(text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100),
+        ],
+      ),
+    );
   }
 }
