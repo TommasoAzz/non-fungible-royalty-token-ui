@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/Token/token_view.dart';
+import '../../widgets/tokenn/token_view.dart';
 
 class WalletView extends StatelessWidget {
   const WalletView({Key? key}) : super(key: key);

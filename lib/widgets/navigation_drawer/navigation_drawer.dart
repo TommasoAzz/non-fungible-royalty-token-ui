@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../routing/route_names.dart';
-import '../../widgets/NavigationDrawer/drawer_item.dart';
-import '../../widgets/NavigationDrawer/navigation_drawer_header.dart';
+import 'drawer_item.dart';
+import 'navigation_drawer_header.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({Key? key}) : super(key: key);

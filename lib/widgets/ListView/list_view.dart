@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/Collections/collections.dart';
+import '../../widgets/collections/collections.dart';
 
 final List<int> colorCodes = <int>[600, 500, 100];
 

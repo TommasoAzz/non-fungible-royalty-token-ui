@@ -3,9 +3,9 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../../routing/route_names.dart';
 import '../../routing/router.dart';
 import '../../services/navigation_service.dart';
-import '../../widgets/CenteredView/centered_view.dart';
-import '../../widgets/NavigationBar/navigation_bar.dart' as nbar;
-import '../../widgets/NavigationDrawer/navigation_drawer.dart';
+import '../../widgets/centered_view/centered_view.dart';
+import '../../widgets/navigation_bar/navigation_bar.dart' as nbar;
+import '../../widgets/navigation_drawer/navigation_drawer.dart';
 
 import '../../locator.dart';
 
