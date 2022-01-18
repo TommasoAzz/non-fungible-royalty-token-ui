@@ -12,6 +12,11 @@ class CreateView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
       child: Column(
         children: <Widget>[
+          const Text(
+            "Create your collection",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
           const TextBox(title: "Collection name"),
           const TextBox(title: "Symbol"),
           const TextBox(title: "Base URI"),
@@ -19,7 +24,6 @@ class CreateView extends StatelessWidget {
         ],
       ),
       decoration: BoxDecoration(
-        color: secondaryColor,
         borderRadius: BorderRadius.circular(10),
       ),
     );

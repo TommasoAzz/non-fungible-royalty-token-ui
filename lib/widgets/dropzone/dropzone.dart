@@ -39,20 +39,22 @@ class _DropzoneState extends State<Dropzone> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.cloud_upload, size: 80, color: Colors.grey),
+                    const Icon(Icons.cloud_upload,
+                        size: 80, color: Colors.white),
                     const Text(
                       "Drop file here",
-                      style: TextStyle(color: Colors.grey, fontSize: 18),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton.icon(
-                      icon: const Icon(Icons.search, size: 32),
+                      icon: const Icon(Icons.search, size: 25),
                       label: const Text(
                         "Choose file",
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 7),
                         primary: colorButton,
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(color: primaryColor),

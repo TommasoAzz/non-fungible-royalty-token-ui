@@ -15,11 +15,38 @@ class ProfileListView extends StatelessWidget {
           textAlign: TextAlign.left,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
+        const SizedBox(height: 20),
         const SizedBox(
           height: 270,
           child: ListsView(
-            entries: ['A', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
-            colorCodes: [100, 200, 300, 100, 200, 300, 100, 200, 300, 100, 200, 300],
+            entries: [
+              'A',
+              'B',
+              'C',
+              'C',
+              'C',
+              'C',
+              'C',
+              'C',
+              'C',
+              'C',
+              'C',
+              'C'
+            ],
+            colorCodes: [
+              100,
+              200,
+              300,
+              100,
+              200,
+              300,
+              100,
+              200,
+              300,
+              100,
+              200,
+              300
+            ],
           ),
         )
       ],

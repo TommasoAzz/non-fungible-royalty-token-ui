@@ -8,9 +8,13 @@ class CollectionsContentMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(dominego): Make a square item.
     return SingleChildScrollView(
       child: Column(children: [
+        const Text(
+          "COLLECTION",
+          textAlign: TextAlign.left,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
         SizedBox(
           width: 220,
           child: ListView.builder(
