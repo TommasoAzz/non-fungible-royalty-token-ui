@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import '../../routing/route_names.dart';
-import '../../routing/router.dart';
+import '../../routing/router.dart' as router;
 import '../../services/navigation_service.dart';
 import '../../widgets/centered_view/centered_view.dart';
 import '../../widgets/navigation_bar/navigation_bar.dart' as nbar;
@@ -25,8 +24,8 @@ class LayoutTemplate extends StatelessWidget {
               Expanded(
                 child: Navigator(
                   key: locator<NavigationService>().navigatorKey,
-                  onGenerateRoute: generateRoute,
-                  initialRoute: HomeRoute,
+                  onGenerateRoute: router.generateRoute,
+                  initialRoute: router.HomeRoute,
                 ),
               )
             ],

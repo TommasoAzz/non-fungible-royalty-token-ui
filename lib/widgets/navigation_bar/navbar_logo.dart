@@ -14,7 +14,7 @@ class NavBarLogo extends StatelessWidget {
         locator<NavigationService>().navigateTo(HomeRoute);
       },
       child: const Text(
-        "ERC1190 \nMARKETPLACE",
+        "ERC1190\nMARKETPLACE",
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/list_view/list_view.dart';
+import '../../widgets/profile_list/profile_list_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -14,51 +14,22 @@ class ProfileView extends StatelessWidget {
             textAlign: TextAlign.left,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          Text(
-            "Created",
-            textAlign: TextAlign.left,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
           SizedBox(
-            height: 270,
-            child: ListsView(
-              entries: ['A', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
-              colorCodes: [100, 200, 300, 100, 200, 300, 100, 200, 300, 100, 200, 300],
-            ),
+            height: 20,
           ),
-          Text(
-            "Owned",
-            textAlign: TextAlign.left,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
+          ProfileListView(title: "Created"),
           SizedBox(
-            height: 270,
-            child: ListsView(entries: ['A', 'F', 'D'], colorCodes: [100, 200, 300]),
+            height: 20,
           ),
-          Text(
-            "Created",
-            textAlign: TextAlign.left,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
+          ProfileListView(title: "Ownership license"),
           SizedBox(
-            height: 270,
-            child: ListsView(
-              entries: ['A', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
-              colorCodes: [100, 200, 300, 100, 200, 300, 100, 200, 300, 100, 200, 300],
-            ),
+            height: 20,
           ),
-          Text(
-            "Created",
-            textAlign: TextAlign.left,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
+          ProfileListView(title: "Creative license"),
           SizedBox(
-            height: 270,
-            child: ListsView(
-              entries: ['A', 'B', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
-              colorCodes: [100, 200, 300, 100, 200, 300, 100, 200, 300, 100, 200, 300],
-            ),
+            height: 20,
           ),
+          ProfileListView(title: "Rented")
         ],
       ),
     );

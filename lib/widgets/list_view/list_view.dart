@@ -10,19 +10,14 @@ class ListsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SizedBox(
-        height: 100,
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: const ClampingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          itemCount: entries.length,
-          itemBuilder: (context, index) {
-            return const Collection(text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100);
-          },
-        ),
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      itemCount: entries.length,
+      itemBuilder: (context, index) {
+        return const Collection(text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100);
+      },
     );
   }
 }

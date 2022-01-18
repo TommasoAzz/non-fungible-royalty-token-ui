@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
-import '../routing/route_names.dart';
 import '../views/Create/create_view.dart';
 import '../views/collections/collections_view.dart';
 
 import '../views/home/home_view.dart';
 import '../views/profile/profile_view.dart';
 import '../views/wallet/wallet_view.dart';
+
+// ignore: constant_identifier_names
+const String HomeRoute = "home";
+// ignore: constant_identifier_names
+const String CreateRoute = "create";
+// ignore: constant_identifier_names
+const String CollectionsRoute = "collections";
+// ignore: constant_identifier_names
+const String ProfileRoute = "profile";
+// ignore: constant_identifier_names
+const String WalletRoute = "wallet";
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   print('generateRoute: ${settings.name}');

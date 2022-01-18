@@ -35,8 +35,9 @@ class _DropzoneState extends State<Dropzone> {
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     primary: colorButton,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        side: BorderSide(color: primaryColor)),
+                      side: const BorderSide(color: primaryColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                   icon: const Icon(Icons.search, size: 32),
                   label: const Text(

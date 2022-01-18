@@ -14,17 +14,13 @@ class NavigationDrawerHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: const <Widget>[
           Text(
-            'ERC1190',
+            'ERC1190\nMARKETPLACE',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 30,
               fontWeight: FontWeight.w800,
               color: Colors.white,
             ),
           ),
-          Text(
-            'MARKETPLACE',
-            style: TextStyle(color: Colors.white),
-          )
         ],
       ),
     );
