@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/ListView/list_view.dart';
+import '../../widgets/list_view/list_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);

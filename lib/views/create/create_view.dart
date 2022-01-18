@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
-import '../../widgets/dropzonee/dropzone.dart';
+import '../../widgets/dropzone/dropzone.dart';
 import '../../widgets/text_box/text_box.dart';
 
 class CreateView extends StatelessWidget {
