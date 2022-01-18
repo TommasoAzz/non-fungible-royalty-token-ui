@@ -11,7 +11,7 @@ class CenteredView extends StatelessWidget {
     return ScreenTypeLayout(
       mobile: child,
       desktop: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 70.0, vertical: 60),
+        padding: const EdgeInsets.fromLTRB(70, 60, 70, 0),
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1200),

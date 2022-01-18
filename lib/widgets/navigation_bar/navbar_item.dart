@@ -13,6 +13,9 @@ class NavBarItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         locator<NavigationService>().navigateTo(navigationPath);
+        if (Scaffold.of(context).hasDrawer) {
+          Navigator.of(context).pop();
+        }
       },
       child: Text(
         title,

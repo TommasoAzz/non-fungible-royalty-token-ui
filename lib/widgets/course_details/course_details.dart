@@ -7,18 +7,10 @@ class CourseDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(builder: (context, sizingInformation) {
-      var textAlignment =
-          // ignore: deprecated_member_use
-          sizingInformation.deviceScreenType == DeviceScreenType.Desktop
-              ? TextAlign.left
-              : TextAlign.center;
+      final titleSize = sizingInformation.deviceScreenType == DeviceScreenType.mobile ? 50.0 : 80.0;
+      final descriptionSize =
+          sizingInformation.deviceScreenType == DeviceScreenType.mobile ? 16.0 : 21.0;
 
-      double titleSize =
-          // ignore: deprecated_member_use
-          sizingInformation.deviceScreenType == DeviceScreenType.Mobile ? 50 : 80;
-      double descriptionSize =
-          // ignore: deprecated_member_use
-          sizingInformation.deviceScreenType == DeviceScreenType.Mobile ? 16 : 21;
       return SizedBox(
         width: 600,
         child: Column(
@@ -26,13 +18,13 @@ class CourseDetails extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'WELCOME TO ERC1190. MARKETPLACE',
+              'WELCOME TO ERC1190 MARKETPLACE',
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 height: 0.9,
                 fontSize: titleSize,
               ),
-              textAlign: textAlignment,
+              textAlign: TextAlign.center,
             ),
             // ignore: prefer_const_constructors
             SizedBox(
@@ -44,7 +36,7 @@ class CourseDetails extends StatelessWidget {
                 fontSize: descriptionSize,
                 height: 1.7,
               ),
-              textAlign: textAlignment,
+              textAlign: TextAlign.center,
             )
           ],
         ),
