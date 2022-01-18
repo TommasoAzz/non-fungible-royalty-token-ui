@@ -9,12 +9,21 @@ class CollectionsContentMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(dominego): Make a square item.
-    return ListView.builder(
-      itemCount: 16,
-      itemBuilder: (context, index) => Collection(
-        text: const ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"],
-        color: Random.secure().nextInt(9) * 100 + 100,
-      ),
+    return SingleChildScrollView(
+      child: Column(children: [
+        SizedBox(
+          width: 220,
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: 16,
+            itemBuilder: (context, index) => Collection(
+              text: const ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"],
+              color: Random.secure().nextInt(9) * 100 + 100,
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }
