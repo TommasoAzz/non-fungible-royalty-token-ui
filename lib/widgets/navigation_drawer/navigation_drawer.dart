@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../routing/router.dart' as router;
+import '../../routing/route_manager.dart';
 import 'drawer_item.dart';
 import 'navigation_drawer_header.dart';
 
@@ -23,10 +23,10 @@ class NavigationDrawer extends StatelessWidget {
       child: Column(
         children: const <Widget>[
           NavigationDrawerHeader(),
-          DrawerItem('Collections', Icons.collections, router.CollectionsRoute),
-          DrawerItem('Create', Icons.create, router.CreateRoute),
-          DrawerItem('Profile', Icons.account_circle_outlined, router.ProfileRoute),
-          DrawerItem('Wallet', Icons.account_balance_wallet_outlined, router.WalletRoute),
+          DrawerItem('Collections', Icons.collections, RouteManager.collections),
+          DrawerItem('Create', Icons.create, RouteManager.create),
+          DrawerItem('Profile', Icons.account_circle_outlined, RouteManager.profile),
+          DrawerItem('Wallet', Icons.account_balance_wallet_outlined, RouteManager.wallet),
         ],
       ),
     );

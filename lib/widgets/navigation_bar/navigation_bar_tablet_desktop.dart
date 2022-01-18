@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../routing/router.dart' as router;
+import '../../routing/route_manager.dart';
 import '../../widgets/navigation_bar/navbar_logo.dart';
 import '../../widgets/navigation_bar/navbar_item.dart';
 
@@ -17,19 +17,19 @@ class NavigationBarTabletDesktop extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: const <Widget>[
-              NavBarItem('Collections', router.CollectionsRoute),
+              NavBarItem('Collections', RouteManager.collections),
               SizedBox(
                 width: 18,
               ),
-              NavBarItem('Create', router.CreateRoute),
+              NavBarItem('Create', RouteManager.create),
               SizedBox(
                 width: 18,
               ),
-              NavBarItem('Profile', router.ProfileRoute),
+              NavBarItem('Profile', RouteManager.profile),
               SizedBox(
                 width: 18,
               ),
-              NavBarItem('Wallet', router.WalletRoute),
+              NavBarItem('Wallet', RouteManager.wallet),
             ],
           ),
         ],
