@@ -1,7 +1,7 @@
 import 'package:flutter_web3/flutter_web3.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/connector/web3_connector.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/contracts/erc1190_marketplace.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/contracts/erc1190_tradable.dart';
+import 'web3_connector.dart';
+import '../contracts/erc1190_marketplace.dart';
+import '../contracts/erc1190_tradable.dart';
 
 typedef EthAddress = String;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/routing/route_names.dart';
+import '../../routing/route_names.dart';
 import '../../services/navigation_service.dart';
 
 import '../../locator.dart';

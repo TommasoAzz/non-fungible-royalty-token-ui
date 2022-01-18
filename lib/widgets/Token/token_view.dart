@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
+import '../../constants/app_colors.dart';
 
 class Token extends StatelessWidget {
   const Token({Key? key, required this.text, required this.color}) : super(key: key);

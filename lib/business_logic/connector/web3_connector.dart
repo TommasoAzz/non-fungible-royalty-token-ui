@@ -1,7 +1,7 @@
 import 'package:flutter_web3/flutter_web3.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/exception/wallet_not_loaded_exception.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/exception/wallet_not_supported_exception.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/exception/wallet_rejected_exception.dart';
+import '../exception/wallet_not_loaded_exception.dart';
+import '../exception/wallet_not_supported_exception.dart';
+import '../exception/wallet_rejected_exception.dart';
 import '../../logger/logger.dart';
 
 typedef EthAddress = String;

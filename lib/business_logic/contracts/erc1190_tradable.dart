@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_web3/flutter_web3.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/logger/logger.dart';
+import '../../logger/logger.dart';
 
 typedef EthAddress = String;
 
@@ -58,7 +58,7 @@ class ERC1190Tradable {
     final completer = Completer<int>();
 
     contract.once("TokenMinted", (event) {
-      // TODO Finish managing event.
+      // TODO(TommasoAzz): Finish managing event.
       dartify(event);
       completer.complete(0);
     });
@@ -106,7 +106,7 @@ class ERC1190Tradable {
     final completer = Completer<void>();
 
     contract.once("TransferOwnershipLicense", (event) {
-      // TODO Finish managing event.
+      // TODO(TommasoAzz): Finish managing event.
       dartify(event);
       completer.complete();
     });
@@ -123,7 +123,7 @@ class ERC1190Tradable {
     final completer = Completer<void>();
 
     contract.once("TransferOwnershipLicense", (event) {
-      // TODO Finish managing event.
+      // TODO(TommasoAzz): Finish managing event.
       dartify(event);
       completer.complete();
     });
@@ -140,7 +140,7 @@ class ERC1190Tradable {
     final completer = Completer<void>();
 
     contract.once("TransferCreativeLicense", (event) {
-      // TODO Finish managing event.
+      // TODO(TommasoAzz): Finish managing event.
       dartify(event);
       completer.complete();
     });
@@ -157,7 +157,7 @@ class ERC1190Tradable {
     final completer = Completer<void>();
 
     contract.once("TransferCreativeLicense", (event) {
-      // TODO Finish managing event.
+      // TODO(TommasoAzz): Finish managing event.
       dartify(event);
       completer.complete();
     });
@@ -230,7 +230,7 @@ class ERC1190Tradable {
     final completer = Completer<void>();
 
     contract.once('Approval', (event) {
-      // TODO Finish managing event.
+      // TODO(TommasoAzz): Finish managing event.
       dartify(event);
       completer.complete();
     });

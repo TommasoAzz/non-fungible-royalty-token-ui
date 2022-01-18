@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/Token/token_view.dart';
+import '../../widgets/Token/token_view.dart';
 
 class WalletView extends StatelessWidget {
   const WalletView({Key? key}) : super(key: key);

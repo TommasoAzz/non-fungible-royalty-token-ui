@@ -11,17 +11,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   print('generateRoute: ${settings.name}');
   switch (settings.name) {
     case HomeRoute:
-      return _getPageRoute(HomeView());
+      return _getPageRoute(const HomeView());
     case CollectionsRoute:
-      return _getPageRoute(CollectionsView());
+      return _getPageRoute(const CollectionsView());
     case CreateRoute:
-      return _getPageRoute(CreateView());
+      return _getPageRoute(const CreateView());
     case ProfileRoute:
-      return _getPageRoute(ProfileView());
+      return _getPageRoute(const ProfileView());
     case WalletRoute:
-      return _getPageRoute(WalletView());
+      return _getPageRoute(const WalletView());
     default:
-      return _getPageRoute(HomeView());
+      return _getPageRoute(const HomeView());
   }
 }
 

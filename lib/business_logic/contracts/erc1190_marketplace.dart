@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_web3/flutter_web3.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/logger/logger.dart';
+import '../../logger/logger.dart';
 
 typedef EthAddress = String;
 
@@ -46,7 +46,7 @@ class ERC1190Marketplace {
     final completer = Completer<EthAddress>();
 
     contract.once("CollectionDeployed", (event) {
-      // TODO Finish managing event.
+      // TODO(TommasoAzz): Finish managing event.
       dartify(event);
       completer.complete("");
     });
