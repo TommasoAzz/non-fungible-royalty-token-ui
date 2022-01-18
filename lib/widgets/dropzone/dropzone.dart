@@ -17,7 +17,9 @@ class _DropzoneState extends State<Dropzone> {
       //color: primaryColor,
       child: Stack(
         children: [
-          DropzoneView(onCreated: (controller) => this.controller = controller, onDrop: acceptFile),
+          DropzoneView(
+              onCreated: (controller) => this.controller = controller,
+              onDrop: acceptFile),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +34,9 @@ class _DropzoneState extends State<Dropzone> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     primary: colorButton,
-                    shape: const RoundedRectangleBorder(),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: primaryColor)),
                   ),
                   icon: const Icon(Icons.search, size: 32),
                   label: const Text(
