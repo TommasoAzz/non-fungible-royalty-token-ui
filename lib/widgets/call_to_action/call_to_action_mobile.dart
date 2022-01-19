@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/locator.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/services/navigation_service.dart';
 import '../../../../constants/app_colors.dart';
 
 class CallToActionMobile extends StatelessWidget {
@@ -10,7 +12,7 @@ class CallToActionMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () => {
-        // TODO(dominego): Connect to wallet.
+        locator<NavigationService>().navigateTo("wallet"),
       },
       child: Padding(
         padding: const EdgeInsets.all(10),
