@@ -7,13 +7,18 @@ class WalletView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: const <Widget>[
-          Token(text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100),
-          Token(text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100),
-        ],
-      ),
-    );
+    return FutureBuilder(builder: (context, snapshot) {
+      if (snapshot.connectionState != ConnectionState.done) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      return Column(children: [
+        Text(
+          "Address ${snapshot.data}",
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
+      ]);
+    });
   }
 }
