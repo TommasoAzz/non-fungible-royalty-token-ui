@@ -19,6 +19,11 @@ class Web3Connector {
     _logger.v("connectToWallet");
 
     if (Ethereum.isSupported) {
+      if (_walletConnected) {
+        _logger.i("Wallet already connected.");
+        return;
+      }
+      
       try {
         _accounts.clear();
         _accounts.addAll(await ethereum!.requestAccount());
@@ -35,6 +40,16 @@ class Web3Connector {
       _logger.e("Wallet not supported!");
       throw const WalletNotSupportedException();
     }
+  }
+
+  Future<void> disconnectFromWallet() async {
+    _logger.v("disconnectFromWallet");
+    if (!_walletConnected) {
+      throw const WalletNotLoadedException();
+    }
+
+    _walletConnected = false;
+    _accounts.clear();
   }
 
   bool get connectedToWallet => _walletConnected;
