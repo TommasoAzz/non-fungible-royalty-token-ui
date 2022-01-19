@@ -10,7 +10,7 @@ class ProfileView extends StatelessWidget {
       child: Column(
         children: const <Widget>[
           Text(
-            "My Profile",
+            "MY PROFILE",
             textAlign: TextAlign.left,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),

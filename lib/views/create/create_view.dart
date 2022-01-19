@@ -13,7 +13,7 @@ class CreateView extends StatelessWidget {
       child: Column(
         children: <Widget>[
           const Text(
-            "Create your collection",
+            "CREATE YOUR COLLECTION",
             textAlign: TextAlign.left,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),

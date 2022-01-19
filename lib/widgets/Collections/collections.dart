@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Collection extends StatelessWidget {
-  const Collection({Key? key, required this.text, required this.color}) : super(key: key);
+  const Collection({Key? key, required this.text, required this.color})
+      : super(key: key);
   final List<String> text;
   final int color;
 

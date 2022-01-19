@@ -16,7 +16,7 @@ class CollectionsContentMobile extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         SizedBox(
-          width: 220,
+          width: 212,
           child: ListView.builder(
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
