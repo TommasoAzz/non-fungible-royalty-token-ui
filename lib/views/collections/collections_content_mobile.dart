@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/widgets/page_title/page_title.dart';
 import '../../widgets/collections/collections.dart';
 
 class CollectionsContentMobile extends StatelessWidget {
@@ -10,11 +11,7 @@ class CollectionsContentMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(children: [
-        const Text(
-          "COLLECTION",
-          textAlign: TextAlign.left,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
+        const PageTitle(title: "collections"),
         SizedBox(
           width: 212,
           child: ListView.builder(
