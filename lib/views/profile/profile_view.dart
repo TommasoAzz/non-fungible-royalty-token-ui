@@ -10,7 +10,7 @@ class ProfileView extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: const <Widget>[
-          const PageTitle(title: "my proflie"),
+          PageTitle(title: "My Profile"),
           SizedBox(
             height: 20,
           ),
