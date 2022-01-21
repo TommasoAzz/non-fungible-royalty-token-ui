@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_web3/flutter_web3.dart';
 import '../exception/wallet_not_loaded_exception.dart';
 import '../exception/wallet_not_supported_exception.dart';
@@ -6,7 +7,7 @@ import '../../logger/logger.dart';
 
 typedef EthAddress = String;
 
-class Web3Connector {
+class Web3Connector with ChangeNotifier {
   final _logger = getLogger("Web3Connector");
 
   late Web3Provider _provider;
@@ -23,7 +24,7 @@ class Web3Connector {
         _logger.i("Wallet already connected.");
         return;
       }
-      
+
       try {
         _accounts.clear();
         _accounts.addAll(await ethereum!.requestAccount());
@@ -32,6 +33,18 @@ class Web3Connector {
 
         _provider = Web3Provider.fromEthereum(ethereum!);
         _walletConnected = true;
+
+        ethereum!.onAccountsChanged((accounts) {
+          if (accounts.isNotEmpty) {
+            _accounts.clear();
+            _accounts.addAll(accounts);
+            _walletConnected = true;
+          } else {
+            _accounts.clear();
+            _walletConnected = false;
+          }
+          notifyListeners();
+        });
       } on EthereumUserRejected {
         _logger.e("User rejected the wallet modal.");
         throw const WalletRejectedException();
@@ -40,16 +53,6 @@ class Web3Connector {
       _logger.e("Wallet not supported!");
       throw const WalletNotSupportedException();
     }
-  }
-
-  Future<void> disconnectFromWallet() async {
-    _logger.v("disconnectFromWallet");
-    if (!_walletConnected) {
-      throw const WalletNotLoadedException();
-    }
-
-    _walletConnected = false;
-    _accounts.clear();
   }
 
   bool get connectedToWallet => _walletConnected;

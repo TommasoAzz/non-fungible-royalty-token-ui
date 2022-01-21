@@ -1,4 +1,3 @@
-import 'package:flutter_web3/flutter_web3.dart';
 import 'web3_connector.dart';
 import '../contracts/erc1190_marketplace.dart';
 import '../contracts/erc1190_tradable.dart';
