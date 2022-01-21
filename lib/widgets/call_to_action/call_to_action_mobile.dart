@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/widgets/hover/on_hover_button.dart';
 import '../../business_logic/connector/web3_connector.dart';
 import '../../locator.dart';
 import '../../services/navigation_service.dart';
@@ -12,7 +13,7 @@ class CallToActionMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => locator<NavigationService>().navigateTo("wallet"),
+      onPressed: () => locator<NavigationService>().navigateTo("/wallet"),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Text(
