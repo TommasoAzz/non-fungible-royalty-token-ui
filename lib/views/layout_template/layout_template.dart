@@ -9,7 +9,8 @@ import '../../widgets/navigation_drawer/navigation_drawer.dart';
 import '../../locator.dart';
 
 class LayoutTemplate extends StatelessWidget {
-  const LayoutTemplate({Key? key}) : super(key: key);
+  final Widget child;
+  const LayoutTemplate({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +25,8 @@ class LayoutTemplate extends StatelessWidget {
             children: <Widget>[
               const nbar.NavigationBar(),
               Expanded(
-                child: Navigator(
-                  key: locator<NavigationService>().navigatorKey,
-                  onGenerateRoute: RouteManager.generateRoute,
-                  initialRoute: RouteManager.home,
-                ),
-              )
+                child: child,
+              ),
             ],
           ),
         ),

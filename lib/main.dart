@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/routing/route_manager.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/services/navigation_service.dart';
 import 'views/layout_template/layout_template.dart';
 
 import 'locator.dart';
@@ -21,7 +23,12 @@ class MyApp extends StatelessWidget {
               fontFamily: 'Open Sans',
             ),
       ),
-      home: const LayoutTemplate(),
+      builder: (context, child) => LayoutTemplate(
+        child: child!,
+      ),
+      navigatorKey: locator<NavigationService>().navigatorKey,
+      onGenerateRoute: RouteManager.generateRoute,
+      initialRoute: RouteManager.home,
     );
   }
 }
