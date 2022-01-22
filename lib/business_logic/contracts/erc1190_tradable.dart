@@ -13,6 +13,7 @@ class ERC1190Tradable {
 
   static const List<String> abi = [
     /* From ERC1190Tradable */
+    "function availableTokens() returns (uint256)",
     "function mint(address, uint8, uint8) returns (uint256)",
     "function setOwnershipLicensePrice(uint256, uint256)",
     "function setCreativeLicensePrice(uint256, uint256)",
@@ -46,7 +47,17 @@ class ERC1190Tradable {
     required this.contract,
   });
 
+  String get address => contract.address;
+
   /* From ERC1190Tradable */
+
+  Future<int> get availableTokens async {
+    _logger.v("availableTokens");
+
+    final tokens = await contract.call<int>("availableTokens");
+
+    return tokens;
+  }
 
   Future<int> mint(
     final String creator,

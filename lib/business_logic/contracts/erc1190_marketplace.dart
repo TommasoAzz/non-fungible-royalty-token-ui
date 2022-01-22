@@ -9,6 +9,7 @@ class ERC1190Marketplace {
   final _logger = getLogger("ERC1190Marketplace");
 
   static const List<String> abi = [
+    "function creatorOf(address) returns (address)",
     "function getCollections() returns (address[])",
     "function getCollections(address) returns (address[])",
     "function deployNewCollection(string, string, string) returns (address)",
@@ -24,6 +25,16 @@ class ERC1190Marketplace {
   ERC1190Marketplace({
     required this.contract,
   });
+
+  String get address => contract.address;
+
+  Future<EthAddress> creatorOf(final EthAddress collectionAddress) async {
+    _logger.v("creatorOf");
+
+    final creator = await contract.call<EthAddress>("creatorOf", [collectionAddress]);
+
+    return creator;
+  }
 
   Future<List<EthAddress>> getCollections([final EthAddress collectionOwner = ""]) async {
     _logger.v("getCollections");
