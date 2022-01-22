@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/page_title/page_title.dart';
+import '../../widgets/page_title/page_title.dart';
 import '../../widgets/collections/collections.dart';
 
 class CollectionsContentMobile extends StatelessWidget {

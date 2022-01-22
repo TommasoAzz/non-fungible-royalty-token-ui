@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../routing/route_manager.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import '../../services/navigation_service.dart';
 import '../../widgets/centered_view/centered_view.dart';
 import '../../widgets/navigation_bar/navigation_bar.dart' as nbar;
 import '../../widgets/navigation_drawer/navigation_drawer.dart';
-
-import '../../locator.dart';
 
 class LayoutTemplate extends StatelessWidget {
   final Widget child;

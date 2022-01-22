@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/page_title/page_title.dart';
+import '../../widgets/page_title/page_title.dart';
 import '../../widgets/form_field/form_field.dart' as form;
 import '../../widgets/dropzone/dropzone.dart';
-import '../../widgets/text_box/text_box.dart';
 
 class CreateView extends StatefulWidget {
   const CreateView({Key? key}) : super(key: key);

@@ -24,7 +24,7 @@ class _OnHoverButtonState extends State<OnHoverButton> {
       onEnter: (event) => onEntered(true),
       onExit: (event) => onEntered(false),
       child: AnimatedContainer(
-          duration: Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 200),
           transform: transform,
           child: widget.child),
     );

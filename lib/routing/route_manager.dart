@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/views/collection_page/collection_page.dart';
+import '../views/collection_page/collection_page.dart';
 import '../views/Create/create_view.dart';
 import '../views/collections/collections_view.dart';
 import 'package:flutter/widgets.dart';
@@ -46,19 +46,8 @@ class _FadeRoute extends PageRouteBuilder {
   _FadeRoute({required this.child, required this.routeName})
       : super(
           settings: RouteSettings(name: routeName),
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              child,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              FadeTransition(
+          pageBuilder: (context, animation, secondaryAnimation) => child,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
             opacity: animation,
             child: child,
           ),
