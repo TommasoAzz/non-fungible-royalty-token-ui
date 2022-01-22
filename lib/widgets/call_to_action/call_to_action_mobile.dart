@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/hover/on_hover_button.dart';
 import '../../business_logic/connector/web3_connector.dart';
 import '../../locator.dart';
-import '../../services/navigation_service.dart';
 import '../../../../constants/app_colors.dart';
 
 class CallToActionMobile extends StatelessWidget {
@@ -12,12 +10,17 @@ class CallToActionMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final connector = locator<Web3Connector>();
     return ElevatedButton(
-      onPressed: () => locator<NavigationService>().navigateTo("/wallet"),
+      onPressed: () async {
+        if (!connector.connectedToWallet) {
+          await connector.connectToWallet();
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Text(
-          title,
+          connector.connectedToWallet ? 'Connected to the wallet' : title,
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w800,
