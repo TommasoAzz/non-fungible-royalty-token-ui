@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import '../views/home/home_view.dart';
 import '../views/profile/profile_view.dart';
 import '../views/wallet/wallet_view.dart';
+import '../extensions/string_extensions.dart';
 
 class RouteManager {
   static const String home = "/home";
@@ -16,20 +17,26 @@ class RouteManager {
   static const String collection = "/collection";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    print('generateRoute: ${settings.name}');
-    switch (settings.name) {
+    var routingData = settings.name?.getRoutingData;
+    switch (routingData?.route) {
       case home:
         return _getPageRoute(const HomeView(), settings);
       case collections:
         return _getPageRoute(const CollectionsView(), settings);
-      case collection:
-        return _getPageRoute(const CollectionPage(), settings);
+      // case collection:
+      //   return _getPageRoute(const CollectionPage(), settings);
       case create:
         return _getPageRoute(const CreateView(), settings);
       case profile:
         return _getPageRoute(const ProfileView(), settings);
       case wallet:
         return _getPageRoute(const WalletView(), settings);
+      case collection:
+        final id = int.tryParse(routingData!['']); // Get the id from the data.
+        final args = settings.arguments;
+        (args as Map<String, dynamic>).addAll({'id': id});
+        print(settings);
+        return _getPageRoute(const CollectionPage(), settings);
       default:
         return _getPageRoute(const HomeView(), settings);
     }
@@ -47,7 +54,8 @@ class _FadeRoute extends PageRouteBuilder {
       : super(
           settings: RouteSettings(name: routeName),
           pageBuilder: (context, animation, secondaryAnimation) => child,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
             opacity: animation,
             child: child,
           ),

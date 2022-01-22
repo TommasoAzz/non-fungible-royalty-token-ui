@@ -49,8 +49,13 @@ class Token extends StatelessWidget {
                   StyleText(title: "Ownership license price: ${text[4]}"),
                   StyleText(title: "Creative license price: ${text[5]}"),
                   StyleText(title: "Rental price per second: ${text[6]}"),
-                  if (isOwnershipOwner) StyleText(title: "Ownership request from: ${text[7]}"),
-                  if (isCreativeOwner) StyleText(title: "Creative request from: ${text[8]}"),
+                  StyleText(
+                      title: "Roialty for ownership transfer: ${text[7]}"),
+                  StyleText(title: "Roialty for rental: ${text[8]}"),
+                  if (isOwnershipOwner)
+                    StyleText(title: "Ownership request from: ${text[9]}"),
+                  if (isCreativeOwner)
+                    StyleText(title: "Creative request from: ${text[10]}"),
                 ],
               ),
             ),
@@ -59,7 +64,8 @@ class Token extends StatelessWidget {
       ),
       if (isOwnershipOwner)
         const SizedBox(
-            width: 500, child: form.FormField(inputLabel: "Set Ownership License price")),
+            width: 500,
+            child: form.FormField(inputLabel: "Set Ownership License price")),
       if (isOwnershipOwner)
         const SizedBox(
           width: 500,
@@ -71,10 +77,13 @@ class Token extends StatelessWidget {
           child: form.FormField(inputLabel: "Transfer Ownership License to"),
         ),
       if (isCreativeOwner)
-        const SizedBox(width: 500, child: form.FormField(inputLabel: "Set Creative License price")),
+        const SizedBox(
+            width: 500,
+            child: form.FormField(inputLabel: "Set Creative License price")),
       if (isCreativeOwner)
         const SizedBox(
-            width: 500, child: form.FormField(inputLabel: "Transfer Creative License to")),
+            width: 500,
+            child: form.FormField(inputLabel: "Transfer Creative License to")),
     ]));
   }
 }

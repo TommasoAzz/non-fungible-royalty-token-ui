@@ -33,6 +33,9 @@ class Collection {
 
   @override
   int get hashCode {
-    return name.hashCode ^ symbol.hashCode ^ creator.hashCode ^ availableTokens.hashCode;
+    return name.hashCode ^
+        symbol.hashCode ^
+        creator.hashCode ^
+        availableTokens.hashCode;
   }
 }
