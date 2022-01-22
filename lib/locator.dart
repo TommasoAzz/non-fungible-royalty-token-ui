@@ -10,7 +10,7 @@ GetIt locator = GetIt.instance;
 
 void setupLocator() {
   locator.registerSingleton<String>(
-    "0xd2747F3C1C425ff3Dd820656e35ed1E67Da75cC0",
+    "0x2E19Cb4b4F90558695B27A6cf46bA6068D36C409",
     instanceName: "ERC1190Marketplace",
   );
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
