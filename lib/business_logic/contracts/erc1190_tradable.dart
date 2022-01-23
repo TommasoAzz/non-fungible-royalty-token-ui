@@ -14,7 +14,7 @@ class ERC1190Tradable {
   static const List<String> abi = [
     /* From ERC1190Tradable */
     "function availableTokens() returns (uint256)",
-    "function mint(address, uint8, uint8) returns (uint256)",
+    "function mint(address, string, uint8, uint8) returns (uint256)",
     "function setOwnershipLicensePrice(uint256, uint256)",
     "function setCreativeLicensePrice(uint256, uint256)",
     "function setRentalPrice(uint256, uint256)",
@@ -61,6 +61,7 @@ class ERC1190Tradable {
 
   Future<int> mint(
     final String creator,
+    final String file,
     int royaltyForRental,
     int royaltyForOwnershipTransfer,
   ) async {
@@ -76,7 +77,7 @@ class ERC1190Tradable {
 
     final tx = await contract.send(
       "mint",
-      [creator, royaltyForRental, royaltyForOwnershipTransfer],
+      [creator, file, royaltyForRental, royaltyForOwnershipTransfer],
     );
     await tx.wait();
 

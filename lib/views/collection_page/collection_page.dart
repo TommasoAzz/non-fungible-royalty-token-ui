@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../widgets/Collections/collection.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/collection.dart';
 
 class CollectionPage extends StatelessWidget {
   const CollectionPage({Key? key}) : super(key: key);
@@ -166,6 +165,7 @@ class BottomTextSection extends StatelessWidget {
 
 class UpperTextSection extends StatelessWidget {
   final Collection collection;
+
   const UpperTextSection({
     Key? key,
     required this.collection,
@@ -189,7 +189,7 @@ class UpperTextSection extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            collection.nameCollection,
+            collection.name,
             style: TextStyle(fontSize: 29, color: Colors.blue.shade900),
           ),
           const SizedBox(height: 15),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import '../../../../constants/app_colors.dart';
@@ -39,8 +41,7 @@ class _DropzoneState extends State<Dropzone> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.cloud_upload,
-                        size: 80, color: Colors.white),
+                    const Icon(Icons.cloud_upload, size: 80, color: Colors.white),
                     const Text(
                       "Drop file here",
                       style: TextStyle(color: Colors.white, fontSize: 18),
@@ -53,8 +54,7 @@ class _DropzoneState extends State<Dropzone> {
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 7),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
                         primary: colorButton,
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(color: primaryColor),
@@ -84,12 +84,8 @@ class _DropzoneState extends State<Dropzone> {
 
   Future acceptFile(dynamic event) async {
     final name = event.name;
-    final mine = await controller.getFileMIME(event);
-    final bytes = await controller.getFileSize(event);
     final url = await controller.createFileUrl(event);
     print('Name: $name');
-    print('MINE: $mine');
-    print('Bytes: $bytes');
     print('Url: $url');
   }
 }

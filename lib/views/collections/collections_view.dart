@@ -12,7 +12,7 @@ class CollectionsView extends StatelessWidget {
     return ScreenTypeLayout(
       mobile: const CollectionsContentMobile(),
       tablet: const CollectionsContentTablet(),
-      desktop: const CollectionsContentTabletDesktop(),
+      desktop: const CollectionsContentDesktop(),
     );
   }
 }

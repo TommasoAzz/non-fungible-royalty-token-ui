@@ -39,12 +39,21 @@ class ERC1190Marketplace {
   Future<List<EthAddress>> getCollections([final EthAddress collectionOwner = ""]) async {
     _logger.v("getCollections");
 
-    final collections = await contract.call<List<EthAddress>>(
-      "getCollections",
-      collectionOwner.isNotEmpty ? [collectionOwner] : [],
-    );
+    try {
+      print(contract);
+      print("Collezioni: ${await contract.call("getCollections")}");
+      final collections = await contract.call<List<EthAddress>>(
+        "getCollections",
+        collectionOwner.isNotEmpty ? [collectionOwner] : [],
+      );
 
-    return collections;
+      print("Ciao");
+
+      return collections;
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 
   Future<EthAddress> deployNewCollection(
