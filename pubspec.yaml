@@ -31,7 +31,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  
+
   assets:
-      - assets/log0.png
-      - assets/ape.png
+    - assets/log0.png
+    - assets/ape.png
+    - assets/contracts/ERC1190Marketplace.json
+    - assets/contracts/ERC1190Tradable.json
