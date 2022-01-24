@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:convert' show json;
 
 import 'package:http/http.dart' as http;
@@ -30,7 +29,12 @@ class MarketplaceVM {
   Future<List<Collection>> getCollections([final String collectionOwner = ""]) async {
     _logger.v("getCollections");
 
-    final collectionAddresses = await marketplaceSmartContract.getCollections(collectionOwner);
+    final collectionAddresses = <String>[];
+    if (collectionOwner.isEmpty) {
+      collectionAddresses.addAll(await marketplaceSmartContract.allCollections);
+    } else {
+      collectionAddresses.addAll(await marketplaceSmartContract.collectionsOf(collectionOwner));
+    }
 
     final contracts = collectionAddresses.map(loadERC1190SmartContract);
 

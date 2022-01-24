@@ -57,7 +57,7 @@ class Web3Connector with ChangeNotifier {
 
   bool get connectedToWallet => _walletConnected;
 
-  Contract loadContract(final EthAddress address, final List<String> abi) {
+  Contract loadContract(final EthAddress address, final String abi) {
     _logger.v("loadContract");
 
     if (!_walletConnected) {

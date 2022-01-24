@@ -11,35 +11,7 @@ typedef EthAddress = String;
 class ERC1190Tradable {
   final _logger = getLogger("ERC1190Tradable");
 
-  static const List<String> abi = [
-    /* From ERC1190Tradable */
-    "function availableTokens() returns (uint256)",
-    "function mint(address, string, uint8, uint8) returns (uint256)",
-    "function setOwnershipLicensePrice(uint256, uint256)",
-    "function setCreativeLicensePrice(uint256, uint256)",
-    "function setRentalPrice(uint256, uint256)",
-    "function rentAsset(uint256, uint256)",
-    "function transferOwnershipLicense(uint256, address)",
-    "function obtainOwnershipLicense(uint256)",
-    "function transferCreativeLicense(uint256, address)",
-    "function obtainCreativeLicense(uint256)",
-    "event TokenMinted(address, uint8, uint8, uint256)",
-    /* From ERC1190 */
-    "function balanceOfOwner(address) returns (uint256)",
-    "function balanceOfCreativeOwner(address) returns (uint256)",
-    "function balanceOfRenter(address) returns (uint256)",
-    "function ownerOf(uint256) returns (address)",
-    "function creativeOwnerOf(uint256) returns (address)",
-    "function rentersOf(uint256) returns (address[])",
-    "function name() returns (string)",
-    "function symbol() returns (string)",
-    "function tokenURI(uint256) returns (string)",
-    "function approve(address, uint256)",
-    "event Approval(address, address, uint256)",
-    "event TransferCreativeLicense(address, address, uint256)",
-    "event TransferOwnershipLicense(address, address, uint256)",
-    "event AssetRented(address, address, uint256)",
-  ];
+  static late final String abi;
 
   final Contract contract;
 
