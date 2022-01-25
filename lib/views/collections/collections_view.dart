@@ -10,9 +10,12 @@ class CollectionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout(
-      mobile: const CollectionsContentMobile(),
-      tablet: const CollectionsContentTablet(),
-      desktop: const CollectionsContentDesktop(),
+      mobile: const CollectionsContentDesktop(
+        column: 1,
+        padding: 10,
+      ),
+      tablet: const CollectionsContentDesktop(column: 3, padding: 30),
+      desktop: const CollectionsContentDesktop(column: 4, padding: 30),
     );
   }
 }

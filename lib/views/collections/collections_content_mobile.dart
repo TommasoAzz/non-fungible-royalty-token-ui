@@ -56,7 +56,8 @@ class CollectionsContentMobile extends StatelessWidget {
                             ),
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.blue[collection.availableTokens * 100],
+                            color:
+                                Colors.blue[collection.availableTokens * 100],
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
