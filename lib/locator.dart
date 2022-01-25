@@ -3,10 +3,10 @@ import 'dart:convert' show json;
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'business_logic/exception/wallet_not_loaded_exception.dart';
 import 'business_logic/contracts/erc1190_marketplace.dart';
 import 'business_logic/contracts/erc1190_tradable.dart';
 import 'business_logic/viewmodel/marketplace_vm.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'business_logic/connector/contract_loader.dart';
 import 'business_logic/connector/web3_connector.dart';
 import 'services/navigation_service.dart';
@@ -19,12 +19,12 @@ void setupLocator() {
   /// Navigation service
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
 
-  /// Ethereum smart contract address to connect to (based on the network)
-  locator.registerSingleton<String>(
-    // "0x2E19Cb4b4F90558695B27A6cf46bA6068D36C409", // On Rinkeby
-    "0xfC8106356958a3161D9b80938C28c1f2b6225a99", // On Ganache
-    instanceName: "marketplace_contract_address",
-  );
+  // /// Ethereum smart contract address to connect to (based on the network)
+  // locator.registerSingleton<String>(
+  //   // "0x2E19Cb4b4F90558695B27A6cf46bA6068D36C409", // On Rinkeby
+  //   "0xfC8106356958a3161D9b80938C28c1f2b6225a99", // On Ganache
+  //   instanceName: "marketplace_contract_address",
+  // );
 
   /// IPFS node URL
   locator.registerSingleton<String>(
@@ -51,16 +51,30 @@ void setupLocator() {
     instanceName: "tradable_contract",
   );
 
-  /// Loading SharedPreferences
-  locator.registerSingletonAsync<SharedPreferences>(SharedPreferences.getInstance);
+  /// Ethereum smart contract address to connect to (based on the network)
+  locator.registerSingletonWithDependencies<String>(
+    () {
+      final contractJson = locator<JSON>(instanceName: "marketplace_contract");
+      final networks = (contractJson["networks"] as JSON);
+      final network = (networks.values.first as JSON);
+      return network["address"] as String;
+    },
+    instanceName: "marketplace_contract_address",
+    dependsOn: [
+      InitDependency(JSON, instanceName: "marketplace_contract"),
+    ],
+  );
 
   /// Web3 Connector instance (to be used by the Contract loader and the UI)
   locator.registerSingleton<Web3Connector>(Web3Connector());
 
   /// Contract loader instance (+ loading contract ABIs)
   locator.registerSingletonWithDependencies<ContractLoader>(() {
-    ERC1190Marketplace.abi = locator<JSON>(instanceName: "marketplace_contract")["abi"].toString();
-    ERC1190Tradable.abi = locator<JSON>(instanceName: "tradable_contract")["abi"].toString();
+    final marketplaceABI = locator<JSON>(instanceName: "marketplace_contract")["abi"];
+    final tradableABI = locator<JSON>(instanceName: "tradable_contract")["abi"];
+
+    ERC1190Marketplace.abi = json.encode(marketplaceABI);
+    ERC1190Tradable.abi = json.encode(tradableABI);
 
     return ContractLoader(locator<Web3Connector>());
   }, dependsOn: [
@@ -71,18 +85,32 @@ void setupLocator() {
   /// Marketplace ViewModel (to be used by the UI)
   locator.registerSingletonWithDependencies<MarketplaceVM>(() {
     final contractLoader = locator<ContractLoader>();
+    final connector = locator<Web3Connector>();
 
-    final contract = contractLoader.loadERC1190MarketplaceContract(
-      locator<String>(instanceName: "marketplace_contract_address"),
-    );
-
-    return MarketplaceVM(
-      marketplaceSmartContract: contract,
+    final vm = MarketplaceVM(
+      connect: connector.connectToWallet,
+      connected: () => connector.connectedToWallet,
+      account: connector.firstAccount,
       loadERC1190SmartContract: contractLoader.loadERC1190Tradable,
       httpClient: http.Client(),
       ipfsUrl: locator<String>(instanceName: "ipfs"),
     );
+
+    connector.addListener(() {
+      try {
+        vm.contract = contractLoader.loadERC1190MarketplaceContract(
+          locator<String>(instanceName: "marketplace_contract_address"),
+        );
+      } on WalletNotLoadedException {
+        vm.disableContract();
+      }
+
+      vm.loggedAccount = connector.firstAccount;
+    });
+
+    return vm;
   }, dependsOn: [
     ContractLoader,
+    InitDependency(String, instanceName: "marketplace_contract_address")
   ]);
 }

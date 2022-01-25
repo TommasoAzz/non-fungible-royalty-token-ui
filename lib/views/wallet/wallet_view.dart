@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../business_logic/viewmodel/marketplace_vm.dart';
 import '../../widgets/page_title/page_title.dart';
-import '../../business_logic/connector/web3_connector.dart';
 import '../../locator.dart';
 
 class WalletView extends StatefulWidget {
@@ -11,56 +11,49 @@ class WalletView extends StatefulWidget {
 }
 
 class _WalletViewState extends State<WalletView> {
-  late Web3Connector connector;
+  MarketplaceVM vm = locator<MarketplaceVM>();
 
   @override
   void initState() {
     super.initState();
-    connector = locator<Web3Connector>();
-    connector.addListener(() => setState(() {}));
+    vm.addListener(() => setState(() {}));
   }
 
-  Future<String> _connectToWallet() async {
-    if (connector.connectedToWallet) {
-      return connector.firstAccount;
+  Future<void> _connectToWallet() async {
+    try {
+      await vm.connectToWallet();
+    } on Exception catch (exc) {
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Error while connecting to the wallet"),
+          content: Text(exc.toString()),
+        ),
+      );
     }
-
-    await connector.connectToWallet();
-
-    return connector.firstAccount;
   }
 
   @override
   Widget build(BuildContext context) {
+    final isConnected = vm.isConnected;
     return SingleChildScrollView(
-      child: FutureBuilder(
-        future: _connectToWallet(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (snapshot.hasError) {
-            return Center(
-              child: Text("Error while connecting to the wallet.\n${snapshot.error}"),
-            );
-          }
-
-          return Column(
-            children: [
-              const PageTitle(title: "wallet"),
-              Text(
-                "Connected with account: ${snapshot.data}",
-                style: const TextStyle(fontSize: 18),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
-          );
-        },
+      child: Column(
+        children: [
+          const PageTitle(title: "wallet"),
+          if (isConnected)
+            Text(
+              "Connected with account: ${vm.loggedAccount}",
+              style: const TextStyle(fontSize: 18),
+            ),
+          if (!isConnected)
+            ElevatedButton(
+              onPressed: _connectToWallet,
+              child: const Text("Connect to wallet"),
+            ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     );
   }

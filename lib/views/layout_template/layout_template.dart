@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/services/navigation_service.dart';
+import '../../business_logic/viewmodel/marketplace_vm.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import '../../services/navigation_service.dart';
 import '../../locator.dart';
 import '../../widgets/centered_view/centered_view.dart';
 import '../../widgets/navigation_bar/navigation_bar.dart' as nbar;
@@ -9,6 +10,11 @@ import '../../widgets/navigation_drawer/navigation_drawer.dart';
 class LayoutTemplate extends StatelessWidget {
   final Widget child;
   const LayoutTemplate({Key? key, required this.child}) : super(key: key);
+
+  Future<void> loadDependenciesAndConnectToWallet() async {
+    await locator.allReady();
+    await locator<MarketplaceVM>().connectToWallet();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +29,33 @@ class LayoutTemplate extends StatelessWidget {
           child: Column(
             children: <Widget>[
               const nbar.NavigationBar(),
-              Expanded(
-                child: child,
+              FutureBuilder<void>(
+                future: loadDependenciesAndConnectToWallet(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return Column(
+                      children: const [
+                        Text(
+                          "Login with your wallet to access this website's functionalities",
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 20),
+                        Center(child: CircularProgressIndicator()),
+                      ],
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return Text(
+                      "Error while connecting to the wallet: ${snapshot.error}",
+                      textAlign: TextAlign.center,
+                    );
+                  }
+
+                  return Expanded(
+                    child: child,
+                  );
+                },
               ),
             ],
           ),
