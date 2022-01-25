@@ -29,18 +29,19 @@ class ERC1190Marketplace {
   Future<List<EthAddress>> get allCollections async {
     _logger.v("allCollections");
 
-    final collections = await contract.call<List<EthAddress>>("getCollections");
+    final collections = (await contract.call<List<dynamic>>("allCollections"))
+        .map((addr) => addr as String)
+        .toList();
 
     return collections;
   }
 
-  Future<List<EthAddress>> collectionsOf([final EthAddress collectionOwner = ""]) async {
+  Future<List<EthAddress>> collectionsOf(final EthAddress collectionOwner) async {
     _logger.v("collectionsOf");
 
-    final collections = await contract.call<List<EthAddress>>(
-      "collectionsOf",
-      collectionOwner.isNotEmpty ? [collectionOwner] : [],
-    );
+    final collections = (await contract.call<List<dynamic>>("collectionsOf", [collectionOwner]))
+        .map((addr) => addr as String)
+        .toList();
 
     return collections;
   }

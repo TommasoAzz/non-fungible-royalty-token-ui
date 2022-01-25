@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/collection.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/viewmodel/marketplace_vm.dart';
+import '../../business_logic/models/collection.dart';
+import '../../business_logic/viewmodel/marketplace_vm.dart';
 import '../../routing/route_manager.dart';
 import '../../services/navigation_service.dart';
 import '../../widgets/page_title/page_title.dart';
@@ -23,13 +23,18 @@ class CollectionsContentDesktop extends StatelessWidget {
               if (snapshot.connectionState != ConnectionState.done) {
                 return const Center(child: CircularProgressIndicator());
               }
+
               if (snapshot.hasError) {
                 return Text("Error: ${snapshot.error}");
               }
 
+              if (snapshot.data!.isEmpty) {
+                return const Text("There are no collections.");
+              }
+
               return GridView.count(
                 primary: false,
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(30),
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 10,
                 crossAxisCount: 4,
