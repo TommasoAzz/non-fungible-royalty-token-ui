@@ -29,12 +29,15 @@ class Web3Connector with ChangeNotifier {
         _accounts.clear();
         _accounts.addAll(await ethereum!.requestAccount());
 
-        _logger.d("ACCOUNTS: $_accounts");
+        _logger.i("Retrieved the following accounts: $_accounts");
 
         _provider = Web3Provider.fromEthereum(ethereum!);
         _walletConnected = true;
 
+        notifyListeners();
+
         ethereum!.onAccountsChanged((accounts) {
+          _logger.i("Accounts changed!");
           if (accounts.isNotEmpty) {
             _accounts.clear();
             _accounts.addAll(accounts);
@@ -57,7 +60,7 @@ class Web3Connector with ChangeNotifier {
 
   bool get connectedToWallet => _walletConnected;
 
-  Contract loadContract(final EthAddress address, final List<String> abi) {
+  Contract loadContract(final EthAddress address, final String abi) {
     _logger.v("loadContract");
 
     if (!_walletConnected) {

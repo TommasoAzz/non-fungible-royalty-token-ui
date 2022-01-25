@@ -8,17 +8,7 @@ typedef EthAddress = String;
 class ERC1190Marketplace {
   final _logger = getLogger("ERC1190Marketplace");
 
-  static const List<String> abi = [
-    "function creatorOf(address) returns (address)",
-    "function getCollections() returns (address[])",
-    "function getCollections(address) returns (address[])",
-    "function deployNewCollection(string, string, string) returns (address)",
-    "function requireOwnershipLicenseTransferApproval(address, uint256)",
-    "function requireCreativeLicenseTransferApproval(address, uint256)",
-    "function getOwnershipLicenseTransferRequests(address, uint256) returns (address[])",
-    "function getCreativeLicenseTransferRequests(address, uint256) returns (address[])",
-    "event CollectionDeployed(string, string, string, address)"
-  ];
+  static late final String abi;
 
   final Contract contract;
 
@@ -36,24 +26,24 @@ class ERC1190Marketplace {
     return creator;
   }
 
-  Future<List<EthAddress>> getCollections([final EthAddress collectionOwner = ""]) async {
-    _logger.v("getCollections");
+  Future<List<EthAddress>> get allCollections async {
+    _logger.v("allCollections");
 
-    try {
-      print(contract);
-      print("Collezioni: ${await contract.call("getCollections")}");
-      final collections = await contract.call<List<EthAddress>>(
-        "getCollections",
-        collectionOwner.isNotEmpty ? [collectionOwner] : [],
-      );
+    final collections = (await contract.call<List<dynamic>>("allCollections"))
+        .map((addr) => addr as String)
+        .toList();
 
-      print("Ciao");
+    return collections;
+  }
 
-      return collections;
-    } catch (e) {
-      print(e);
-      return [];
-    }
+  Future<List<EthAddress>> collectionsOf(final EthAddress collectionOwner) async {
+    _logger.v("collectionsOf");
+
+    final collections = (await contract.call<List<dynamic>>("collectionsOf", [collectionOwner]))
+        .map((addr) => addr as String)
+        .toList();
+
+    return collections;
   }
 
   Future<EthAddress> deployNewCollection(

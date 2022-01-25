@@ -13,11 +13,11 @@ class NavBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        final navService = locator<NavigationService>();
         if (Scaffold.of(context).hasDrawer) {
-          print("ho un drawer");
-          locator<NavigationService>().closeDrawer();
+          navService.closeDrawer();
         }
-        locator<NavigationService>().navigateTo(navigationPath);
+        navService.navigateTo(navigationPath);
       },
       child: Text(
         title,

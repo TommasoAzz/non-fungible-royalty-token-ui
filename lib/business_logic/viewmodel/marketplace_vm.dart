@@ -1,6 +1,6 @@
-import 'dart:typed_data';
 import 'dart:convert' show json;
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../business_logic/contracts/erc1190_tradable.dart';
@@ -9,10 +9,12 @@ import '../../business_logic/models/collection.dart';
 import '../../business_logic/contracts/erc1190_marketplace.dart';
 import '../../logger/logger.dart';
 
-class MarketplaceVM {
+class MarketplaceVM with ChangeNotifier {
   final _logger = getLogger("MarketplaceVM");
 
-  final ERC1190Marketplace marketplaceSmartContract;
+  late ERC1190Marketplace marketplaceSmartContract;
+
+  bool _marketplaceSmartContractLoaded = false;
 
   final ERC1190Tradable Function(String) loadERC1190SmartContract;
 
@@ -20,17 +22,73 @@ class MarketplaceVM {
 
   final String ipfsUrl;
 
+  final Future<void> Function() _connect;
+
+  final bool Function() _connected;
+
+  String _account;
+
   MarketplaceVM({
-    required this.marketplaceSmartContract,
+    required Future<void> Function() connect,
+    required bool Function() connected,
+    required String account,
     required this.loadERC1190SmartContract,
     required this.httpClient,
     required this.ipfsUrl,
-  });
+  })  : _connect = connect,
+        _connected = connected,
+        _account = account;
+
+  Future<void> connectToWallet() async {
+    _logger.v("connectToWallet");
+
+    await _connect();
+  }
+
+  bool get isConnected {
+    _logger.v("isConnected");
+
+    return _connected();
+  }
+
+  String get loggedAccount {
+    _logger.v("loggedAccount");
+
+    return _account;
+  }
+
+  set loggedAccount(final String account) {
+    _logger.v("loggedAccount");
+
+    if (_account != account) {
+      _account = account;
+      notifyListeners();
+    }
+  }
+
+  set contract(final ERC1190Marketplace erc1190marketplace) {
+    _logger.v("contract");
+
+    if (!_marketplaceSmartContractLoaded) {
+      marketplaceSmartContract = erc1190marketplace;
+      _marketplaceSmartContractLoaded = true;
+      notifyListeners();
+    }
+  }
+
+  void disableContract() {
+    _marketplaceSmartContractLoaded = false;
+  }
 
   Future<List<Collection>> getCollections([final String collectionOwner = ""]) async {
     _logger.v("getCollections");
 
-    final collectionAddresses = await marketplaceSmartContract.getCollections(collectionOwner);
+    final collectionAddresses = <String>[];
+    if (collectionOwner.isEmpty) {
+      collectionAddresses.addAll(await marketplaceSmartContract.allCollections);
+    } else {
+      collectionAddresses.addAll(await marketplaceSmartContract.collectionsOf(collectionOwner));
+    }
 
     final contracts = collectionAddresses.map(loadERC1190SmartContract);
 
