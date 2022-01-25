@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'collection_content_tablet.dart';
-import 'collections_content_mobile.dart';
-import 'collections_content_desktop.dart';
+import 'collections_content.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class CollectionsView extends StatelessWidget {
@@ -10,12 +8,12 @@ class CollectionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout(
-      mobile: const CollectionsContentDesktop(
+      mobile: const CollectionsContent(
         column: 1,
         padding: 10,
       ),
-      tablet: const CollectionsContentDesktop(column: 3, padding: 30),
-      desktop: const CollectionsContentDesktop(column: 4, padding: 30),
+      tablet: const CollectionsContent(column: 3, padding: 30),
+      desktop: const CollectionsContent(column: 4, padding: 30),
     );
   }
 }

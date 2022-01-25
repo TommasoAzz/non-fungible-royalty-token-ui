@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/widgets/slider/slider_number.dart';
-import '../../widgets/numberPicker/number_picker.dart';
 import '../../widgets/page_title/page_title.dart';
 import '../../widgets/form_field/form_field.dart' as form;
 import '../../widgets/dropzone/dropzone.dart';
@@ -36,19 +35,12 @@ class _CreateViewState extends State<CreateView> {
             const SizedBox(
               height: 40,
             ),
-            // const form.FormField(
-            //   inputLabel: "Base URI",
-            // ),
-            // const SizedBox(
-            //   height: 40,
-            // ),
             const SliderNumber(
               title: "Set roialty for ownership transfer",
             ),
             const SliderNumber(
               title: "Set roialty for rental",
             ),
-            //PickNumber(),
             Dropzone(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),

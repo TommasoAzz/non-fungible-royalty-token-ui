@@ -6,8 +6,12 @@ import '../../services/navigation_service.dart';
 import '../../widgets/page_title/page_title.dart';
 import '../../locator.dart';
 
-class CollectionsContentTablet extends StatelessWidget {
-  const CollectionsContentTablet({Key? key}) : super(key: key);
+class CollectionsContent extends StatelessWidget {
+  const CollectionsContent(
+      {Key? key, required this.column, required this.padding})
+      : super(key: key);
+  final int column;
+  final double padding;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +19,7 @@ class CollectionsContentTablet extends StatelessWidget {
     return Column(
       children: [
         const PageTitle(title: "collections"),
+        const SizedBox(height: 20),
         Expanded(
           child: FutureBuilder<List<Collection>>(
             future: marketplaceVM.getCollections(),
@@ -33,10 +38,10 @@ class CollectionsContentTablet extends StatelessWidget {
 
               return GridView.count(
                 primary: false,
-                padding: const EdgeInsets.all(30),
+                padding: EdgeInsets.all(padding),
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 10,
-                crossAxisCount: 3,
+                crossAxisCount: column,
                 children: snapshot.data!
                     .map(
                       (collection) => InkWell(
@@ -56,7 +61,8 @@ class CollectionsContentTablet extends StatelessWidget {
                             ),
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.blue[collection.availableTokens * 100],
+                            color:
+                                Colors.blue[collection.availableTokens * 100],
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
