@@ -14,7 +14,7 @@ class _SliderNumberState extends State<SliderNumber> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 500,
+      width: 800,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +35,17 @@ class _SliderNumberState extends State<SliderNumber> {
             divisions: 10,
             onChanged: (value) => setState(() => _currentValue = value),
           ),
-          Text('Current value: ${_currentValue.toStringAsFixed(0)}'),
+          Text(
+            'Current value: ${_currentValue.toStringAsFixed(0)}',
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w200,
+              color: Colors.black,
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          )
         ],
       ),
     );

@@ -44,7 +44,8 @@ class _WalletViewState extends State<WalletView> {
 
           if (snapshot.hasError) {
             return Center(
-              child: Text("Error while connecting to the wallet.\n${snapshot.error}"),
+              child: Text(
+                  "Error while connecting to the wallet.\n${snapshot.error}"),
             );
           }
 

@@ -18,7 +18,7 @@ class _CreateViewState extends State<CreateView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 15),
       child: Form(
         key: _form,
         child: Column(
@@ -36,16 +36,19 @@ class _CreateViewState extends State<CreateView> {
             const SizedBox(
               height: 40,
             ),
-            const form.FormField(
-              inputLabel: "Base URI",
-            ),
-            const SizedBox(
-              height: 40,
-            ),
+            // const form.FormField(
+            //   inputLabel: "Base URI",
+            // ),
+            // const SizedBox(
+            //   height: 40,
+            // ),
             const SliderNumber(
               title: "Set roialty for ownership transfer",
             ),
-            PickNumber(),
+            const SliderNumber(
+              title: "Set roialty for rental",
+            ),
+            //PickNumber(),
             Dropzone(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
