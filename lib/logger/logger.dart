@@ -24,19 +24,12 @@ class _ConsoleLogPrinter extends LogPrinter {
 
   @override
   List<String> log(final LogEvent event) {
-    /// Color of the log line in the console.
-    final color = PrettyPrinter.levelColors[event.level]!;
-
     /// Emoji in the line of text of the log to begin the line (indicative).
     final emoji = levelEmojis[event.level]!;
 
     final currentDate = DateTime.now();
 
-    return [
-      color(
-        '$emoji [${_dateFormatter.format(currentDate)}-- $label]:\t${event.message}',
-      )
-    ];
+    return ['$emoji [${_dateFormatter.format(currentDate)}-- $label]:\t${event.message}'];
   }
 }
 
