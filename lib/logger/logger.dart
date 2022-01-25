@@ -29,7 +29,7 @@ class _ConsoleLogPrinter extends LogPrinter {
 
     final currentDate = DateTime.now();
 
-    return ['$emoji [${_dateFormatter.format(currentDate)}-- $label]:\t${event.message}'];
+    return ['$emoji [${_dateFormatter.format(currentDate)} - $label]:\t${event.message}'];
   }
 }
 
