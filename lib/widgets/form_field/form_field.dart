@@ -4,11 +4,13 @@ class FormField extends StatelessWidget {
   /// Testo da visualizzare come descrizione del campo in cui inserire il testo.
   final String inputLabel;
   final String? Function(String?) validationCallback;
+  final void Function(String?) onSavedCallback;
 
   const FormField({
     Key? key,
     required this.inputLabel,
     required this.validationCallback,
+    required this.onSavedCallback,
   });
 
   @override
@@ -38,12 +40,8 @@ class FormField extends StatelessWidget {
           ),
         ),
       ),
-      validator: validationCallback, // (value) {
-      //   if (value == null || value.isEmpty) {
-      //     return 'Please enter some text';
-      //   }
-      //   return null;
-      // },
+      validator: validationCallback,
+      onSaved: onSavedCallback,
     );
   }
 }

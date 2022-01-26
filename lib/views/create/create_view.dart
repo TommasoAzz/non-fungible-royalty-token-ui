@@ -5,7 +5,12 @@ import '../../widgets/form_field/form_field.dart' as form;
 import '../../widgets/dropzone/dropzone.dart';
 
 class CreateView extends StatefulWidget {
-  const CreateView({Key? key}) : super(key: key);
+  //const CreateView({Key? key}) : super(key: key);
+  final Future<int> Function(String name, String? symbol) loginFn;
+
+  const CreateView({
+    required this.loginFn,
+  });
 
   @override
   State<CreateView> createState() => _CreateViewState();
@@ -13,6 +18,9 @@ class CreateView extends StatefulWidget {
 
 class _CreateViewState extends State<CreateView> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+
+  String _name = '';
+  String _symbol = '';
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +31,18 @@ class _CreateViewState extends State<CreateView> {
         child: Column(
           children: <Widget>[
             const PageTitle(title: "create your collections"),
-            const form.FormField(
+            form.FormField(
               inputLabel: "Collection name",
               validationCallback: _validateNameInputField,
+              onSavedCallback: _saveNameInputField,
             ),
             const SizedBox(
               height: 40,
             ),
-            const form.FormField(
+            form.FormField(
               inputLabel: "Symbol",
               validationCallback: _validateSymbolInputField,
+              onSavedCallback: _saveSymbolInputField,
             ),
             const SizedBox(
               height: 40,
@@ -47,7 +57,7 @@ class _CreateViewState extends State<CreateView> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
-                onPressed: _checkData,
+                onPressed: _submitData,
                 child: const Text('Submit'),
               ),
             ),
@@ -57,24 +67,31 @@ class _CreateViewState extends State<CreateView> {
     );
   }
 
-  Future<void> _checkData() async {
+  String? _validateNameInputField(final String? name) {
+    if (name == null || name.isEmpty) {
+      return 'Please enter a name';
+    }
+    return null;
+  }
+
+  String? _validateSymbolInputField(final String? symbol) {
+    if (symbol == null || symbol.isEmpty) {
+      return 'Please enter a symbol';
+    } else if (symbol.length != 6) {
+      return 'Symbol must have six characters';
+    }
+    return null;
+  }
+
+  void _saveNameInputField(final String? name) => _name = name ?? '';
+
+  void _saveSymbolInputField(final String? symbol) => _symbol = symbol ?? '';
+
+  Future<void> _submitData() async {
     if (!_form.currentState!.validate()) return;
-    _form.currentState!.validate();
-  }
-}
 
-String? _validateNameInputField(final String? name) {
-  if (name == null || name.isEmpty) {
-    return 'Please enter a name';
-  }
-  return null;
-}
+    _form.currentState!.save();
 
-String? _validateSymbolInputField(final String? symbol) {
-  if (symbol == null || symbol.isEmpty) {
-    return 'Please enter a symbol';
-  } else if (symbol.length != 6) {
-    return 'Symbol must have six characters';
+    widget.loginFn(_name, _symbol);
   }
-  return null;
 }

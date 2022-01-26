@@ -3,7 +3,7 @@ import '../../widgets/style_text/style_text.dart';
 import '../../widgets/form_field/form_field.dart' as form;
 
 class Token extends StatelessWidget {
-  const Token({
+  Token({
     Key? key,
     this.isCreativeOwner = false,
     this.isOwnershipOwner = false,
@@ -15,6 +15,8 @@ class Token extends StatelessWidget {
   final bool isCreativeOwner;
   final bool isOwnershipOwner;
   final bool isCreator;
+
+  double _number = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -63,51 +65,59 @@ class Token extends StatelessWidget {
         ],
       ),
       if (isOwnershipOwner)
-        const SizedBox(
+        SizedBox(
             width: 500,
             child: form.FormField(
               inputLabel: "Set Ownership License price",
               validationCallback: _validateNumberField,
+              onSavedCallback: _saveNumberInputField,
             )),
       if (isOwnershipOwner)
-        const SizedBox(
+        SizedBox(
           width: 500,
           child: form.FormField(
             inputLabel: "Set Rental price per second",
             validationCallback: _validateNumberField,
+            onSavedCallback: _saveNumberInputField,
           ),
         ),
       if (isOwnershipOwner)
-        const SizedBox(
+        SizedBox(
           width: 500,
           child: form.FormField(
             inputLabel: "Transfer Ownership License to",
             validationCallback: _validateNumberField,
+            onSavedCallback: _saveNumberInputField,
           ),
         ),
       if (isCreativeOwner)
-        const SizedBox(
+        SizedBox(
             width: 500,
             child: form.FormField(
               inputLabel: "Set Creative License price",
               validationCallback: _validateNumberField,
+              onSavedCallback: _saveNumberInputField,
             )),
       if (isCreativeOwner)
-        const SizedBox(
+        SizedBox(
             width: 500,
             child: form.FormField(
               inputLabel: "Transfer Creative License to",
               validationCallback: _validateNumberField,
+              onSavedCallback: _saveNumberInputField,
             )),
     ]));
   }
-}
 
-String? _validateNumberField(final String? value) {
-  if (value == null || value.isEmpty) {
-    return 'Please enter a value';
-  } else if (double.tryParse(value) != null && double.tryParse(value)! < 0) {
-    return 'Please enter a positive value ';
+  void _saveNumberInputField(final String? number) =>
+      _number = double.tryParse(number ?? '') ?? 0;
+
+  String? _validateNumberField(final String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a value';
+    } else if (double.tryParse(value) != null && double.tryParse(value)! < 0) {
+      return 'Please enter a positive value ';
+    }
+    return null;
   }
-  return null;
 }
