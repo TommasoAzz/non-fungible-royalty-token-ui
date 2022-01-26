@@ -11,7 +11,21 @@ class WalletView extends StatefulWidget {
 }
 
 class _WalletViewState extends State<WalletView> {
-  MarketplaceVM vm = locator<MarketplaceVM>();
+  final vm = locator<MarketplaceVM>();
+
+  @override
+  void initState() {
+    super.initState();
+    vm.addListener(update);
+  }
+
+  @override
+  void dispose() {
+    vm.removeListener(update);
+    super.dispose();
+  }
+
+  void update() => setState(() {});
 
   Future<void> _connectToWallet() async {
     try {
