@@ -7,8 +7,7 @@ import '../../widgets/page_title/page_title.dart';
 import '../../locator.dart';
 
 class CollectionsContent extends StatelessWidget {
-  const CollectionsContent(
-      {Key? key, required this.column, required this.padding})
+  const CollectionsContent({Key? key, required this.column, required this.padding})
       : super(key: key);
   final int column;
   final double padding;
@@ -45,9 +44,9 @@ class CollectionsContent extends StatelessWidget {
                 children: snapshot.data!
                     .map(
                       (collection) => InkWell(
-                        onTap: () => locator<NavigationService>().navigateTo(
+                        onTap: () => Navigator.of(context).restorablePushNamed(
                           RouteManager.collection,
-                          {
+                          arguments: {
                             'collection': collection,
                           },
                         ),
@@ -61,8 +60,7 @@ class CollectionsContent extends StatelessWidget {
                             ),
                           ),
                           decoration: BoxDecoration(
-                            color:
-                                Colors.blue[collection.availableTokens * 100],
+                            color: Colors.blue[collection.availableTokens * 100],
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),

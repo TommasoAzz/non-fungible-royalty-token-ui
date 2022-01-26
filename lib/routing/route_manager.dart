@@ -10,7 +10,7 @@ import '../views/wallet/wallet_view.dart';
 import '../extensions/string_extensions.dart';
 
 class RouteManager {
-  static const String home = "/home";
+  static const String home = "/";
   static const String create = "/create";
   static const String collections = "/collections";
   static const String profile = "/profile";

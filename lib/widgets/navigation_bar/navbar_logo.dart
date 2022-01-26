@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../routing/route_manager.dart';
-import '../../services/navigation_service.dart';
-
-import '../../locator.dart';
 
 class NavBarLogo extends StatelessWidget {
   const NavBarLogo({Key? key}) : super(key: key);
@@ -11,7 +8,7 @@ class NavBarLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        locator<NavigationService>().navigateTo(RouteManager.home);
+        Navigator.of(context).restorablePushNamed(RouteManager.home);
       },
       child: const Text(
         "ERC1190\nMARKETPLACE",

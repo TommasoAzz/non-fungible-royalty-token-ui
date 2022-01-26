@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../business_logic/viewmodel/marketplace_vm.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import '../../services/navigation_service.dart';
 import '../../locator.dart';
 import '../../widgets/centered_view/centered_view.dart';
 import '../../widgets/navigation_bar/navigation_bar.dart' as nbar;
@@ -20,7 +19,6 @@ class LayoutTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
       builder: (context, sizingInformation) => Scaffold(
-        key: locator<NavigationService>().scaffoldKey,
         drawer: sizingInformation.isMobile || sizingInformation.isTablet
             ? const NavigationDrawer()
             : null,
