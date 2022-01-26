@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/logger/logger.dart';
 import '../../business_logic/viewmodel/marketplace_vm.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import '../../services/navigation_service.dart';
@@ -36,7 +37,7 @@ class LayoutTemplate extends StatelessWidget {
                     return Column(
                       children: const [
                         Text(
-                          "Login with your wallet to access this website's functionalities",
+                          "ERC1190 Marketplace can only be used by logging in with your wallet.",
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 20),
@@ -53,7 +54,10 @@ class LayoutTemplate extends StatelessWidget {
                   }
 
                   return Expanded(
-                    child: child,
+                    child: _ViewModelListener(
+                      viewModel: locator<MarketplaceVM>(),
+                      child: child,
+                    ),
                   );
                 },
               ),
@@ -62,5 +66,45 @@ class LayoutTemplate extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _ViewModelListener extends StatefulWidget {
+  final MarketplaceVM viewModel;
+  final Widget child;
+
+  const _ViewModelListener({
+    Key? key,
+    required this.viewModel,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  __ViewModelListenerState createState() => __ViewModelListenerState();
+}
+
+class __ViewModelListenerState extends State<_ViewModelListener> {
+  final _logger = getLogger("_ViewModelListener");
+
+  @override
+  void initState() {
+    super.initState();
+    widget.viewModel.addListener(updateWidget);
+  }
+
+  @override
+  void dispose() {
+    widget.viewModel.removeListener(updateWidget);
+    super.dispose();
+  }
+
+  void updateWidget() {
+    _logger.d("Received notification. Updating the UI...");
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
   }
 }

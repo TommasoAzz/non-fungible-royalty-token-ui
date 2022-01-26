@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import '../../business_logic/connector/web3_connector.dart';
+import '../../business_logic/viewmodel/marketplace_vm.dart';
 import '../../locator.dart';
 import '../../../../constants/app_colors.dart';
 
-class CallToActionTabletDesktop extends StatelessWidget {
+class CallToAction extends StatelessWidget {
   final String title;
   // ignore: use_key_in_widget_constructors
-  const CallToActionTabletDesktop(this.title);
+  const CallToAction(this.title);
 
   @override
   Widget build(BuildContext context) {
-    final connector = locator<Web3Connector>();
+    final vm = locator<MarketplaceVM>();
     return ElevatedButton(
       onPressed: () async {
-        if (!connector.connectedToWallet) {
-          await connector.connectToWallet();
+        if (!vm.isConnected) {
+          await vm.connectToWallet();
         }
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 10),
+        padding: const EdgeInsets.all(10),
         child: Text(
-          connector.connectedToWallet ? 'Connected to the wallet' : title,
+          vm.isConnected ? 'Connected to the wallet' : title,
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w800,
