@@ -36,7 +36,7 @@ class LayoutTemplate extends StatelessWidget {
                     return Column(
                       children: const [
                         Text(
-                          "Login with your wallet to access this website's functionalities",
+                          "ERC1190 Marketplace can only be used by logging in with your wallet.",
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 20),

@@ -77,6 +77,7 @@ class MarketplaceVM with ChangeNotifier {
   }
 
   void disableContract() {
+    _logger.v("disableContract");
     _marketplaceSmartContractLoaded = false;
   }
 

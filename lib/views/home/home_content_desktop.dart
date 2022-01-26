@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/call_to_action/call_to_action_tablet_desktop.dart';
+import '../../widgets/call_to_action/call_to_action.dart';
 import '../../widgets/course_details/course_details.dart';
 
 class HomeContentDesktop extends StatelessWidget {
@@ -12,7 +12,7 @@ class HomeContentDesktop extends StatelessWidget {
         CourseDetails(),
         Expanded(
           child: Center(
-            child: CallToActionTabletDesktop('Connect a wallet'),
+            child: CallToAction('Connect a wallet'),
           ),
         )
       ],

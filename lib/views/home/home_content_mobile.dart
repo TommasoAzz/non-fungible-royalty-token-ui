@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/call_to_action/call_to_action_mobile.dart';
+import '../../widgets/call_to_action/call_to_action.dart';
 import '../../widgets/course_details/course_details.dart';
 
 class HomeContentMobile extends StatelessWidget {
@@ -17,7 +17,7 @@ class HomeContentMobile extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          CallToActionMobile('Connect a wallet'),
+          CallToAction('Connect a wallet'),
         ],
       ),
     );
