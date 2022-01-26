@@ -58,7 +58,10 @@ class Web3Connector with ChangeNotifier {
     }
   }
 
-  bool get connectedToWallet => _walletConnected;
+  bool get connectedToWallet {
+    _logger.v("connectedToWallet");
+    return _walletConnected;
+  }
 
   Contract loadContract(final EthAddress address, final String abi) {
     _logger.v("loadContract");
