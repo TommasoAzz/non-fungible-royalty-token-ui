@@ -50,8 +50,8 @@ class Token extends StatelessWidget {
                   StyleText(title: "Creative license price: ${text[5]}"),
                   StyleText(title: "Rental price per second: ${text[6]}"),
                   StyleText(
-                      title: "Roialty for ownership transfer: ${text[7]}"),
-                  StyleText(title: "Roialty for rental: ${text[8]}"),
+                      title: "Royalty for ownership transfer: ${text[7]}"),
+                  StyleText(title: "Royalty for rental: ${text[8]}"),
                   if (isOwnershipOwner)
                     StyleText(title: "Ownership request from: ${text[9]}"),
                   if (isCreativeOwner)
@@ -65,25 +65,49 @@ class Token extends StatelessWidget {
       if (isOwnershipOwner)
         const SizedBox(
             width: 500,
-            child: form.FormField(inputLabel: "Set Ownership License price")),
+            child: form.FormField(
+              inputLabel: "Set Ownership License price",
+              validationCallback: _validateNumberField,
+            )),
       if (isOwnershipOwner)
         const SizedBox(
           width: 500,
-          child: form.FormField(inputLabel: "Set Rental price per second"),
+          child: form.FormField(
+            inputLabel: "Set Rental price per second",
+            validationCallback: _validateNumberField,
+          ),
         ),
       if (isOwnershipOwner)
         const SizedBox(
           width: 500,
-          child: form.FormField(inputLabel: "Transfer Ownership License to"),
+          child: form.FormField(
+            inputLabel: "Transfer Ownership License to",
+            validationCallback: _validateNumberField,
+          ),
         ),
       if (isCreativeOwner)
         const SizedBox(
             width: 500,
-            child: form.FormField(inputLabel: "Set Creative License price")),
+            child: form.FormField(
+              inputLabel: "Set Creative License price",
+              validationCallback: _validateNumberField,
+            )),
       if (isCreativeOwner)
         const SizedBox(
             width: 500,
-            child: form.FormField(inputLabel: "Transfer Creative License to")),
+            child: form.FormField(
+              inputLabel: "Transfer Creative License to",
+              validationCallback: _validateNumberField,
+            )),
     ]));
   }
+}
+
+String? _validateNumberField(final String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter a value';
+  } else if (double.tryParse(value) != null && double.tryParse(value)! < 0) {
+    return 'Please enter a positive value ';
+  }
+  return null;
 }

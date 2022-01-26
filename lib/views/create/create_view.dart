@@ -25,21 +25,23 @@ class _CreateViewState extends State<CreateView> {
             const PageTitle(title: "create your collections"),
             const form.FormField(
               inputLabel: "Collection name",
+              validationCallback: _validateNameInputField,
             ),
             const SizedBox(
               height: 40,
             ),
             const form.FormField(
               inputLabel: "Symbol",
+              validationCallback: _validateSymbolInputField,
             ),
             const SizedBox(
               height: 40,
             ),
             const SliderNumber(
-              title: "Set roialty for ownership transfer",
+              title: "Set royalty for ownership transfer",
             ),
             const SliderNumber(
-              title: "Set roialty for rental",
+              title: "Set royalty for rental",
             ),
             Dropzone(),
             Padding(
@@ -59,4 +61,20 @@ class _CreateViewState extends State<CreateView> {
     if (!_form.currentState!.validate()) return;
     _form.currentState!.validate();
   }
+}
+
+String? _validateNameInputField(final String? name) {
+  if (name == null || name.isEmpty) {
+    return 'Please enter a name';
+  }
+  return null;
+}
+
+String? _validateSymbolInputField(final String? symbol) {
+  if (symbol == null || symbol.isEmpty) {
+    return 'Please enter a symbol';
+  } else if (symbol.length != 6) {
+    return 'Symbol must have six characters';
+  }
+  return null;
 }
