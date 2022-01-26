@@ -7,13 +7,13 @@ class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Future<dynamic> navigateTo(
+  String navigateTo(
     String routeName, [
     Map<String, dynamic> arguments = const {},
   ]) {
     _logger.v("navigateTo: $routeName");
 
-    return navigatorKey.currentState!.pushNamed(
+    return navigatorKey.currentState!.restorablePushNamed(
       routeName,
       arguments: arguments,
     );

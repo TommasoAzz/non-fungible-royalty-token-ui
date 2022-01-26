@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/views/home/home_view.dart';
 import 'routing/route_manager.dart';
 import 'services/navigation_service.dart';
 import 'views/layout_template/layout_template.dart';
@@ -17,14 +18,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      restorationScopeId: "ERC1190Marketplace",
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: Theme.of(context).textTheme.apply(
               fontFamily: 'Open Sans',
             ),
-      ),
-      builder: (context, child) => LayoutTemplate(
-        child: child!,
       ),
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: RouteManager.generateRoute,
