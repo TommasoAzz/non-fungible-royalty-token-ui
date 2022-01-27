@@ -16,7 +16,11 @@ class Token extends StatelessWidget {
   final bool isOwnershipOwner;
   final bool isCreator;
 
-  double _number = 0;
+  double _ownershipLicensePrice = 0;
+  double _rentalPricePerSecond = 0;
+  double _creativeLicensePrice = 0;
+  String _transferOwnershipLicenseTo = '';
+  String _transferCreativeLicenseTo = '';
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +74,7 @@ class Token extends StatelessWidget {
             child: form.FormField(
               inputLabel: "Set Ownership License price",
               validationCallback: _validateNumberField,
-              onSavedCallback: _saveNumberInputField,
+              onSavedCallback: _saveOwnershipLicensePriceInputField,
             )),
       if (isOwnershipOwner)
         SizedBox(
@@ -78,7 +82,7 @@ class Token extends StatelessWidget {
           child: form.FormField(
             inputLabel: "Set Rental price per second",
             validationCallback: _validateNumberField,
-            onSavedCallback: _saveNumberInputField,
+            onSavedCallback: _saveRentalPricePerSecondInputField,
           ),
         ),
       if (isOwnershipOwner)
@@ -86,8 +90,8 @@ class Token extends StatelessWidget {
           width: 500,
           child: form.FormField(
             inputLabel: "Transfer Ownership License to",
-            validationCallback: _validateNumberField,
-            onSavedCallback: _saveNumberInputField,
+            validationCallback: _validateAddressField,
+            onSavedCallback: _saveTransferOwnershipLicenseInputField,
           ),
         ),
       if (isCreativeOwner)
@@ -96,21 +100,42 @@ class Token extends StatelessWidget {
             child: form.FormField(
               inputLabel: "Set Creative License price",
               validationCallback: _validateNumberField,
-              onSavedCallback: _saveNumberInputField,
+              onSavedCallback: _saveCreativeLicensePriceInputField,
             )),
       if (isCreativeOwner)
         SizedBox(
             width: 500,
             child: form.FormField(
               inputLabel: "Transfer Creative License to",
-              validationCallback: _validateNumberField,
-              onSavedCallback: _saveNumberInputField,
+              validationCallback: _validateAddressField,
+              onSavedCallback: _saveTransferCreativeLicenseInputField,
             )),
     ]));
   }
 
-  void _saveNumberInputField(final String? number) =>
-      _number = double.tryParse(number ?? '') ?? 0;
+  void _saveOwnershipLicensePriceInputField(final String? number) =>
+      _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0;
+
+  void _saveCreativeLicensePriceInputField(final String? number) =>
+      _creativeLicensePrice = double.tryParse(number ?? '') ?? 0;
+
+  void _saveRentalPricePerSecondInputField(final String? number) =>
+      _rentalPricePerSecond = double.tryParse(number ?? '') ?? 0;
+
+  void _saveTransferOwnershipLicenseInputField(final String? name) =>
+      _transferOwnershipLicenseTo = name ?? '';
+
+  void _saveTransferCreativeLicenseInputField(final String? name) =>
+      _transferCreativeLicenseTo = name ?? '';
+
+  String? _validateAddressField(final String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a value';
+    } else if (value.length != 42 && value[0] != '0' && value[1] != 'x') {
+      return 'Please enter a valide address ';
+    }
+    return null;
+  }
 
   String? _validateNumberField(final String? value) {
     if (value == null || value.isEmpty) {
