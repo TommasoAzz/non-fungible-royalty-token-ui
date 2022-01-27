@@ -11,6 +11,7 @@ class Dropzone extends StatefulWidget {
 
 class _DropzoneState extends State<Dropzone> {
   late DropzoneViewController controller;
+  int numberFileUploaded = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +69,15 @@ class _DropzoneState extends State<Dropzone> {
                             await controller.pickFiles(multiple: true);
                         if (events.isEmpty) return;
                         for (dynamic event in events) {
+                          numberFileUploaded += 1;
                           acceptFile(event);
                         }
                       },
-                    )
+                    ),
+                    Text(
+                      "File Uploaded: ${numberFileUploaded}",
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
                   ],
                 ),
               ),
