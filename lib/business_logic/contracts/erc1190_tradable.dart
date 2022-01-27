@@ -41,10 +41,20 @@ class ERC1190Tradable {
 
     final completer = Completer<int>();
 
-    contract.once("TokenMinted", (event) {
-      // TODO(TommasoAzz): Finish managing event.
-      dartify(event);
-      completer.complete(0);
+    contract.once("TokenMinted", (
+      creator,
+      royaltyForRental,
+      royaltyForOwnershipTransfer,
+      tokenId,
+      _,
+    ) {
+      _logger.i("Event: TokenMinted");
+      _logger.i("- creator: ${dartify(creator)}");
+      _logger.i("- royaltyForRental: ${dartify(royaltyForRental)}");
+      _logger.i("- royaltyForOwnershipTransfer: ${dartify(royaltyForOwnershipTransfer)}");
+      _logger.i("- tokenId: ${dartify(tokenId)}");
+
+      completer.complete(int.tryParse(dartify(tokenId).toString()) ?? -1);
     });
 
     final tx = await contract.send(
@@ -89,9 +99,11 @@ class ERC1190Tradable {
 
     final completer = Completer<void>();
 
-    contract.once("TransferOwnershipLicense", (event) {
-      // TODO(TommasoAzz): Finish managing event.
-      dartify(event);
+    contract.once("TransferOwnershipLicense", (from, to, tokenId, _) {
+      _logger.i("Event: TransferOwnershipLicense");
+      _logger.i("- from: ${dartify(from)}");
+      _logger.i("- to: ${dartify(to)}");
+      _logger.i("- tokenId: ${dartify(tokenId)}");
       completer.complete();
     });
 
@@ -106,9 +118,11 @@ class ERC1190Tradable {
 
     final completer = Completer<void>();
 
-    contract.once("TransferOwnershipLicense", (event) {
-      // TODO(TommasoAzz): Finish managing event.
-      dartify(event);
+    contract.once("TransferOwnershipLicense", (from, to, tokenId, _) {
+      _logger.i("Event: TransferOwnershipLicense");
+      _logger.i("- from: ${dartify(from)}");
+      _logger.i("- to: ${dartify(to)}");
+      _logger.i("- tokenId: ${dartify(tokenId)}");
       completer.complete();
     });
 
@@ -123,9 +137,11 @@ class ERC1190Tradable {
 
     final completer = Completer<void>();
 
-    contract.once("TransferCreativeLicense", (event) {
-      // TODO(TommasoAzz): Finish managing event.
-      dartify(event);
+    contract.once("TransferCreativeLicense", (from, to, tokenId, _) {
+      _logger.i("Event: TransferCreativeLicense");
+      _logger.i("- from: ${dartify(from)}");
+      _logger.i("- to: ${dartify(to)}");
+      _logger.i("- tokenId: ${dartify(tokenId)}");
       completer.complete();
     });
 
@@ -140,9 +156,11 @@ class ERC1190Tradable {
 
     final completer = Completer<void>();
 
-    contract.once("TransferCreativeLicense", (event) {
-      // TODO(TommasoAzz): Finish managing event.
-      dartify(event);
+    contract.once("TransferCreativeLicense", (from, to, tokenId, _) {
+      _logger.i("Event: TransferCreativeLicense");
+      _logger.i("- from: ${dartify(from)}");
+      _logger.i("- to: ${dartify(to)}");
+      _logger.i("- tokenId: ${dartify(tokenId)}");
       completer.complete();
     });
 
@@ -213,9 +231,11 @@ class ERC1190Tradable {
 
     final completer = Completer<void>();
 
-    contract.once('Approval', (event) {
-      // TODO(TommasoAzz): Finish managing event.
-      dartify(event);
+    contract.once('Approval', (owner, approved, tokenId, _) {
+      _logger.i("Event: Approval");
+      print("- owner: ${dartify(owner)}");
+      print("- approved: ${dartify(approved)}");
+      print("- tokenId: ${dartify(tokenId)}");
       completer.complete();
     });
 

@@ -55,10 +55,13 @@ class ERC1190Marketplace {
 
     final completer = Completer<EthAddress>();
 
-    contract.once("CollectionDeployed", (event) {
-      // TODO(TommasoAzz): Finish managing event.
-      print(dartify(event));
-      completer.complete("");
+    contract.once("CollectionDeployed", (name, symbol, baseURI, contractAddress, _) {
+      _logger.i("Event: CollectionDeployed");
+      _logger.i("- name: ${dartify(name)}");
+      _logger.i("- symbol: ${dartify(symbol)}");
+      _logger.i("- baseURI: ${dartify(baseURI)}");
+      _logger.i("- contractAddress: ${dartify(contractAddress)}");
+      completer.complete(contractAddress);
     });
 
     final tx = await contract.send("deployNewCollection", [name, symbol, baseURI]);
