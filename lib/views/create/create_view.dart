@@ -5,13 +5,10 @@ import '../../widgets/form_field/form_field.dart' as form;
 import '../../widgets/dropzone/dropzone.dart';
 
 class CreateView extends StatefulWidget {
-  //const CreateView({Key? key}) : super(key: key);
-  final Future<int> Function(String name, String? symbol) loginFn;
+  const CreateView({Key? key}) : super(key: key);
 
-  const CreateView({
-    required this.loginFn,
-  });
 
+  
   @override
   State<CreateView> createState() => _CreateViewState();
 }
@@ -92,6 +89,6 @@ class _CreateViewState extends State<CreateView> {
 
     _form.currentState!.save();
 
-    widget.loginFn(_name, _symbol);
+    //widget.loginFn(_name, _symbol);
   }
 }
