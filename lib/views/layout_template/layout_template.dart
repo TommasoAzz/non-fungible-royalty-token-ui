@@ -12,7 +12,9 @@ class LayoutTemplate extends StatelessWidget {
 
   Future<void> loadDependenciesAndConnectToWallet() async {
     await locator.allReady();
-    await locator<MarketplaceVM>().connectToWallet();
+    if (!locator<MarketplaceVM>().isConnected) {
+      await locator<MarketplaceVM>().connectToWallet();
+    }
   }
 
   @override

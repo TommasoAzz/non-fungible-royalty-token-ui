@@ -52,10 +52,10 @@ class _FadeRoute extends PageRouteBuilder {
   _FadeRoute({required this.child, required this.routeName})
       : super(
           settings: RouteSettings(name: routeName),
-          pageBuilder: (context, animation, secondaryAnimation) => child,
+          pageBuilder: (context, animation, secondaryAnimation) => LayoutTemplate(child: child),
           transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
             opacity: animation,
-            child: LayoutTemplate(child: child),
+            child: child,
           ),
         );
 }
