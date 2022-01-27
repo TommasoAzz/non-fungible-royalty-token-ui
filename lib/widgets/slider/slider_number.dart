@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SliderNumber extends StatefulWidget {
-  const SliderNumber({Key? key, required this.title}) : super(key: key);
   final String title;
+  final void Function(double) saveValue;
+
+  const SliderNumber({
+    Key? key,
+    required this.saveValue,
+    required this.title,
+  }) : super(key: key);
 
   @override
   State<SliderNumber> createState() => _SliderNumberState();
@@ -33,7 +39,10 @@ class _SliderNumberState extends State<SliderNumber> {
             min: 0,
             max: 100,
             divisions: 10,
-            onChanged: (value) => setState(() => _currentValue = value),
+            onChanged: (value) {
+              widget.saveValue(value);
+              setState(() => _currentValue = value);
+            },
           ),
           Text(
             'Current value: ${_currentValue.toStringAsFixed(0)}',

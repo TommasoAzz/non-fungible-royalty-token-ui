@@ -27,7 +27,11 @@ class _CallToActionState extends State<CallToAction> {
     super.dispose();
   }
 
-  void update() => setState(() {});
+  void update() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

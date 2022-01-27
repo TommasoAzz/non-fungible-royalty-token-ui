@@ -110,7 +110,6 @@ class MarketplaceVM with ChangeNotifier {
   Future<Collection> deployNewCollection(
     final String name,
     final String symbol,
-    final String baseURI,
     final int royaltyForRental,
     final int royaltyForOwnershipTransfer, [
     final List<String> files = const [],
@@ -120,7 +119,7 @@ class MarketplaceVM with ChangeNotifier {
     final contractAddress = await marketplaceSmartContract.deployNewCollection(
       name,
       symbol,
-      baseURI,
+      "https://ipfs.io/ipfs/",
     );
 
     final collection = loadERC1190SmartContract(contractAddress);

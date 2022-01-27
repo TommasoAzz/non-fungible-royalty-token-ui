@@ -25,7 +25,11 @@ class _WalletViewState extends State<WalletView> {
     super.dispose();
   }
 
-  void update() => setState(() {});
+  void update() {
+    if(mounted) {
+      setState(() {});
+    }
+  }
 
   Future<void> _connectToWallet() async {
     try {

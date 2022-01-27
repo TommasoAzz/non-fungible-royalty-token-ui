@@ -57,7 +57,7 @@ class ERC1190Marketplace {
 
     contract.once("CollectionDeployed", (event) {
       // TODO(TommasoAzz): Finish managing event.
-      dartify(event);
+      print(dartify(event));
       completer.complete("");
     });
 
