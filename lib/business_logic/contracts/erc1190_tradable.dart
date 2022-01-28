@@ -26,9 +26,9 @@ class ERC1190Tradable {
   Future<int> get availableTokens async {
     _logger.v("availableTokens");
 
-    final tokens = await contract.call<int>("availableTokens");
+    final tokens = await contract.call<BigInt>("availableTokens");
 
-    return tokens;
+    return tokens.toInt();
   }
 
   Future<int> mint(
@@ -205,7 +205,9 @@ class ERC1190Tradable {
   Future<List<EthAddress>> rentersOf(final int tokenId) async {
     _logger.v("rentersOf");
 
-    return await contract.call<List<EthAddress>>("rentersOf", [tokenId]);
+    return (await contract.call<List<dynamic>>("rentersOf", [tokenId]))
+        .map((addr) => addr as String)
+        .toList();
   }
 
   Future<String> get name async {
