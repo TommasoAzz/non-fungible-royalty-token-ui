@@ -12,8 +12,8 @@ class CollectionsView extends StatelessWidget {
         column: 1,
         padding: 10,
       ),
-      tablet: const CollectionsContent(column: 3, padding: 30),
-      desktop: const CollectionsContent(column: 4, padding: 30),
+      tablet: const CollectionsContent(column: 2, padding: 30),
+      desktop: const CollectionsContent(column: 3, padding: 30),
     );
   }
 }

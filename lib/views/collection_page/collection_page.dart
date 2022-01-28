@@ -6,7 +6,9 @@ class CollectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    print(args['collection']);
+    final collectionData = (args['collection'] as String).split("-");
+    final collectionName = collectionData[0];
+    final collectionSymbol = collectionData[1];
     return Scaffold(
       appBar: AppBar(
         actions: [

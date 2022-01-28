@@ -31,9 +31,11 @@ class RouteManager {
       case wallet:
         return _getPageRoute(const WalletView(), settings);
       case collection:
-        final id = int.tryParse(routingData!['']); // Get the id from the data.
+        final collectionStr = int.tryParse(routingData!['']); // Get the id from the data.
         final args = settings.arguments as Map<String, dynamic>;
-        args.addAll({'id': id});
+        if (!args.containsKey('collection')) {
+          args.addAll({'collection': collectionStr});
+        } 
         return _getPageRoute(const CollectionPage(), settings);
       default:
         return _getPageRoute(const HomeView(), settings);

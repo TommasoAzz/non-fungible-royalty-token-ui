@@ -47,21 +47,44 @@ class CollectionsContent extends StatelessWidget {
                         onTap: () => Navigator.of(context).restorablePushNamed(
                           RouteManager.collection,
                           arguments: {
-                            'collection': collection,
+                            'collection': "${collection.name}-${collection.symbol}".toLowerCase(),
                           },
                         ),
-                        child: Container(
-                          child: Text(
-                            "${collection.name}\n${collection.symbol}\n${collection.creator}",
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w200,
-                              color: Colors.black,
+                        child: Card(
+                          color: Colors.blue[collection.availableTokens * 100],
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                          elevation: 5,
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            child: Column(
+                              children: [
+                                Text(
+                                  collection.name,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.black,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  "Symbol: ${collection.symbol}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  "Created by\n${collection.creator}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w200,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
                             ),
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.blue[collection.availableTokens * 100],
-                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
