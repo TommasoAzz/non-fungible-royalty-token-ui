@@ -36,7 +36,6 @@ class _CreateViewState extends State<CreateView> {
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(
             horizontal: sizingInformation.isMobile ? 20 : 200,
-            vertical: 15,
           ),
           child: Form(
             key: _form,

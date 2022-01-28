@@ -28,6 +28,13 @@ class _DropzoneState extends State<Dropzone> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         const SizedBox(
+          height: 8,
+        ),
+        Text(
+          "Uploaded files: $numberFileUploaded",
+          style: const TextStyle(fontSize: 16),
+        ),
+        const SizedBox(
           height: 16,
         ),
         Container(
@@ -59,7 +66,7 @@ class _DropzoneState extends State<Dropzone> {
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         primary: colorButton,
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(color: primaryColor),
@@ -68,16 +75,13 @@ class _DropzoneState extends State<Dropzone> {
                       ),
                       onPressed: () async {
                         final events = await controller.pickFiles(multiple: true);
-                        if (events.isEmpty) return;
-                        for (dynamic event in events) {
-                          numberFileUploaded += 1;
-                          acceptFile(event);
+                        for (final event in events) {
+                          await acceptFile(event);
                         }
+                        setState(() {
+                          numberFileUploaded += events.length;
+                        });
                       },
-                    ),
-                    Text(
-                      "File Uploaded: ${numberFileUploaded}",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ],
                 ),
