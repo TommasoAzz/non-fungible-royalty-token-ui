@@ -16,7 +16,9 @@ class CreateView extends StatefulWidget {
 }
 
 class _CreateViewState extends State<CreateView> {
-  bool pressedSubmit = false;
+  bool collectionUploaded = false;
+
+  bool uploadingCollection = false;
 
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
 
@@ -65,37 +67,48 @@ class _CreateViewState extends State<CreateView> {
                   title: "Set royalty (%) for ownership transfer",
                   saveValue: _saveOwnershipTransferInputField,
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
                 SliderNumber(
                   title: "Set royalty (%) for rental",
                   saveValue: _saveRentalInputField,
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
                 Dropzone(
                   saveUrl: _saveUrlFromDropzone,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: ElevatedButton.icon(
-                    label: pressedSubmit
-                        ? const Icon(Icons.check_box, size: 16)
-                        : const Icon(Icons.check_box_outline_blank, size: 16),
-                    icon: pressedSubmit
-                        ? const Text(
+                  child: ElevatedButton(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (collectionUploaded)
+                          const Text(
                             "Submitted",
                             style: TextStyle(color: Colors.white, fontSize: 16),
-                          )
-                        : const Text(
+                          ),
+                        if (collectionUploaded) const Icon(Icons.check_box, size: 16),
+                        if (!collectionUploaded)
+                          const Text(
                             "Submit",
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
+                        if (uploadingCollection) const SizedBox(width: 10),
+                        if (uploadingCollection)
+                          const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(color: Colors.white),
+                          ),
+                      ],
+                    ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
+                        horizontal: 20,
+                        vertical: 20,
+                      ),
                       primary: primaryColor,
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(color: primaryColor),
@@ -136,8 +149,7 @@ class _CreateViewState extends State<CreateView> {
   void _saveOwnershipTransferInputField(final double value) =>
       _ownershipTransferRoyalty = value.toInt();
 
-  void _saveRentalInputField(final double value) =>
-      _rentalRoyalty = value.toInt();
+  void _saveRentalInputField(final double value) => _rentalRoyalty = value.toInt();
 
   void _saveUrlFromDropzone(final String value) => _fileUrls.add(value);
 
@@ -145,32 +157,62 @@ class _CreateViewState extends State<CreateView> {
     if (!_form.currentState!.validate()) return;
 
     _form.currentState!.save();
+
     setState(() {
-      pressedSubmit = !pressedSubmit;
+      uploadingCollection = true;
     });
 
-    final collection = await marketplaceVM.deployNewCollection(
-      _name,
-      _symbol,
-      _rentalRoyalty,
-      _ownershipTransferRoyalty,
-      _fileUrls,
-    );
+    try {
+      final collection = await marketplaceVM.deployNewCollection(
+        _name,
+        _symbol,
+        _rentalRoyalty,
+        _ownershipTransferRoyalty,
+        _fileUrls,
+      );
 
-    await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Successful deploy'),
-        content: Text(
-          'Collection ${collection.name} (${collection.symbol}) was deployed successfully with ${collection.availableTokens} initial tokens.',
+      setState(() {
+        collectionUploaded = true;
+        uploadingCollection = false;
+        _form.currentState!.reset();
+      });
+
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Successful deploy'),
+          content: Text(
+            'Collection ${collection.name} (${collection.symbol}) was deployed successfully with ${collection.availableTokens} initial tokens.',
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('Okay'),
+            )
+          ],
         ),
-        actions: [
-          ElevatedButton(
-            onPressed: Navigator.of(context).pop,
-            child: const Text('Okay'),
-          )
-        ],
-      ),
-    );
+      );
+      // ignore: avoid_catches_without_on_clauses
+    } catch (exc) {
+      setState(() {
+        collectionUploaded = false;
+        uploadingCollection = false;
+      });
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Deploy not successful'),
+          content: Text(
+            'The collection was not deployed. An error occurred: $exc',
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('Okay'),
+            )
+          ],
+        ),
+      );
+    }
   }
 }

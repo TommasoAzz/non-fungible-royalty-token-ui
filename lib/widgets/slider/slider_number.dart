@@ -15,42 +15,37 @@ class SliderNumber extends StatefulWidget {
 }
 
 class _SliderNumberState extends State<SliderNumber> {
-  double _currentValue = 0;
+  // double _currentValue = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          widget.title,
-          style: const TextStyle(
-            fontSize: 18,
+    return FormField<double>(
+      initialValue: 0,
+      builder: (fieldState) => InputDecorator(
+        decoration: InputDecoration(
+          labelText: widget.title,
+          labelStyle: const TextStyle(
+            fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
-          textAlign: TextAlign.left,
+          border: InputBorder.none,
         ),
-        Slider(
-          value: _currentValue,
+        child: Slider(
+          value: fieldState.value!,
+          label: 'Current value: ${fieldState.value!.toStringAsFixed(0)}',
           min: 0,
           max: 100,
           divisions: 10,
           onChanged: (value) {
             widget.saveValue(value);
-            setState(() => _currentValue = value);
+            setState(() {
+              // _currentValue = value;
+              fieldState.didChange(value);
+            });
           },
         ),
-        Text(
-          'Current value: ${_currentValue.toStringAsFixed(0)}',
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w200,
-            color: Colors.black,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

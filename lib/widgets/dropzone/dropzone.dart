@@ -40,7 +40,7 @@ class _DropzoneState extends State<Dropzone> {
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 50),
-          height: 250,
+          height: 300,
           child: Stack(
             children: [
               DropzoneView(
@@ -53,13 +53,12 @@ class _DropzoneState extends State<Dropzone> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.cloud_upload,
-                        size: 80, color: Colors.white),
+                    const Icon(Icons.cloud_upload, size: 80, color: Colors.white),
                     const Text(
                       "Drop file here",
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 40),
                     ElevatedButton.icon(
                       icon: const Icon(Icons.search, size: 25),
                       label: const Text(
@@ -68,7 +67,9 @@ class _DropzoneState extends State<Dropzone> {
                       ),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
+                          horizontal: 20,
+                          vertical: 20,
+                        ),
                         primary: colorButton,
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(color: primaryColor),
@@ -76,8 +77,7 @@ class _DropzoneState extends State<Dropzone> {
                         ),
                       ),
                       onPressed: () async {
-                        final events =
-                            await controller.pickFiles(multiple: true);
+                        final events = await controller.pickFiles(multiple: true);
                         for (final event in events) {
                           await acceptFile(event);
                         }
