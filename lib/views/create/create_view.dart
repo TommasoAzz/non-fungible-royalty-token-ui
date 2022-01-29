@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/viewmodel/marketplace_vm.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/locator.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/dropzone/dropzone.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/page_title/page_title.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/slider/slider_number.dart';
+import '../../business_logic/viewmodel/marketplace_vm.dart';
+import '../../constants/app_colors.dart';
+import '../../locator.dart';
+import '../../widgets/dropzone/dropzone.dart';
+import '../../widgets/page_title/page_title.dart';
+import '../../widgets/slider/slider_number.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import '../../widgets/form_field/form_field.dart' as form;
 
@@ -118,7 +118,7 @@ class _CreateViewState extends State<CreateView> {
                       ),
                     ),
                     onPressed: _submitData,
-                  ), //child: const Text('Submit'),
+                  ),
                 ),
               ],
             ),
