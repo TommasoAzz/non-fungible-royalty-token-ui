@@ -25,7 +25,7 @@ class CollectionItem extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                collection.name,
+                "${collection.name} (${collection.symbol})".toUpperCase(),
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w200,
@@ -33,18 +33,18 @@ class CollectionItem extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              Text(
-                "Symbol: ${collection.symbol}",
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w200,
-                  color: Colors.black,
-                ),
-              ),
+              // Text(
+              //   "Symbol: ${collection.symbol}",
+              //   style: const TextStyle(
+              //     fontSize: 18,
+              //     fontWeight: FontWeight.w200,
+              //     color: Colors.black,
+              //   ),
+              // ),
               Text(
                 "Created by:\n${collection.creator}",
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.w200,
                   color: Colors.black,
                 ),
