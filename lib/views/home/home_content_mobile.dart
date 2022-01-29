@@ -13,7 +13,7 @@ class HomeContentMobile extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: const <Widget>[
-          CourseDetails(),
+          MarketplaceBanner(),
           SizedBox(
             height: 20,
           ),

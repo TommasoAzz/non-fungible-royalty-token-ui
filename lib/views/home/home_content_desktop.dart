@@ -9,7 +9,7 @@ class HomeContentDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: const <Widget>[
-        CourseDetails(),
+        MarketplaceBanner(),
         Expanded(
           child: Center(
             child: CallToAction('Connect a wallet'),

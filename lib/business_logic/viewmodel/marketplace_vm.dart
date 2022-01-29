@@ -2,6 +2,7 @@ import 'dart:convert' show json;
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/token.dart';
 
 import '../../business_logic/contracts/erc1190_tradable.dart';
 import '../../business_logic/models/collection.dart';
@@ -162,4 +163,14 @@ class MarketplaceVM with ChangeNotifier {
       availableTokens: await collection.availableTokens,
     );
   }
+
+  // Future<List<Token>> getTokens(final String collectionAddress) async {
+  //   final contract = loadERC1190SmartContract(collectionAddress);
+  //   final tokenIds = List.generate(
+  //     await contract.availableTokens,
+  //     (index) => index,
+  //     growable: false,
+  //   );
+  //   tokenIds.map((tokenId) async => Token(id: tokenId, uri: await contract.tokenURI(tokenId), ownershipLicensePrice: ownershipLicensePrice, creativeLicensePrice: creativeLicensePrice, rentalPricePerSecond: rentalPricePerSecond, owner: await contract.ownerOf(tokenId), creativeOwner: await contract.creativeOwnerOf(tokenId), rentedBy: await contract.rentersOf(tokenId), collection: collection,),);
+  // }
 }

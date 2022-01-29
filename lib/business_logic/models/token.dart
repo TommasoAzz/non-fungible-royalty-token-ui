@@ -4,7 +4,7 @@ import 'collection.dart';
 typedef EthAddress = String;
 
 class Token {
-  final String id;
+  final int id;
   final String uri;
   final int ownershipLicensePrice;
   final int creativeLicensePrice;
