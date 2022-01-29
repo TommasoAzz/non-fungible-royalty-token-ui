@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/call_to_action/call_to_action.dart';
-import '../../widgets/course_details/marketplace_banner.dart';
+import '../../widgets/marketplace_banner/marketplace_banner.dart';
 
 class HomeContentDesktop extends StatelessWidget {
   const HomeContentDesktop({Key? key}) : super(key: key);
