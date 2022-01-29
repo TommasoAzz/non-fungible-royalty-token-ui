@@ -31,28 +31,44 @@ class ERC1190Tradable {
     return tokens.toInt();
   }
 
-  Future<int> ownershipPriceOf(final int tokenId) async {
+  Future<double> ownershipPriceOf(final int tokenId) async {
     _logger.v("ownershipPriceOf");
 
     final ownershipPrice = await contract.call<BigInt>("ownershipPriceOf", [tokenId]);
 
-    return ownershipPrice.toInt();
+    return ownershipPrice.toInt() / 1e18;
   }
 
-  Future<int> creativeOwnershipPriceOf(final int tokenId) async {
+  Future<double> creativeOwnershipPriceOf(final int tokenId) async {
     _logger.v("creativeOwnershipPriceOf");
 
     final creativePrice = await contract.call<BigInt>("creativeOwnershipPriceOf", [tokenId]);
 
-    return creativePrice.toInt();
+    return creativePrice.toInt() / 1e18;
   }
 
-  Future<int> rentalPriceOf(final int tokenId) async {
+  Future<double> rentalPriceOf(final int tokenId) async {
     _logger.v("rentalPriceOf");
 
     final rentalPrice = await contract.call<BigInt>("rentalPriceOf", [tokenId]);
 
-    return rentalPrice.toInt();
+    return rentalPrice.toInt() / 1e18;
+  }
+
+  Future<int> royaltyForRental(final int tokenId) async {
+    _logger.v("royaltyForRental");
+
+    final royalty = await contract.call<int>("royaltyForRental", [tokenId]);
+
+    return royalty;
+  }
+
+  Future<int> royaltyForOwnershipTransfer(final int tokenId) async {
+    _logger.v("royaltyForOwnershipTransfer");
+
+    final royalty = await contract.call<int>("royaltyForOwnershipTransfer", [tokenId]);
+
+    return royalty;
   }
 
   Future<int> mint(
@@ -90,10 +106,7 @@ class ERC1190Tradable {
     return await completer.future;
   }
 
-  Future<void> setOwnershipLicensePrice(
-    final int tokenId,
-    final int priceInWei,
-  ) async {
+  Future<void> setOwnershipLicensePrice(final int tokenId, final int priceInWei) async {
     _logger.v("setOwnershipLicensePrice");
 
     final tx = await contract.send("setOwnershipLicensePrice", [tokenId, priceInWei]);

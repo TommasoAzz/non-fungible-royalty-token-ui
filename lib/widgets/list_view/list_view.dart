@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/collection.dart';
-import '../collections/collection_item.dart';
+import '../collection_item/collection_item.dart';
 import '../../business_logic/models/collection.dart';
 
 class ListsView extends StatelessWidget {

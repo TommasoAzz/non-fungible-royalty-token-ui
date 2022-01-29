@@ -1,4 +1,5 @@
 import 'dart:convert' show json;
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +14,7 @@ import '../../logger/logger.dart';
 class MarketplaceVM with ChangeNotifier {
   final _logger = getLogger("MarketplaceVM");
 
-  late ERC1190Marketplace marketplaceSmartContract;
+  late ERC1190Marketplace marketplaceContract;
 
   bool _marketplaceSmartContractLoaded = false;
 
@@ -71,7 +72,7 @@ class MarketplaceVM with ChangeNotifier {
     _logger.v("contract");
 
     if (!_marketplaceSmartContractLoaded) {
-      marketplaceSmartContract = erc1190marketplace;
+      marketplaceContract = erc1190marketplace;
       _marketplaceSmartContractLoaded = true;
       notifyListeners();
     }
@@ -87,9 +88,9 @@ class MarketplaceVM with ChangeNotifier {
 
     final collectionAddresses = <String>[];
     if (collectionOwner.isEmpty) {
-      collectionAddresses.addAll(await marketplaceSmartContract.allCollections);
+      collectionAddresses.addAll(await marketplaceContract.allCollections);
     } else {
-      collectionAddresses.addAll(await marketplaceSmartContract.collectionsOf(collectionOwner));
+      collectionAddresses.addAll(await marketplaceContract.collectionsOf(collectionOwner));
     }
 
     final contracts = collectionAddresses.map(loadERC1190SmartContract);
@@ -101,7 +102,7 @@ class MarketplaceVM with ChangeNotifier {
         address: contract.address,
         name: await contract.name,
         symbol: await contract.symbol,
-        creator: await marketplaceSmartContract.creatorOf(contract.address),
+        creator: await marketplaceContract.creatorOf(contract.address),
         availableTokens: await contract.availableTokens,
       ));
     }
@@ -118,7 +119,7 @@ class MarketplaceVM with ChangeNotifier {
   ]) async {
     _logger.v("deployNewCollection");
 
-    final contractAddress = await marketplaceSmartContract.deployNewCollection(
+    final contractAddress = await marketplaceContract.deployNewCollection(
       name,
       symbol,
       "https://ipfs.io/ipfs/",
@@ -126,7 +127,7 @@ class MarketplaceVM with ChangeNotifier {
     _logger.i("Deployed collection. Deployed smart contract at address: $contractAddress.");
 
     final collection = loadERC1190SmartContract(contractAddress);
-    final creator = await marketplaceSmartContract.creatorOf(contractAddress);
+    final creator = await marketplaceContract.creatorOf(contractAddress);
 
     for (final fileBlobURI in files) {
       final fileResponse = await httpClient.get(Uri.parse(fileBlobURI));
@@ -167,6 +168,8 @@ class MarketplaceVM with ChangeNotifier {
   }
 
   Future<List<Token>> getTokens(final String collectionAddress) async {
+    _logger.v("getTokens");
+
     final contract = loadERC1190SmartContract(collectionAddress);
     final tokenIds = List.generate(
       await contract.availableTokens,
@@ -177,18 +180,72 @@ class MarketplaceVM with ChangeNotifier {
     final tokens = <Token>[];
 
     for (final tokenId in tokenIds) {
-      tokens.add(Token(
-        id: tokenId,
-        uri: await contract.tokenURI(tokenId),
-        ownershipLicensePrice: await contract.ownershipPriceOf(tokenId),
-        creativeLicensePrice: await contract.creativeOwnershipPriceOf(tokenId),
-        rentalPricePerSecond: await contract.rentalPriceOf(tokenId),
-        owner: await contract.ownerOf(tokenId),
-        creativeOwner: await contract.creativeOwnerOf(tokenId),
-        rentedBy: await contract.rentersOf(tokenId),
-      ));
+      tokens.add(
+        Token(
+          id: tokenId,
+          uri: await contract.tokenURI(tokenId),
+          ownershipLicensePrice: await contract.ownershipPriceOf(tokenId),
+          creativeLicensePrice: await contract.creativeOwnershipPriceOf(tokenId),
+          rentalPricePerSecond: await contract.rentalPriceOf(tokenId),
+          owner: await contract.ownerOf(tokenId),
+          creativeOwner: await contract.creativeOwnerOf(tokenId),
+          rentedBy: await contract.rentersOf(tokenId),
+          royaltyOwnershipTransfer: await contract.royaltyForOwnershipTransfer(tokenId),
+          royaltyRental: await contract.royaltyForRental(tokenId),
+          creativeLicenseRequests: await marketplaceContract.getCreativeLicenseTransferRequests(
+            collectionAddress,
+            tokenId,
+          ),
+          ownershipLicenseRequests: await marketplaceContract.getOwnershipLicenseTransferRequests(
+            collectionAddress,
+            tokenId,
+          ),
+        ),
+      );
     }
 
     return tokens;
+  }
+
+  Future<void> setOwnershipLicensePrice(
+    final String collectionAddress,
+    final int tokenId,
+    final double priceInEth,
+  ) async {
+    _logger.v("setOwnershipLicensePrice");
+
+    final contract = loadERC1190SmartContract(collectionAddress);
+
+    final priceInWei = (priceInEth * 1e18).toInt();
+
+    await contract.setOwnershipLicensePrice(tokenId, priceInWei);
+  }
+
+  Future<void> setCreativeLicensePrice(
+    final String collectionAddress,
+    final int tokenId,
+    final double priceInEth,
+  ) async {
+    _logger.v("setCreativeLicensePrice");
+
+    final contract = loadERC1190SmartContract(collectionAddress);
+
+    final priceInWei = (priceInEth * 1e18).toInt();
+
+    await contract.setCreativeLicensePrice(tokenId, priceInWei);
+  }
+
+  Future<void> setRentalPrice(
+    final String collectionAddress,
+    final int tokenId,
+    final double priceInEth,
+  ) async {
+    _logger.v("setRentalPrice");
+
+    final contract = loadERC1190SmartContract(collectionAddress);
+
+    final priceInWei = (priceInEth * 1e18).toInt();
+
+    await contract.setRentalPrice(tokenId, priceInWei);
   }
 }

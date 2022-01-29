@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/viewmodel/marketplace_vm.dart';
 import '../../widgets/page_title/page_title.dart';
-import '../../widgets/Collections/collection_item.dart';
+import '../../widgets/collection_item/collection_item.dart';
 import '../../locator.dart';
 
 class CollectionsContent extends StatelessWidget {

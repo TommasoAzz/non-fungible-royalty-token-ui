@@ -10,12 +10,18 @@ class CollectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).restorablePushNamed(
-        RouteManager.collection,
-        arguments: {
-          'collection': collection.address,
-        },
-      ),
+      onTap: () {
+        print("RouteManager.collection: ${RouteManager.collection}");
+        print("collection.address: ${collection.address}");
+
+        Navigator.of(context).restorablePushNamed(
+          RouteManager.collection,
+          arguments: {
+            'collectionName': collection.name,
+            'collectionAddress': collection.address,
+          },
+        );
+      },
       child: Card(
         color: Colors.blue[collection.availableTokens * 100],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
