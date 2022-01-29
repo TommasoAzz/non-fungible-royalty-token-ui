@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../business_logic/viewmodel/marketplace_vm.dart';
@@ -16,7 +17,10 @@ class CreateView extends StatefulWidget {
 }
 
 class _CreateViewState extends State<CreateView> {
+  bool pressedSubmit = false;
+
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+
   final marketplaceVM = locator<MarketplaceVM>();
 
   String _name = '';
@@ -71,10 +75,30 @@ class _CreateViewState extends State<CreateView> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: ElevatedButton(
+                  child: ElevatedButton.icon(
+                    label: pressedSubmit
+                        ? const Icon(Icons.check_box, size: 16)
+                        : const Icon(Icons.check_box_outline_blank, size: 16),
+                    icon: pressedSubmit
+                        ? const Text(
+                            "Submitted",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          )
+                        : const Text(
+                            "Submit",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      primary: primaryColor,
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: primaryColor),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                     onPressed: _submitData,
-                    child: const Text('Submit'),
-                  ),
+                  ), //child: const Text('Submit'),
                 ),
               ],
             ),
@@ -107,7 +131,8 @@ class _CreateViewState extends State<CreateView> {
   void _saveOwnershipTransferInputField(final double value) =>
       _ownershipTransferRoyalty = value.toInt();
 
-  void _saveRentalInputField(final double value) => _rentalRoyalty = value.toInt();
+  void _saveRentalInputField(final double value) =>
+      _rentalRoyalty = value.toInt();
 
   void _saveUrlFromDropzone(final String value) => _fileUrls.add(value);
 
@@ -115,6 +140,9 @@ class _CreateViewState extends State<CreateView> {
     if (!_form.currentState!.validate()) return;
 
     _form.currentState!.save();
+    setState(() {
+      pressedSubmit = !pressedSubmit;
+    });
 
     await marketplaceVM.deployNewCollection(
       _name,

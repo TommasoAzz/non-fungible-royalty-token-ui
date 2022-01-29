@@ -4,10 +4,12 @@ import '../../business_logic/viewmodel/marketplace_vm.dart';
 import '../../routing/route_manager.dart';
 import '../../services/navigation_service.dart';
 import '../../widgets/page_title/page_title.dart';
+import '../../widgets/Collections/collectionItem.dart';
 import '../../locator.dart';
 
 class CollectionsContent extends StatelessWidget {
-  const CollectionsContent({Key? key, required this.column, required this.padding})
+  const CollectionsContent(
+      {Key? key, required this.column, required this.padding})
       : super(key: key);
   final int column;
   final double padding;
@@ -43,51 +45,7 @@ class CollectionsContent extends StatelessWidget {
                 crossAxisCount: column,
                 children: snapshot.data!
                     .map(
-                      (collection) => InkWell(
-                        onTap: () => Navigator.of(context).restorablePushNamed(
-                          RouteManager.collection,
-                          arguments: {
-                            'collection': "${collection.name}-${collection.symbol}".toLowerCase(),
-                          },
-                        ),
-                        child: Card(
-                          color: Colors.blue[collection.availableTokens * 100],
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                          elevation: 5,
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            child: Column(
-                              children: [
-                                Text(
-                                  collection.name,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w200,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                Text(
-                                  "Symbol: ${collection.symbol}",
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w200,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  "Created by\n${collection.creator}",
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w200,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      (collection) => CollectionItem(collection: collection),
                     )
                     .toList(),
               );

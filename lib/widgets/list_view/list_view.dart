@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../widgets/collections/collections.dart';
-
-final List<int> colorCodes = <int>[600, 500, 100];
+import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/collection.dart';
+import '../../widgets/collections/collectionItem.dart';
+import '../../business_logic/models/collection.dart';
 
 class ListsView extends StatelessWidget {
-  const ListsView({Key? key, required this.entries, required this.colorCodes}) : super(key: key);
-  final List<String> entries;
-  final List<int> colorCodes;
+  const ListsView({Key? key, required this.entries}) : super(key: key);
+  final List<Collection> entries;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,9 @@ class ListsView extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: entries.length,
       itemBuilder: (context, index) {
-        return const Collection(text: ["Name", "NAM", "0xgfhyerb73qfggsd8je", "5"], color: 100);
+        return CollectionItem(
+          collection: entries[index],
+        );
       },
     );
   }

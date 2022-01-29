@@ -15,6 +15,7 @@ class Dropzone extends StatefulWidget {
 
 class _DropzoneState extends State<Dropzone> {
   late DropzoneViewController controller;
+
   int numberFileUploaded = 0;
 
   @override
@@ -53,7 +54,8 @@ class _DropzoneState extends State<Dropzone> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.cloud_upload, size: 80, color: Colors.white),
+                    const Icon(Icons.cloud_upload,
+                        size: 80, color: Colors.white),
                     const Text(
                       "Drop file here",
                       style: TextStyle(color: Colors.white, fontSize: 18),
@@ -66,7 +68,8 @@ class _DropzoneState extends State<Dropzone> {
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
                         primary: colorButton,
                         shape: RoundedRectangleBorder(
                           side: const BorderSide(color: primaryColor),
@@ -74,7 +77,8 @@ class _DropzoneState extends State<Dropzone> {
                         ),
                       ),
                       onPressed: () async {
-                        final events = await controller.pickFiles(multiple: true);
+                        final events =
+                            await controller.pickFiles(multiple: true);
                         for (final event in events) {
                           await acceptFile(event);
                         }

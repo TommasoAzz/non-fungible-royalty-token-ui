@@ -19,34 +19,7 @@ class ProfileListView extends StatelessWidget {
         const SizedBox(
           height: 270,
           child: ListsView(
-            entries: [
-              'A',
-              'B',
-              'C',
-              'C',
-              'C',
-              'C',
-              'C',
-              'C',
-              'C',
-              'C',
-              'C',
-              'C'
-            ],
-            colorCodes: [
-              100,
-              200,
-              300,
-              100,
-              200,
-              300,
-              100,
-              200,
-              300,
-              100,
-              200,
-              300
-            ],
+            entries: [],
           ),
         )
       ],
