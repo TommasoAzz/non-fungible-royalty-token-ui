@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/collection.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../business_logic/viewmodel/marketplace_vm.dart';
@@ -59,12 +60,18 @@ class _CreateViewState extends State<CreateView> {
                   height: 40,
                 ),
                 SliderNumber(
-                  title: "Set royalty for ownership transfer",
+                  title: "Set royalty (%) for ownership transfer",
                   saveValue: _saveOwnershipTransferInputField,
                 ),
+                const SizedBox(
+                  height: 40,
+                ),
                 SliderNumber(
-                  title: "Set royalty for rental",
+                  title: "Set royalty (%) for rental",
                   saveValue: _saveRentalInputField,
+                ),
+                const SizedBox(
+                  height: 40,
                 ),
                 Dropzone(
                   saveUrl: _saveUrlFromDropzone,
@@ -116,12 +123,28 @@ class _CreateViewState extends State<CreateView> {
 
     _form.currentState!.save();
 
-    await marketplaceVM.deployNewCollection(
+    final collection = await marketplaceVM.deployNewCollection(
       _name,
       _symbol,
       _rentalRoyalty,
       _ownershipTransferRoyalty,
       _fileUrls,
+    );
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Successful deploy'),
+        content: Text(
+          'Collection ${collection.name} (${collection.symbol}) was deployed successfully with ${collection.availableTokens} initial tokens.',
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: Navigator.of(context).pop,
+            child: const Text('Okay'),
+          )
+        ],
+      ),
     );
   }
 }
