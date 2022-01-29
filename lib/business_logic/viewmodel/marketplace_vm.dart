@@ -121,6 +121,7 @@ class MarketplaceVM with ChangeNotifier {
       symbol,
       "https://ipfs.io/ipfs/",
     );
+    _logger.i("Deployed collection. Deployed smart contract at address: $contractAddress.");
 
     final collection = loadERC1190SmartContract(contractAddress);
     final creator = await marketplaceSmartContract.creatorOf(contractAddress);
@@ -134,6 +135,7 @@ class MarketplaceVM with ChangeNotifier {
       request.files.add(http.MultipartFile.fromBytes("path", fileBytes));
       final ipfsResponse = await request.send();
       if (ipfsResponse.statusCode == 200) {
+        _logger.i("Deployed file with path = $fileBlobURI to IPFS. Minting the relative token.");
         final ipfsResponseBodyJson = json.decode(
           await ipfsResponse.stream.bytesToString(),
         ) as Map<String, dynamic>;
@@ -144,6 +146,11 @@ class MarketplaceVM with ChangeNotifier {
           "$fileHash?filename=$fileName",
           royaltyForRental,
           royaltyForOwnershipTransfer,
+        );
+        _logger.i("Minted token $tokenId");
+      } else {
+        _logger.e(
+          "Could not deploy file with path = $fileBlobURI to IPFS. Not minting the relative token.",
         );
       }
     }

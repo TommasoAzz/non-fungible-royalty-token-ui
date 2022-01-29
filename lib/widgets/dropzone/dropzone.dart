@@ -41,7 +41,6 @@ class _DropzoneState extends State<Dropzone> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 50),
           height: 250,
-          //color: primaryColor,
           child: Stack(
             children: [
               DropzoneView(
@@ -101,7 +100,7 @@ class _DropzoneState extends State<Dropzone> {
     );
   }
 
-  Future acceptFile(dynamic event) async {
+  Future<void> acceptFile(dynamic event) async {
     final name = event.name;
     final url = await controller.createFileUrl(event);
     print('Name: $name');
