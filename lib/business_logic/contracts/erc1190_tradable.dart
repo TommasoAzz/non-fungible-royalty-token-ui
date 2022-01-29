@@ -51,7 +51,8 @@ class ERC1190Tradable {
       _logger.i("Event: TokenMinted");
       _logger.i("- creator: ${dartify(creator)}");
       _logger.i("- royaltyForRental: ${dartify(royaltyForRental)}");
-      _logger.i("- royaltyForOwnershipTransfer: ${dartify(royaltyForOwnershipTransfer)}");
+      _logger.i(
+          "- royaltyForOwnershipTransfer: ${dartify(royaltyForOwnershipTransfer)}");
       _logger.i("- tokenId: ${dartify(tokenId)}");
 
       completer.complete(int.tryParse(dartify(tokenId).toString()) ?? -1);
@@ -66,17 +67,21 @@ class ERC1190Tradable {
     return await completer.future;
   }
 
-  Future<void> setOwnershipLicensePrice(final int tokenId, final int priceInWei) async {
+  Future<void> setOwnershipLicensePrice(
+      final int tokenId, final int priceInWei) async {
     _logger.v("setOwnershipLicensePrice");
 
-    final tx = await contract.send("setOwnershipLicensePrice", [tokenId, priceInWei]);
+    final tx =
+        await contract.send("setOwnershipLicensePrice", [tokenId, priceInWei]);
     await tx.wait();
   }
 
-  Future<void> setCreativeLicensePrice(final int tokenId, final int priceInWei) async {
+  Future<void> setCreativeLicensePrice(
+      final int tokenId, final int priceInWei) async {
     _logger.v("setCreativeLicensePrice");
 
-    final tx = await contract.send("setCreativeLicensePrice", [tokenId, priceInWei]);
+    final tx =
+        await contract.send("setCreativeLicensePrice", [tokenId, priceInWei]);
     await tx.wait();
   }
 
@@ -87,14 +92,17 @@ class ERC1190Tradable {
     await tx.wait();
   }
 
-  Future<void> rentAsset(final int tokenId, final int rentExpirationDateInMillis) async {
+  Future<void> rentAsset(
+      final int tokenId, final int rentExpirationDateInMillis) async {
     _logger.v("rentAsset");
 
-    final tx = await contract.send("rentAsset", [tokenId, rentExpirationDateInMillis]);
+    final tx =
+        await contract.send("rentAsset", [tokenId, rentExpirationDateInMillis]);
     await tx.wait();
   }
 
-  Future<void> transferOwnershipLicense(final int tokenId, final EthAddress to) async {
+  Future<void> transferOwnershipLicense(
+      final int tokenId, final EthAddress to) async {
     _logger.v("transferOwnershipLicense");
 
     final completer = Completer<void>();
@@ -132,7 +140,8 @@ class ERC1190Tradable {
     await completer.future;
   }
 
-  Future<void> transferCreativeLicense(final int tokenId, final EthAddress to) async {
+  Future<void> transferCreativeLicense(
+      final int tokenId, final EthAddress to) async {
     _logger.v("transferCreativeLicense");
 
     final completer = Completer<void>();
