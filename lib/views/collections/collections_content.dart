@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/viewmodel/marketplace_vm.dart';
-import '../../routing/route_manager.dart';
-import '../../services/navigation_service.dart';
 import '../../widgets/page_title/page_title.dart';
-import '../../widgets/Collections/collectionItem.dart';
+import '../../widgets/Collections/collection_item.dart';
 import '../../locator.dart';
 
 class CollectionsContent extends StatelessWidget {
-  const CollectionsContent(
-      {Key? key, required this.column, required this.padding})
+  const CollectionsContent({Key? key, required this.column, required this.padding})
       : super(key: key);
   final int column;
   final double padding;
@@ -44,9 +41,9 @@ class CollectionsContent extends StatelessWidget {
                 mainAxisSpacing: 10,
                 crossAxisCount: column,
                 children: snapshot.data!
-                    .map(
-                      (collection) => CollectionItem(collection: collection),
-                    )
+                    .map((collection) => CollectionItem(
+                          collection: collection,
+                        ))
                     .toList(),
               );
             },

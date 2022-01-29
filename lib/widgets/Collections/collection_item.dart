@@ -13,7 +13,7 @@ class CollectionItem extends StatelessWidget {
       onTap: () => Navigator.of(context).restorablePushNamed(
         RouteManager.collection,
         arguments: {
-          'collection': "${collection.name}-${collection.symbol}".toLowerCase(),
+          'collection': collection.address,
         },
       ),
       child: Card(

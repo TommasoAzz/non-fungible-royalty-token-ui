@@ -1,5 +1,4 @@
-import 'package:flutter/foundation.dart';
-import 'collection.dart';
+import 'package:collection/collection.dart';
 
 typedef EthAddress = String;
 
@@ -14,7 +13,6 @@ class Token {
   final List<EthAddress> rentedBy;
   final List<EthAddress> ownershipLicenseRequests;
   final List<EthAddress> creativeLicenseRequests;
-  final Collection collection;
 
   Token({
     required this.id,
@@ -27,17 +25,17 @@ class Token {
     required this.rentedBy,
     this.ownershipLicenseRequests = const [],
     this.creativeLicenseRequests = const [],
-    required this.collection,
   });
 
   @override
   String toString() {
-    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, collection: $collection)';
+    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
 
     return other is Token &&
         other.id == id &&
@@ -49,8 +47,7 @@ class Token {
         other.creativeOwner == creativeOwner &&
         listEquals(other.rentedBy, rentedBy) &&
         listEquals(other.ownershipLicenseRequests, ownershipLicenseRequests) &&
-        listEquals(other.creativeLicenseRequests, creativeLicenseRequests) &&
-        other.collection == collection;
+        listEquals(other.creativeLicenseRequests, creativeLicenseRequests);
   }
 
   @override
@@ -64,7 +61,6 @@ class Token {
         creativeOwner.hashCode ^
         rentedBy.hashCode ^
         ownershipLicenseRequests.hashCode ^
-        creativeLicenseRequests.hashCode ^
-        collection.hashCode;
+        creativeLicenseRequests.hashCode;
   }
 }

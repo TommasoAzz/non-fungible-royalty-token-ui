@@ -2,7 +2,7 @@ import 'dart:convert' show json;
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/token.dart';
+import '../../business_logic/models/token.dart';
 
 import '../../business_logic/contracts/erc1190_tradable.dart';
 import '../../business_logic/models/collection.dart';
@@ -98,6 +98,7 @@ class MarketplaceVM with ChangeNotifier {
 
     for (final contract in contracts) {
       collections.add(Collection(
+        address: contract.address,
         name: await contract.name,
         symbol: await contract.symbol,
         creator: await marketplaceSmartContract.creatorOf(contract.address),
@@ -157,6 +158,7 @@ class MarketplaceVM with ChangeNotifier {
     }
 
     return Collection(
+      address: collection.address,
       name: await collection.name,
       symbol: await collection.symbol,
       creator: creator,
@@ -164,13 +166,29 @@ class MarketplaceVM with ChangeNotifier {
     );
   }
 
-  // Future<List<Token>> getTokens(final String collectionAddress) async {
-  //   final contract = loadERC1190SmartContract(collectionAddress);
-  //   final tokenIds = List.generate(
-  //     await contract.availableTokens,
-  //     (index) => index,
-  //     growable: false,
-  //   );
-  //   tokenIds.map((tokenId) async => Token(id: tokenId, uri: await contract.tokenURI(tokenId), ownershipLicensePrice: ownershipLicensePrice, creativeLicensePrice: creativeLicensePrice, rentalPricePerSecond: rentalPricePerSecond, owner: await contract.ownerOf(tokenId), creativeOwner: await contract.creativeOwnerOf(tokenId), rentedBy: await contract.rentersOf(tokenId), collection: collection,),);
-  // }
+  Future<List<Token>> getTokens(final String collectionAddress) async {
+    final contract = loadERC1190SmartContract(collectionAddress);
+    final tokenIds = List.generate(
+      await contract.availableTokens,
+      (index) => index,
+      growable: false,
+    );
+
+    final tokens = <Token>[];
+
+    for (final tokenId in tokenIds) {
+      tokens.add(Token(
+        id: tokenId,
+        uri: await contract.tokenURI(tokenId),
+        ownershipLicensePrice: await contract.ownershipPriceOf(tokenId),
+        creativeLicensePrice: await contract.creativeOwnershipPriceOf(tokenId),
+        rentalPricePerSecond: await contract.rentalPriceOf(tokenId),
+        owner: await contract.ownerOf(tokenId),
+        creativeOwner: await contract.creativeOwnerOf(tokenId),
+        rentedBy: await contract.rentersOf(tokenId),
+      ));
+    }
+
+    return tokens;
+  }
 }
