@@ -13,7 +13,7 @@ class CollectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final marketplaceVM = locator<MarketplaceVM>();
     final collectionData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final collection = collectionData['collection'] as Collection;
+    final collection = Collection.fromMap(collectionData['collection']);
 
     return Column(
       children: [

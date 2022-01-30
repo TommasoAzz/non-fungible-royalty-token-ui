@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/routing/route_manager.dart';
+import '../../routing/route_manager.dart';
 import '../../business_logic/models/collection.dart';
 
 class CollectionItem extends StatelessWidget {
@@ -14,7 +14,7 @@ class CollectionItem extends StatelessWidget {
         Navigator.of(context).restorablePushNamed(
           RouteManager.collection,
           arguments: {
-            'collection': collection,
+            'collection': collection.toMap(),
           },
         );
       },
