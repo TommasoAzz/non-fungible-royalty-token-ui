@@ -43,6 +43,7 @@ class CollectionContent extends StatelessWidget {
               }
 
               return GridView.count(
+                childAspectRatio: 0.8,
                 primary: false,
                 padding: EdgeInsets.all(padding),
                 crossAxisSpacing: 20,
@@ -50,8 +51,8 @@ class CollectionContent extends StatelessWidget {
                 crossAxisCount: column,
                 children: snapshot.data!
                     .map((token) => TokenItem(
-                          isCreativeOwner: token.creativeOwner == marketplaceVM.loggedAccount,
-                          isOwner: token.owner == marketplaceVM.loggedAccount,
+                          isCreativeOwner: token.creativeOwner.toLowerCase() == marketplaceVM.loggedAccount,
+                          isOwner: token.owner.toLowerCase() == marketplaceVM.loggedAccount,
                           token: token,
                           collection: collection,
                         ))

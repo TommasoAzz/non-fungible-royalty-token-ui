@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../views/collection/collection_view.dart';
 import '../views/error/error_view.dart';
 import '../widgets/layout_template/layout_template.dart';
 import '../views/create/create_view.dart';
@@ -29,7 +30,7 @@ class RouteManager {
       case wallet:
         return _FadeRoute(const WalletView(), settings);
       case collection:
-        return _FadeRoute(const CollectionsView(), settings);
+        return _FadeRoute(const CollectionView(), settings);
       default:
         return _FadeRoute(const ErrorView(), settings);
     }

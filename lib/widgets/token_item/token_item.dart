@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'token_info.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/models/token.dart';
 import '../../business_logic/viewmodel/marketplace_vm.dart';
 import '../submittable_form_field/submittable_form_field.dart';
 import '../../locator.dart';
-import '../../widgets/style_text/style_text.dart';
 
 class TokenItem extends StatefulWidget {
   final Collection collection;
@@ -57,125 +57,106 @@ class _TokenItemState extends State<TokenItem> {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 5,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Image.network(widget.token.uri),
-          ),
-          Container(
-            margin: const EdgeInsets.all(5),
-            padding: const EdgeInsets.all(8),
-            child: SingleChildScrollView(
-              child: Column(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                constraints: const BoxConstraints(
+                  maxHeight: 180,
+                ),
+                child: Center(child: Image.network(widget.token.uri)),
+              ),
+              TokenInfo(
+                token: widget.token,
+                showCreativeOwnershipRequests: widget.isCreativeOwner,
+                showOwnershipRequests: widget.isOwner,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  StyleText(
-                    title: "ID: ${widget.token.id}",
-                  ),
-                  StyleText(
-                    title: "Owner: ${widget.token.owner}",
-                  ),
-                  StyleText(
-                    title: "Rented by: ${widget.token.rentedBy.length} people",
-                  ),
-                  StyleText(
-                    title: "Ownership license price: ${widget.token.ownershipLicensePrice} ETH",
-                  ),
-                  StyleText(
-                    title: "Creative license price: ${widget.token.creativeLicensePrice} ETH",
-                  ),
-                  StyleText(
-                    title: "Rental price per second: ${widget.token.rentalPricePerSecond} ETH/sec",
-                  ),
-                  StyleText(
-                    title:
-                        "Royalty for ownership transfer: ${widget.token.royaltyOwnershipTransfer}",
-                  ),
-                  StyleText(
-                    title: "Royalty for rental: ${widget.token.royaltyRental}",
-                  ),
-                  if (widget.isOwner)
-                    StyleText(
-                      title: "Ownership requests from: ${widget.token.ownershipLicenseRequests}",
-                    ),
-                  if (widget.isCreativeOwner)
-                    StyleText(
-                      title: "Creative requests from: ${widget.token.creativeLicenseRequests}",
+                  ElevatedButton(onPressed: () {}, child: const Text("Rent")),
+                  if (widget.isOwner || widget.isCreativeOwner)
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text("Settings"),
                     ),
                 ],
               ),
-            ),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              if (widget.isOwner)
-                SizedBox(
-                    width: 500,
-                    child: SubmittableFormField(
-                      formKey: setOwnershipLicensePriceKey,
-                      inputLabel: "Set Ownership License price",
-                      validate: _validateNumberField,
-                      save: _saveOwnershipLicensePriceInputField,
-                      submit: _submitOwnershipLicensePrice,
-                      uploadingData: uploadingOwnershipPrice,
-                      dataUploaded: ownershipPriceUploaded,
-                    )),
-              if (widget.isOwner)
-                SizedBox(
-                  width: 500,
-                  child: SubmittableFormField(
-                    formKey: setRentalPriceKey,
-                    inputLabel: "Set Rental price per second",
-                    validate: _validateNumberField,
-                    save: _saveRentalPricePerSecondInputField,
-                    submit: _submitRentalPrice,
-                    uploadingData: uploadingRentalPrice,
-                    dataUploaded: rentalPriceUploaded,
-                  ),
-                ),
-              if (widget.isOwner)
-                SizedBox(
-                  width: 500,
-                  child: SubmittableFormField(
-                    formKey: transferOwnershipLicenseKey,
-                    inputLabel: "Transfer Ownership License to",
-                    validate: _validateAddressField,
-                    save: _saveTransferOwnershipLicenseInputField,
-                    submit: _submitTransferOwnershipLicense,
-                    uploadingData: uploadingTransferOwnership,
-                    dataUploaded: transferOwnershipUploaded,
-                  ),
-                ),
-              if (widget.isCreativeOwner)
-                SizedBox(
-                    width: 500,
-                    child: SubmittableFormField(
-                      formKey: setCreativeLicensePriceKey,
-                      inputLabel: "Set Creative License price",
-                      validate: _validateNumberField,
-                      save: _saveCreativeLicensePriceInputField,
-                      submit: _submitCreativeLicensePrice,
-                      dataUploaded: creativePriceUploaded,
-                      uploadingData: uploadingCreativePrice,
-                    )),
-              if (widget.isCreativeOwner)
-                SizedBox(
-                  width: 500,
-                  child: SubmittableFormField(
-                    formKey: transferCreativeLicenseKey,
-                    inputLabel: "Transfer Creative License to",
-                    validate: _validateAddressField,
-                    save: _saveTransferCreativeLicenseInputField,
-                    submit: _submitTransferCreativeLicense,
-                    dataUploaded: transferCreativeUploaded,
-                    uploadingData: uploadingTransferCreative,
-                  ),
-                ),
+              // Row(
+              //   mainAxisSize: MainAxisSize.min,
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     if (widget.isOwner)
+              //       SizedBox(
+              //           width: 500,
+              //           child: SubmittableFormField(
+              //             formKey: setOwnershipLicensePriceKey,
+              //             inputLabel: "Set Ownership License price",
+              //             validate: _validateNumberField,
+              //             save: _saveOwnershipLicensePriceInputField,
+              //             submit: _submitOwnershipLicensePrice,
+              //             uploadingData: uploadingOwnershipPrice,
+              //             dataUploaded: ownershipPriceUploaded,
+              //           )),
+              //     if (widget.isOwner)
+              //       SizedBox(
+              //         width: 500,
+              //         child: SubmittableFormField(
+              //           formKey: setRentalPriceKey,
+              //           inputLabel: "Set Rental price per second",
+              //           validate: _validateNumberField,
+              //           save: _saveRentalPricePerSecondInputField,
+              //           submit: _submitRentalPrice,
+              //           uploadingData: uploadingRentalPrice,
+              //           dataUploaded: rentalPriceUploaded,
+              //         ),
+              //       ),
+              //     if (widget.isOwner)
+              //       SizedBox(
+              //         width: 500,
+              //         child: SubmittableFormField(
+              //           formKey: transferOwnershipLicenseKey,
+              //           inputLabel: "Transfer Ownership License to",
+              //           validate: _validateAddressField,
+              //           save: _saveTransferOwnershipLicenseInputField,
+              //           submit: _submitTransferOwnershipLicense,
+              //           uploadingData: uploadingTransferOwnership,
+              //           dataUploaded: transferOwnershipUploaded,
+              //         ),
+              //       ),
+              //     if (widget.isCreativeOwner)
+              //       SizedBox(
+              //           width: 500,
+              //           child: SubmittableFormField(
+              //             formKey: setCreativeLicensePriceKey,
+              //             inputLabel: "Set Creative License price",
+              //             validate: _validateNumberField,
+              //             save: _saveCreativeLicensePriceInputField,
+              //             submit: _submitCreativeLicensePrice,
+              //             dataUploaded: creativePriceUploaded,
+              //             uploadingData: uploadingCreativePrice,
+              //           )),
+              //     if (widget.isCreativeOwner)
+              //       SizedBox(
+              //         width: 500,
+              //         child: SubmittableFormField(
+              //           formKey: transferCreativeLicenseKey,
+              //           inputLabel: "Transfer Creative License to",
+              //           validate: _validateAddressField,
+              //           save: _saveTransferCreativeLicenseInputField,
+              //           submit: _submitTransferCreativeLicense,
+              //           dataUploaded: transferCreativeUploaded,
+              //           uploadingData: uploadingTransferCreative,
+              //         ),
+              //       ),
+              //   ],
+              // ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

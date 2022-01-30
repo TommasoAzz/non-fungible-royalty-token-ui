@@ -7,16 +7,13 @@ class StyleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      //padding: const EdgeInsets.all(20),
-      child: Text(
+    return Text(
         title,
         textAlign: TextAlign.left,
         style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w200,
         ),
-      ),
     );
   }
 }
