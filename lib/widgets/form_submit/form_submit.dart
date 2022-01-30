@@ -1,57 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/collection.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/token.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/viewmodel/marketplace_vm.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
-import '../../locator.dart';
-import '../../widgets/style_text/style_text.dart';
+import '../../constants/app_colors.dart';
 import '../../widgets/form_field/form_field.dart' as form;
 
-class SubmitForm extends StatefulWidget {
-  SubmitForm(
-      {Key? key,
-      required this.inputLabel,
-      required this.validationData,
-      required this.saveData,
-      required this.submitData})
-      : super(key: key);
+class SubmitForm extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
 
-  @override
-  State<SubmitForm> createState() => _SubmitFormState();
-
-  final void Function()? submitData;
-  final String? Function(String?) validationData;
-  final void Function(String?) saveData;
+  final void Function() submit;
+  final String? Function(String?) validate;
+  final void Function(String?) save;
   final String inputLabel;
-}
 
-class _SubmitFormState extends State<SubmitForm> {
-  final GlobalKey<FormState> _form = GlobalKey<FormState>();
-  bool dataUploaded = false;
-  bool uploadingData = false;
-  double _ownershipLicensePrice = 0;
-  double _rentalPricePerSecond = 0;
-  double _creativeLicensePrice = 0;
-  String _transferOwnershipLicenseTo = '';
-  String _transferCreativeLicenseTo = '';
+  final bool dataUploaded;
+  final bool uploadingData;
+
+  const SubmitForm({
+    Key? key,
+    required this.formKey,
+    required this.inputLabel,
+    required this.validate,
+    required this.save,
+    required this.submit,
+    required this.uploadingData,
+    required this.dataUploaded,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _form,
+      key: formKey,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-              width: 500,
-              child: form.FormField(
-                inputLabel: widget.inputLabel,
-                validationCallback: widget.validationData,
-                onSavedCallback: widget.saveData,
-              )),
+            width: 500,
+            child: form.FormField(
+              inputLabel: inputLabel,
+              validationCallback: validate,
+              onSavedCallback: save,
+            ),
+          ),
           ElevatedButton(
-            key: _form,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +76,7 @@ class _SubmitFormState extends State<SubmitForm> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            onPressed: widget.submitData,
+            onPressed: submit,
           ),
         ],
       ),

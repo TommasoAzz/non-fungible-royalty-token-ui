@@ -3,13 +3,17 @@ import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/
 import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/token.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/viewmodel/marketplace_vm.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/single_form_submit/form_submit.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/widgets/form_submit/form_submit.dart';
 import '../../locator.dart';
 import '../../widgets/style_text/style_text.dart';
-import '../../widgets/form_field/form_field.dart' as form;
 
 class TokenItem extends StatefulWidget {
-  TokenItem({
+  final Collection collection;
+  final Token token;
+  final bool isCreativeOwner;
+  final bool isOwner;
+
+  const TokenItem({
     Key? key,
     required this.isCreativeOwner,
     required this.isOwner,
@@ -19,36 +23,34 @@ class TokenItem extends StatefulWidget {
 
   @override
   State<TokenItem> createState() => _TokenItemState();
-
-  final Collection collection;
-  final Token token;
-  final bool isCreativeOwner;
-  final bool isOwner;
 }
 
 class _TokenItemState extends State<TokenItem> {
-  final GlobalKey<FormState> _form = GlobalKey<FormState>();
   final marketplaceVM = locator<MarketplaceVM>();
 
+  final setOwnershipLicensePriceKey = GlobalKey<FormState>();
   bool ownershipPriceUploaded = false;
   bool uploadingOwnershipPrice = false;
+  double _ownershipLicensePrice = 0;
 
+  final setRentalPriceKey = GlobalKey<FormState>();
   bool rentalPriceUploaded = false;
   bool uploadingRentalPrice = false;
+  double _rentalPricePerSecond = 0;
 
+  final setCreativeLicensePriceKey = GlobalKey<FormState>();
   bool creativePriceUploaded = false;
   bool uploadingCreativePrice = false;
+  double _creativeLicensePrice = 0;
 
+  final transferOwnershipLicenseKey = GlobalKey<FormState>();
   bool transferOwnershipUploaded = false;
   bool uploadingTransferOwnership = false;
+  String _transferOwnershipLicenseTo = '';
 
+  final transferCreativeLicenseKey = GlobalKey<FormState>();
   bool transferCreativeUploaded = false;
   bool uploadingTransferCreative = false;
-
-  double _ownershipLicensePrice = 0;
-  double _rentalPricePerSecond = 0;
-  double _creativeLicensePrice = 0;
-  String _transferOwnershipLicenseTo = '';
   String _transferCreativeLicenseTo = '';
 
   @override
@@ -56,7 +58,6 @@ class _TokenItemState extends State<TokenItem> {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 5,
-      //color: secondaryColor,
       child: Column(
         children: [
           Row(
@@ -64,10 +65,10 @@ class _TokenItemState extends State<TokenItem> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
-                height: 200,
+                height: 210,
                 width: 200,
                 padding: const EdgeInsets.all(8),
-                child: Image.asset('assets/ape.png'),
+                child: Image.network(widget.token.uri),
               ),
               Container(
                 margin: const EdgeInsets.all(5),
@@ -75,9 +76,6 @@ class _TokenItemState extends State<TokenItem> {
                 width: 400,
                 padding: const EdgeInsets.all(8),
                 child: SingleChildScrollView(
-                  //mainAxisSize: MainAxisSize.max,
-                  //crossAxisAlignment: CrossAxisAlignment.start,
-
                   child: Column(
                     children: [
                       StyleText(
@@ -87,16 +85,13 @@ class _TokenItemState extends State<TokenItem> {
                         title: "Owner: ${widget.token.owner}",
                       ),
                       StyleText(
-                        title:
-                            "Rented by: ${widget.token.rentedBy.length} people",
+                        title: "Rented by: ${widget.token.rentedBy.length} people",
                       ),
                       StyleText(
-                        title:
-                            "Ownership license price: ${widget.token.ownershipLicensePrice} ETH",
+                        title: "Ownership license price: ${widget.token.ownershipLicensePrice} ETH",
                       ),
                       StyleText(
-                        title:
-                            "Creative license price: ${widget.token.creativeLicensePrice} ETH",
+                        title: "Creative license price: ${widget.token.creativeLicensePrice} ETH",
                       ),
                       StyleText(
                         title:
@@ -107,8 +102,7 @@ class _TokenItemState extends State<TokenItem> {
                             "Royalty for ownership transfer: ${widget.token.royaltyOwnershipTransfer}",
                       ),
                       StyleText(
-                        title:
-                            "Royalty for rental: ${widget.token.royaltyRental}",
+                        title: "Royalty for rental: ${widget.token.royaltyRental}",
                       ),
                       if (widget.isOwner)
                         StyleText(
@@ -117,8 +111,7 @@ class _TokenItemState extends State<TokenItem> {
                         ),
                       if (widget.isCreativeOwner)
                         StyleText(
-                          title:
-                              "Creative requests from: ${widget.token.creativeLicenseRequests}",
+                          title: "Creative requests from: ${widget.token.creativeLicenseRequests}",
                         ),
                     ],
                   ),
@@ -126,62 +119,74 @@ class _TokenItemState extends State<TokenItem> {
               ),
             ],
           ),
-          Form(
-            key: _form,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                if (widget.isOwner)
-                  SizedBox(
-                      width: 500,
-                      child: SubmitForm(
-                        inputLabel: "Set Ownership License price",
-                        validationData: _validateNumberField,
-                        saveData: _saveOwnershipLicensePriceInputField,
-                        submitData: _submitOwnershipLicensePrice,
-                      )),
-                if (widget.isOwner)
-                  SizedBox(
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              if (widget.isOwner)
+                SizedBox(
                     width: 500,
                     child: SubmitForm(
-                      inputLabel: "Set Rental price per second",
-                      validationData: _validateNumberField,
-                      saveData: _saveRentalPricePerSecondInputField,
-                      submitData: _submitRentalPrice,
-                    ),
+                      formKey: setOwnershipLicensePriceKey,
+                      inputLabel: "Set Ownership License price",
+                      validate: _validateNumberField,
+                      save: _saveOwnershipLicensePriceInputField,
+                      submit: _submitOwnershipLicensePrice,
+                      uploadingData: uploadingOwnershipPrice,
+                      dataUploaded: ownershipPriceUploaded,
+                    )),
+              if (widget.isOwner)
+                SizedBox(
+                  width: 500,
+                  child: SubmitForm(
+                    formKey: setRentalPriceKey,
+                    inputLabel: "Set Rental price per second",
+                    validate: _validateNumberField,
+                    save: _saveRentalPricePerSecondInputField,
+                    submit: _submitRentalPrice,
+                    uploadingData: uploadingRentalPrice,
+                    dataUploaded: rentalPriceUploaded,
                   ),
-                if (widget.isOwner)
-                  SizedBox(
+                ),
+              if (widget.isOwner)
+                SizedBox(
+                  width: 500,
+                  child: SubmitForm(
+                    formKey: transferOwnershipLicenseKey,
+                    inputLabel: "Transfer Ownership License to",
+                    validate: _validateAddressField,
+                    save: _saveTransferOwnershipLicenseInputField,
+                    submit: _submitTransferOwnershipLicense,
+                    uploadingData: uploadingTransferOwnership,
+                    dataUploaded: transferOwnershipUploaded,
+                  ),
+                ),
+              if (widget.isCreativeOwner)
+                SizedBox(
                     width: 500,
                     child: SubmitForm(
-                      inputLabel: "Transfer Ownership License to",
-                      validationData: _validateAddressField,
-                      saveData: _saveTransferOwnershipLicenseInputField,
-                      submitData: _submitTransferOwnershipLicense,
-                    ),
+                      formKey: setCreativeLicensePriceKey,
+                      inputLabel: "Set Creative License price",
+                      validate: _validateNumberField,
+                      save: _saveCreativeLicensePriceInputField,
+                      submit: _submitCreativeLicensePrice,
+                      dataUploaded: creativePriceUploaded,
+                      uploadingData: uploadingCreativePrice,
+                    )),
+              if (widget.isCreativeOwner)
+                SizedBox(
+                  width: 500,
+                  child: SubmitForm(
+                    formKey: transferCreativeLicenseKey,
+                    inputLabel: "Transfer Creative License to",
+                    validate: _validateAddressField,
+                    save: _saveTransferCreativeLicenseInputField,
+                    submit: _submitTransferCreativeLicense,
+                    dataUploaded: transferCreativeUploaded,
+                    uploadingData: uploadingTransferCreative,
                   ),
-                if (widget.isCreativeOwner)
-                  SizedBox(
-                      width: 500,
-                      child: SubmitForm(
-                        inputLabel: "Set Creative License price",
-                        validationData: _validateNumberField,
-                        saveData: _saveCreativeLicensePriceInputField,
-                        submitData: _submitCreativeLicensePrice,
-                      )),
-                if (widget.isCreativeOwner)
-                  SizedBox(
-                    width: 500,
-                    child: SubmitForm(
-                      inputLabel: "Transfer Creative License to",
-                      validationData: _validateAddressField,
-                      saveData: _saveTransferCreativeLicenseInputField,
-                      submitData: _submitTransferCreativeLicense,
-                    ),
-                  ),
-              ],
-            ),
+                ),
+            ],
           ),
         ],
       ),
@@ -222,8 +227,8 @@ class _TokenItemState extends State<TokenItem> {
   }
 
   Future<void> _submitOwnershipLicensePrice() async {
-    if (!_form.currentState!.validate()) return;
-    _form.currentState!.save();
+    if (!setOwnershipLicensePriceKey.currentState!.validate()) return;
+    setOwnershipLicensePriceKey.currentState!.save();
 
     setState(() {
       uploadingOwnershipPrice = true;
@@ -239,7 +244,7 @@ class _TokenItemState extends State<TokenItem> {
       setState(() {
         ownershipPriceUploaded = true;
         uploadingOwnershipPrice = false;
-        _form.currentState!.reset();
+        setOwnershipLicensePriceKey.currentState!.reset();
       });
 
       await showDialog(
@@ -282,8 +287,8 @@ class _TokenItemState extends State<TokenItem> {
   }
 
   Future<void> _submitRentalPrice() async {
-    if (!_form.currentState!.validate()) return;
-    _form.currentState!.save();
+    if (!setRentalPriceKey.currentState!.validate()) return;
+    setRentalPriceKey.currentState!.save();
 
     setState(() {
       uploadingRentalPrice = true;
@@ -299,7 +304,7 @@ class _TokenItemState extends State<TokenItem> {
       setState(() {
         rentalPriceUploaded = true;
         uploadingRentalPrice = false;
-        _form.currentState!.reset();
+        setRentalPriceKey.currentState!.reset();
       });
 
       await showDialog(
@@ -342,8 +347,8 @@ class _TokenItemState extends State<TokenItem> {
   }
 
   Future<void> _submitCreativeLicensePrice() async {
-    if (!_form.currentState!.validate()) return;
-    _form.currentState!.save();
+    if (!setCreativeLicensePriceKey.currentState!.validate()) return;
+    setCreativeLicensePriceKey.currentState!.save();
 
     setState(() {
       uploadingCreativePrice = true;
@@ -359,7 +364,7 @@ class _TokenItemState extends State<TokenItem> {
       setState(() {
         creativePriceUploaded = true;
         uploadingCreativePrice = false;
-        _form.currentState!.reset();
+        setCreativeLicensePriceKey.currentState!.reset();
       });
 
       await showDialog(
@@ -402,8 +407,8 @@ class _TokenItemState extends State<TokenItem> {
   }
 
   Future<void> _submitTransferCreativeLicense() async {
-    if (!_form.currentState!.validate()) return;
-    _form.currentState!.save();
+    if (!transferCreativeLicenseKey.currentState!.validate()) return;
+    transferCreativeLicenseKey.currentState!.save();
 
     setState(() {
       uploadingTransferCreative = true;
@@ -419,7 +424,7 @@ class _TokenItemState extends State<TokenItem> {
       setState(() {
         transferCreativeUploaded = true;
         uploadingTransferCreative = false;
-        _form.currentState!.reset();
+        transferCreativeLicenseKey.currentState!.reset();
       });
 
       await showDialog(
@@ -462,8 +467,8 @@ class _TokenItemState extends State<TokenItem> {
   }
 
   Future<void> _submitTransferOwnershipLicense() async {
-    if (!_form.currentState!.validate()) return;
-    _form.currentState!.save();
+    if (!transferOwnershipLicenseKey.currentState!.validate()) return;
+    transferOwnershipLicenseKey.currentState!.save();
 
     setState(() {
       uploadingTransferOwnership = true;
@@ -479,7 +484,7 @@ class _TokenItemState extends State<TokenItem> {
       setState(() {
         transferOwnershipUploaded = true;
         uploadingTransferOwnership = false;
-        _form.currentState!.reset();
+        transferOwnershipLicenseKey.currentState!.reset();
       });
 
       await showDialog(

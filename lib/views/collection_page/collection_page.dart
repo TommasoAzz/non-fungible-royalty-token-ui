@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/collection.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/token.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/viewmodel/marketplace_vm.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/locator.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/page_title/page_title.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/token_item/token_item.dart';
+import '../../business_logic/models/collection.dart';
+import '../../business_logic/models/token.dart';
+import '../../business_logic/viewmodel/marketplace_vm.dart';
+import '../../locator.dart';
+import '../../widgets/page_title/page_title.dart';
+import '../../widgets/token_item/token_item.dart';
 
 class CollectionPage extends StatelessWidget {
   const CollectionPage({Key? key}) : super(key: key);
@@ -13,15 +13,14 @@ class CollectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final marketplaceVM = locator<MarketplaceVM>();
     final collectionData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final name = collectionData['collectionName'] as String;
-    final address = collectionData['collectionAddress'] as String;
+    final collection = collectionData['collection'] as Collection;
 
     return Column(
       children: [
-        PageTitle(title: name),
+        PageTitle(title: collection.name),
         const SizedBox(height: 20),
         FutureBuilder<List<Token>>(
-          future: marketplaceVM.getTokens(address),
+          future: marketplaceVM.getTokens(collection.address),
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return const Center(child: CircularProgressIndicator());
@@ -46,6 +45,7 @@ class CollectionPage extends StatelessWidget {
                         isCreativeOwner: token.creativeOwner == marketplaceVM.loggedAccount,
                         isOwner: token.owner == marketplaceVM.loggedAccount,
                         token: token,
+                        collection: collection,
                       ))
                   .toList(),
             );

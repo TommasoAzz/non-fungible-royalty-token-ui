@@ -14,8 +14,7 @@ class CollectionItem extends StatelessWidget {
         Navigator.of(context).restorablePushNamed(
           RouteManager.collection,
           arguments: {
-            'collectionName': collection.name,
-            'collectionAddress': collection.address,
+            'collection': collection,
           },
         );
       },
@@ -55,7 +54,7 @@ class CollectionItem extends StatelessWidget {
                 height: 8,
               ),
               Text(
-                "Available token:\n${collection.tokens}",
+                "${collection.availableTokens} tokens",
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w200,
