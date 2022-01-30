@@ -60,7 +60,6 @@ class _TokenItemState extends State<TokenItem> {
       child: Column(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.2,
             padding: const EdgeInsets.all(8),
             child: Image.network(widget.token.uri),
           ),
