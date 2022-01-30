@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/token_item/token_item.dart';
+import '../../constants/app_colors.dart';
 
-class ErrorPageView extends StatelessWidget {
-  const ErrorPageView({Key? key, n}) : super(key: key);
+class ErrorView extends StatelessWidget {
+  const ErrorView({Key? key, n}) : super(key: key);
 
   @override
   @override

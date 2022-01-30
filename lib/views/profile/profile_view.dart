@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/page_title/page_title.dart';
-import '../../widgets/profile_list/profile_list_view.dart';
+import '../../widgets/profile_collection_list/profile_collection_list.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -14,19 +14,19 @@ class ProfileView extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          ProfileListView(title: "Created"),
+          ProfileCollectionList(title: "Created"),
           SizedBox(
             height: 20,
           ),
-          ProfileListView(title: "Ownership license"),
+          ProfileCollectionList(title: "Ownership license"),
           SizedBox(
             height: 20,
           ),
-          ProfileListView(title: "Creative license"),
+          ProfileCollectionList(title: "Creative license"),
           SizedBox(
             height: 20,
           ),
-          ProfileListView(title: "Rented")
+          ProfileCollectionList(title: "Rented")
         ],
       ),
     );

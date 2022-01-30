@@ -3,9 +3,9 @@ import '../../routing/route_manager.dart';
 import '../../business_logic/models/collection.dart';
 
 class CollectionItem extends StatelessWidget {
-  const CollectionItem({Key? key, required this.collection}) : super(key: key);
-
   final Collection collection;
+
+  const CollectionItem({Key? key, required this.collection}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/views/collection_page/collection_page_view.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/views/error_page/error_page.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/views/layout_template/layout_template.dart';
-import '../views/collection_page/collection_page.dart';
-import '../views/Create/create_view.dart';
+import '../views/error/error_view.dart';
+import '../widgets/layout_template/layout_template.dart';
+import '../views/create/create_view.dart';
 import '../views/collections/collections_view.dart';
-import 'package:flutter/widgets.dart';
 import '../views/home/home_view.dart';
 import '../views/profile/profile_view.dart';
 import '../views/wallet/wallet_view.dart';
@@ -32,9 +29,9 @@ class RouteManager {
       case wallet:
         return _FadeRoute(const WalletView(), settings);
       case collection:
-        return _FadeRoute(const CollectionsPageView(), settings);
+        return _FadeRoute(const CollectionsView(), settings);
       default:
-        return _FadeRoute(const ErrorPageView(), settings);
+        return _FadeRoute(const ErrorView(), settings);
     }
   }
 }
@@ -43,10 +40,8 @@ class _FadeRoute extends PageRouteBuilder {
   _FadeRoute(final Widget _child, final RouteSettings _settings)
       : super(
           settings: _settings,
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              LayoutTemplate(child: _child),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(
+          pageBuilder: (context, animation, secondaryAnimation) => LayoutTemplate(child: _child),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
             opacity: animation,
             child: child,
           ),

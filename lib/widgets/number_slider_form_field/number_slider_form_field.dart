@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SliderNumber extends StatefulWidget {
+class NumberSliderFormField extends StatefulWidget {
   final String title;
   final void Function(double) saveValue;
 
-  const SliderNumber({
+  const NumberSliderFormField({
     Key? key,
     required this.saveValue,
     required this.title,
   }) : super(key: key);
 
   @override
-  State<SliderNumber> createState() => _SliderNumberState();
+  State<NumberSliderFormField> createState() => _NumberSliderFormFieldState();
 }
 
-class _SliderNumberState extends State<SliderNumber> {
+class _NumberSliderFormFieldState extends State<NumberSliderFormField> {
   // double _currentValue = 0;
 
   @override

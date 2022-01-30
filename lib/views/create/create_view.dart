@@ -4,7 +4,7 @@ import '../../constants/app_colors.dart';
 import '../../locator.dart';
 import '../../widgets/dropzone/dropzone.dart';
 import '../../widgets/page_title/page_title.dart';
-import '../../widgets/slider/slider_number.dart';
+import '../../widgets/number_slider_form_field/number_slider_form_field.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import '../../widgets/form_field/form_field.dart' as form;
 
@@ -63,11 +63,11 @@ class _CreateViewState extends State<CreateView> {
                 const SizedBox(
                   height: 40,
                 ),
-                SliderNumber(
+                NumberSliderFormField(
                   title: "Set royalty (%) for ownership transfer",
                   saveValue: _saveOwnershipTransferInputField,
                 ),
-                SliderNumber(
+                NumberSliderFormField(
                   title: "Set royalty (%) for rental",
                   saveValue: _saveRentalInputField,
                 ),
@@ -89,8 +89,7 @@ class _CreateViewState extends State<CreateView> {
                             "Submitted",
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
-                        if (collectionUploaded)
-                          const Icon(Icons.check_box, size: 16),
+                        if (collectionUploaded) const Icon(Icons.check_box, size: 16),
                         if (!collectionUploaded)
                           const Text(
                             "Submit",
@@ -101,8 +100,7 @@ class _CreateViewState extends State<CreateView> {
                           const SizedBox(
                             height: 20,
                             width: 20,
-                            child:
-                                CircularProgressIndicator(color: Colors.white),
+                            child: CircularProgressIndicator(color: Colors.white),
                           ),
                       ],
                     ),
@@ -151,8 +149,7 @@ class _CreateViewState extends State<CreateView> {
   void _saveOwnershipTransferInputField(final double value) =>
       _ownershipTransferRoyalty = value.toInt();
 
-  void _saveRentalInputField(final double value) =>
-      _rentalRoyalty = value.toInt();
+  void _saveRentalInputField(final double value) => _rentalRoyalty = value.toInt();
 
   void _saveUrlFromDropzone(final String value) => _fileUrls.add(value);
 

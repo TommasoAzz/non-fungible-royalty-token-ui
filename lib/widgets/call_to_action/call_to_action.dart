@@ -5,8 +5,8 @@ import '../../../../constants/app_colors.dart';
 
 class CallToAction extends StatefulWidget {
   final String title;
-  // ignore: use_key_in_widget_constructors
-  const CallToAction(this.title);
+
+  const CallToAction(this.title, {Key? key}) : super(key: key);
 
   @override
   State<CallToAction> createState() => _CallToActionState();

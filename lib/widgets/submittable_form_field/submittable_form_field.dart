@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
 import '../../widgets/form_field/form_field.dart' as form;
 
-class SubmitForm extends StatelessWidget {
+class SubmittableFormField extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
   final void Function() submit;
@@ -13,7 +13,7 @@ class SubmitForm extends StatelessWidget {
   final bool dataUploaded;
   final bool uploadingData;
 
-  const SubmitForm({
+  const SubmittableFormField({
     Key? key,
     required this.formKey,
     required this.inputLabel,

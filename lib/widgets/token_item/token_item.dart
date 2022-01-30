@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/collection.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/token.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/viewmodel/marketplace_vm.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/form_submit/form_submit.dart';
+import '../../business_logic/models/collection.dart';
+import '../../business_logic/models/token.dart';
+import '../../business_logic/viewmodel/marketplace_vm.dart';
+import '../submittable_form_field/submittable_form_field.dart';
 import '../../locator.dart';
 import '../../widgets/style_text/style_text.dart';
 
@@ -81,16 +80,13 @@ class _TokenItemState extends State<TokenItem> {
                     title: "Rented by: ${widget.token.rentedBy.length} people",
                   ),
                   StyleText(
-                    title:
-                        "Ownership license price: ${widget.token.ownershipLicensePrice} ETH",
+                    title: "Ownership license price: ${widget.token.ownershipLicensePrice} ETH",
                   ),
                   StyleText(
-                    title:
-                        "Creative license price: ${widget.token.creativeLicensePrice} ETH",
+                    title: "Creative license price: ${widget.token.creativeLicensePrice} ETH",
                   ),
                   StyleText(
-                    title:
-                        "Rental price per second: ${widget.token.rentalPricePerSecond} ETH/sec",
+                    title: "Rental price per second: ${widget.token.rentalPricePerSecond} ETH/sec",
                   ),
                   StyleText(
                     title:
@@ -101,13 +97,11 @@ class _TokenItemState extends State<TokenItem> {
                   ),
                   if (widget.isOwner)
                     StyleText(
-                      title:
-                          "Ownership requests from: ${widget.token.ownershipLicenseRequests}",
+                      title: "Ownership requests from: ${widget.token.ownershipLicenseRequests}",
                     ),
                   if (widget.isCreativeOwner)
                     StyleText(
-                      title:
-                          "Creative requests from: ${widget.token.creativeLicenseRequests}",
+                      title: "Creative requests from: ${widget.token.creativeLicenseRequests}",
                     ),
                 ],
               ),
@@ -120,7 +114,7 @@ class _TokenItemState extends State<TokenItem> {
               if (widget.isOwner)
                 SizedBox(
                     width: 500,
-                    child: SubmitForm(
+                    child: SubmittableFormField(
                       formKey: setOwnershipLicensePriceKey,
                       inputLabel: "Set Ownership License price",
                       validate: _validateNumberField,
@@ -132,7 +126,7 @@ class _TokenItemState extends State<TokenItem> {
               if (widget.isOwner)
                 SizedBox(
                   width: 500,
-                  child: SubmitForm(
+                  child: SubmittableFormField(
                     formKey: setRentalPriceKey,
                     inputLabel: "Set Rental price per second",
                     validate: _validateNumberField,
@@ -145,7 +139,7 @@ class _TokenItemState extends State<TokenItem> {
               if (widget.isOwner)
                 SizedBox(
                   width: 500,
-                  child: SubmitForm(
+                  child: SubmittableFormField(
                     formKey: transferOwnershipLicenseKey,
                     inputLabel: "Transfer Ownership License to",
                     validate: _validateAddressField,
@@ -158,7 +152,7 @@ class _TokenItemState extends State<TokenItem> {
               if (widget.isCreativeOwner)
                 SizedBox(
                     width: 500,
-                    child: SubmitForm(
+                    child: SubmittableFormField(
                       formKey: setCreativeLicensePriceKey,
                       inputLabel: "Set Creative License price",
                       validate: _validateNumberField,
@@ -170,7 +164,7 @@ class _TokenItemState extends State<TokenItem> {
               if (widget.isCreativeOwner)
                 SizedBox(
                   width: 500,
-                  child: SubmitForm(
+                  child: SubmittableFormField(
                     formKey: transferCreativeLicenseKey,
                     inputLabel: "Transfer Creative License to",
                     validate: _validateAddressField,
