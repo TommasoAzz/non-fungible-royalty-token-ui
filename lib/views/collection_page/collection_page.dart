@@ -19,37 +19,39 @@ class CollectionPage extends StatelessWidget {
       children: [
         PageTitle(title: collection.name),
         const SizedBox(height: 20),
-        FutureBuilder<List<Token>>(
-          future: marketplaceVM.getTokens(collection.address),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return const Center(child: CircularProgressIndicator());
-            }
+        Expanded(
+          child: FutureBuilder<List<Token>>(
+            future: marketplaceVM.getTokens(collection.address),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-            if (snapshot.hasError) {
-              return Text("Error: ${snapshot.error}");
-            }
+              if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              }
 
-            if (snapshot.data!.isEmpty) {
-              return const Text("There are no tokens for collection.");
-            }
+              if (snapshot.data!.isEmpty) {
+                return const Text("There are no tokens for collection.");
+              }
 
-            return GridView.count(
-              primary: false,
-              // padding: EdgeInsets.all(padding),
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 10,
-              crossAxisCount: 2,
-              children: snapshot.data!
-                  .map((token) => TokenItem(
-                        isCreativeOwner: token.creativeOwner == marketplaceVM.loggedAccount,
-                        isOwner: token.owner == marketplaceVM.loggedAccount,
-                        token: token,
-                        collection: collection,
-                      ))
-                  .toList(),
-            );
-          },
+              return GridView.count(
+                primary: false,
+                // padding: EdgeInsets.all(padding),
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 10,
+                crossAxisCount: 2,
+                children: snapshot.data!
+                    .map((token) => TokenItem(
+                          isCreativeOwner: token.creativeOwner == marketplaceVM.loggedAccount,
+                          isOwner: token.owner == marketplaceVM.loggedAccount,
+                          token: token,
+                          collection: collection,
+                        ))
+                    .toList(),
+              );
+            },
+          ),
         ),
       ],
     );

@@ -65,15 +65,12 @@ class _TokenItemState extends State<TokenItem> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
-                height: 210,
-                width: 200,
+                width: MediaQuery.of(context).size.width * 0.2,
                 padding: const EdgeInsets.all(8),
                 child: Image.network(widget.token.uri),
               ),
               Container(
                 margin: const EdgeInsets.all(5),
-                height: 210,
-                width: 400,
                 padding: const EdgeInsets.all(8),
                 child: SingleChildScrollView(
                   child: Column(
