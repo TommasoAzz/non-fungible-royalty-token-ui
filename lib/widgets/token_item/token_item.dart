@@ -60,61 +60,58 @@ class _TokenItemState extends State<TokenItem> {
       elevation: 5,
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width * 0.2,
-                padding: const EdgeInsets.all(8),
-                child: Image.network(widget.token.uri),
-              ),
-              Container(
-                margin: const EdgeInsets.all(5),
-                padding: const EdgeInsets.all(8),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      StyleText(
-                        title: "ID: ${widget.token.id}",
-                      ),
-                      StyleText(
-                        title: "Owner: ${widget.token.owner}",
-                      ),
-                      StyleText(
-                        title: "Rented by: ${widget.token.rentedBy.length} people",
-                      ),
-                      StyleText(
-                        title: "Ownership license price: ${widget.token.ownershipLicensePrice} ETH",
-                      ),
-                      StyleText(
-                        title: "Creative license price: ${widget.token.creativeLicensePrice} ETH",
-                      ),
-                      StyleText(
-                        title:
-                            "Rental price per second: ${widget.token.rentalPricePerSecond} ETH/sec",
-                      ),
-                      StyleText(
-                        title:
-                            "Royalty for ownership transfer: ${widget.token.royaltyOwnershipTransfer}",
-                      ),
-                      StyleText(
-                        title: "Royalty for rental: ${widget.token.royaltyRental}",
-                      ),
-                      if (widget.isOwner)
-                        StyleText(
-                          title:
-                              "Ownership requests from: ${widget.token.ownershipLicenseRequests}",
-                        ),
-                      if (widget.isCreativeOwner)
-                        StyleText(
-                          title: "Creative requests from: ${widget.token.creativeLicenseRequests}",
-                        ),
-                    ],
+          Container(
+            width: MediaQuery.of(context).size.width * 0.2,
+            padding: const EdgeInsets.all(8),
+            child: Image.network(widget.token.uri),
+          ),
+          Container(
+            margin: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(8),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  StyleText(
+                    title: "ID: ${widget.token.id}",
                   ),
-                ),
+                  StyleText(
+                    title: "Owner: ${widget.token.owner}",
+                  ),
+                  StyleText(
+                    title: "Rented by: ${widget.token.rentedBy.length} people",
+                  ),
+                  StyleText(
+                    title:
+                        "Ownership license price: ${widget.token.ownershipLicensePrice} ETH",
+                  ),
+                  StyleText(
+                    title:
+                        "Creative license price: ${widget.token.creativeLicensePrice} ETH",
+                  ),
+                  StyleText(
+                    title:
+                        "Rental price per second: ${widget.token.rentalPricePerSecond} ETH/sec",
+                  ),
+                  StyleText(
+                    title:
+                        "Royalty for ownership transfer: ${widget.token.royaltyOwnershipTransfer}",
+                  ),
+                  StyleText(
+                    title: "Royalty for rental: ${widget.token.royaltyRental}",
+                  ),
+                  if (widget.isOwner)
+                    StyleText(
+                      title:
+                          "Ownership requests from: ${widget.token.ownershipLicenseRequests}",
+                    ),
+                  if (widget.isCreativeOwner)
+                    StyleText(
+                      title:
+                          "Creative requests from: ${widget.token.creativeLicenseRequests}",
+                    ),
+                ],
               ),
-            ],
+            ),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,

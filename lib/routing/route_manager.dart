@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/views/collection_page/collection_page_view.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/views/error_page/error_page.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/views/layout_template/layout_template.dart';
 import '../views/collection_page/collection_page.dart';
@@ -31,7 +32,7 @@ class RouteManager {
       case wallet:
         return _FadeRoute(const WalletView(), settings);
       case collection:
-        return _FadeRoute(const CollectionPage(), settings);
+        return _FadeRoute(const CollectionsPageView(), settings);
       default:
         return _FadeRoute(const ErrorPageView(), settings);
     }

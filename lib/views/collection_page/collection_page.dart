@@ -7,12 +7,16 @@ import '../../widgets/page_title/page_title.dart';
 import '../../widgets/token_item/token_item.dart';
 
 class CollectionPage extends StatelessWidget {
-  const CollectionPage({Key? key}) : super(key: key);
+  const CollectionPage({Key? key, required this.column, required this.padding})
+      : super(key: key);
+  final int column;
+  final double padding;
 
   @override
   Widget build(BuildContext context) {
     final marketplaceVM = locator<MarketplaceVM>();
-    final collectionData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final collectionData =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final collection = Collection.fromMap(collectionData['collection']);
 
     return Column(
@@ -37,13 +41,14 @@ class CollectionPage extends StatelessWidget {
 
               return GridView.count(
                 primary: false,
-                // padding: EdgeInsets.all(padding),
+                padding: EdgeInsets.all(padding),
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 10,
-                crossAxisCount: 2,
+                crossAxisCount: column,
                 children: snapshot.data!
                     .map((token) => TokenItem(
-                          isCreativeOwner: token.creativeOwner == marketplaceVM.loggedAccount,
+                          isCreativeOwner: token.creativeOwner ==
+                              marketplaceVM.loggedAccount,
                           isOwner: token.owner == marketplaceVM.loggedAccount,
                           token: token,
                           collection: collection,
