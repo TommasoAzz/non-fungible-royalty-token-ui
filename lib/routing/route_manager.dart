@@ -19,45 +19,31 @@ class RouteManager {
   static const String collection = "/collection";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final routingData = settings.name?.getRoutingData;
-    switch (routingData?.route) {
+    switch (settings.name!.getRoutingData.route) {
       case home:
-        return _getPageRoute(const HomeView(), settings);
+        return _FadeRoute(const HomeView(), settings);
       case collections:
-        return _getPageRoute(const CollectionsView(), settings);
+        return _FadeRoute(const CollectionsView(), settings);
       case create:
-        return _getPageRoute(const CreateView(), settings);
+        return _FadeRoute(const CreateView(), settings);
       case profile:
-        return _getPageRoute(const ProfileView(), settings);
+        return _FadeRoute(const ProfileView(), settings);
       case wallet:
-        return _getPageRoute(const WalletView(), settings);
+        return _FadeRoute(const WalletView(), settings);
       case collection:
-        // Get the collection address from the data.
-        final collectionAddr = int.tryParse(routingData!['']) ?? '';
-        final args = settings.arguments as Map<String, dynamic>;
-        if (!args.containsKey('collection')) {
-          args.addAll({'collection': collectionAddr});
-        }
-        return _getPageRoute(const CollectionPage(), settings);
+        return _FadeRoute(const CollectionPage(), settings);
       default:
-        return _getPageRoute(const ErrorPageView(), settings);
+        return _FadeRoute(const ErrorPageView(), settings);
     }
-  }
-
-  static PageRoute _getPageRoute(Widget child, RouteSettings settings) {
-    return _FadeRoute(child: child, routeName: settings.name!);
   }
 }
 
 class _FadeRoute extends PageRouteBuilder {
-  final Widget child;
-  final String routeName;
-
-  _FadeRoute({required this.child, required this.routeName})
+  _FadeRoute(final Widget _child, final RouteSettings _settings)
       : super(
-          settings: RouteSettings(name: routeName),
+          settings: _settings,
           pageBuilder: (context, animation, secondaryAnimation) =>
-              LayoutTemplate(child: child),
+              LayoutTemplate(child: _child),
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
               FadeTransition(
             opacity: animation,
