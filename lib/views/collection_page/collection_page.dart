@@ -15,8 +15,6 @@ class CollectionPage extends StatelessWidget {
     final collectionData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final name = collectionData['collectionName'] as String;
     final address = collectionData['collectionAddress'] as String;
-    print(
-        "ModalRoute.of(context)!.settings.arguments: ${ModalRoute.of(context)!.settings.arguments}");
 
     return Column(
       children: [

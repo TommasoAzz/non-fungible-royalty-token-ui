@@ -21,8 +21,7 @@ class ERC1190Marketplace {
   Future<EthAddress> creatorOf(final EthAddress collectionAddress) async {
     _logger.v("creatorOf");
 
-    final creator =
-        await contract.call<EthAddress>("creatorOf", [collectionAddress]);
+    final creator = await contract.call<EthAddress>("creatorOf", [collectionAddress]);
 
     return creator;
   }
@@ -37,14 +36,12 @@ class ERC1190Marketplace {
     return collections;
   }
 
-  Future<List<EthAddress>> collectionsOf(
-      final EthAddress collectionOwner) async {
+  Future<List<EthAddress>> collectionsOf(final EthAddress collectionOwner) async {
     _logger.v("collectionsOf");
 
-    final collections =
-        (await contract.call<List<dynamic>>("collectionsOf", [collectionOwner]))
-            .map((addr) => addr as String)
-            .toList();
+    final collections = (await contract.call<List<dynamic>>("collectionsOf", [collectionOwner]))
+        .map((addr) => addr as String)
+        .toList();
 
     return collections;
   }
@@ -58,8 +55,7 @@ class ERC1190Marketplace {
 
     final completer = Completer<EthAddress>();
 
-    contract.once("CollectionDeployed",
-        (name, symbol, baseURI, contractAddress, _) {
+    contract.once("CollectionDeployed", (name, symbol, baseURI, contractAddress, _) {
       _logger.i("Event: CollectionDeployed");
       _logger.i("- name: ${dartify(name)}");
       _logger.i("- symbol: ${dartify(symbol)}");
@@ -68,8 +64,11 @@ class ERC1190Marketplace {
       completer.complete(contractAddress);
     });
 
-    final tx =
-        await contract.send("deployNewCollection", [name, symbol, baseURI]);
+    final tx = await contract.send("deployNewCollection", [
+      name,
+      symbol,
+      baseURI,
+    ]);
     await tx.wait();
 
     return await completer.future;
@@ -107,10 +106,13 @@ class ERC1190Marketplace {
   ) async {
     _logger.v("getOwnershipLicenseTransferRequests");
 
-    return await contract.call<List<EthAddress>>(
+    final requests = (await contract.call<List<dynamic>>(
       "getOwnershipLicenseTransferRequests",
       [collectionAddress, tokenId],
-    );
+    ))
+        .map((addr) => addr as String)
+        .toList();
+    return requests;
   }
 
   Future<List<EthAddress>> getCreativeLicenseTransferRequests(
@@ -119,9 +121,13 @@ class ERC1190Marketplace {
   ) async {
     _logger.v("getCreativeLicenseTransferRequests");
 
-    return await contract.call<List<EthAddress>>(
+    final requests = (await contract.call<List<dynamic>>(
       "getCreativeLicenseTransferRequests",
       [collectionAddress, tokenId],
-    );
+    ))
+        .map((addr) => addr as String)
+        .toList();
+
+    return requests;
   }
 }

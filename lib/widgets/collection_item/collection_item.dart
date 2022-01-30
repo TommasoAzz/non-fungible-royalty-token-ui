@@ -11,9 +11,6 @@ class CollectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print("RouteManager.collection: ${RouteManager.collection}");
-        print("collection.address: ${collection.address}");
-
         Navigator.of(context).restorablePushNamed(
           RouteManager.collection,
           arguments: {

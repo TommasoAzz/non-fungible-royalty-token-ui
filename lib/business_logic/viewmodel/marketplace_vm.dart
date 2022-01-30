@@ -173,7 +173,7 @@ class MarketplaceVM with ChangeNotifier {
     final contract = loadERC1190SmartContract(collectionAddress);
     final tokenIds = List.generate(
       await contract.availableTokens,
-      (index) => index,
+      (index) => index + 1,
       growable: false,
     );
 

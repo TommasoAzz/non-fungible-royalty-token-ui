@@ -18,7 +18,6 @@ class RouteManager {
   static const String collection = "/collection";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    print(settings.arguments);
     switch (settings.name!.getRoutingData.route) {
       case home:
         return _FadeRoute(const HomeView(), settings);
