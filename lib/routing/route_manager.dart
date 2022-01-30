@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/views/error_page/error_page.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/views/layout_template/layout_template.dart';
 import '../views/collection_page/collection_page.dart';
 import '../views/Create/create_view.dart';
@@ -39,7 +40,7 @@ class RouteManager {
         }
         return _getPageRoute(const CollectionPage(), settings);
       default:
-        return _getPageRoute(const HomeView(), settings);
+        return _getPageRoute(const ErrorPageView(), settings);
     }
   }
 
@@ -55,8 +56,10 @@ class _FadeRoute extends PageRouteBuilder {
   _FadeRoute({required this.child, required this.routeName})
       : super(
           settings: RouteSettings(name: routeName),
-          pageBuilder: (context, animation, secondaryAnimation) => LayoutTemplate(child: child),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              LayoutTemplate(child: child),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(
             opacity: animation,
             child: child,
           ),

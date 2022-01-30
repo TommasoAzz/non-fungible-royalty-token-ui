@@ -23,7 +23,11 @@ class CollectionItem extends StatelessWidget {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(5),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(
+                height: 8,
+              ),
               Text(
                 "${collection.name} (${collection.symbol})".toUpperCase(),
                 style: const TextStyle(
@@ -33,14 +37,9 @@ class CollectionItem extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              // Text(
-              //   "Symbol: ${collection.symbol}",
-              //   style: const TextStyle(
-              //     fontSize: 18,
-              //     fontWeight: FontWeight.w200,
-              //     color: Colors.black,
-              //   ),
-              // ),
+              const SizedBox(
+                height: 8,
+              ),
               Text(
                 "Created by:\n${collection.creator}",
                 style: const TextStyle(
@@ -48,7 +47,18 @@ class CollectionItem extends StatelessWidget {
                   fontWeight: FontWeight.w200,
                   color: Colors.black,
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                "Available token:\n${collection.tokens}",
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w200,
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
         ),

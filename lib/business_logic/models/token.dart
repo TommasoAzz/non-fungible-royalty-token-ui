@@ -5,14 +5,16 @@ typedef EthAddress = String;
 class Token {
   final int id;
   final String uri;
-  final int ownershipLicensePrice;
-  final int creativeLicensePrice;
-  final int rentalPricePerSecond;
+  final double ownershipLicensePrice;
+  final double creativeLicensePrice;
+  final double rentalPricePerSecond;
   final EthAddress owner;
   final EthAddress creativeOwner;
   final List<EthAddress> rentedBy;
   final List<EthAddress> ownershipLicenseRequests;
   final List<EthAddress> creativeLicenseRequests;
+  final int royaltyOwnershipTransfer;
+  final int royaltyRental;
 
   Token({
     required this.id,
@@ -25,11 +27,13 @@ class Token {
     required this.rentedBy,
     this.ownershipLicenseRequests = const [],
     this.creativeLicenseRequests = const [],
+    required this.royaltyOwnershipTransfer,
+    required this.royaltyRental,
   });
 
   @override
   String toString() {
-    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests)';
+    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, royaltyOwnershipTransfer: $royaltyOwnershipTransfer, royaltyRental: $royaltyRental)';
   }
 
   @override
@@ -47,7 +51,9 @@ class Token {
         other.creativeOwner == creativeOwner &&
         listEquals(other.rentedBy, rentedBy) &&
         listEquals(other.ownershipLicenseRequests, ownershipLicenseRequests) &&
-        listEquals(other.creativeLicenseRequests, creativeLicenseRequests);
+        listEquals(other.creativeLicenseRequests, creativeLicenseRequests) &&
+        other.royaltyOwnershipTransfer == royaltyOwnershipTransfer &&
+        other.royaltyRental == royaltyRental;
   }
 
   @override
@@ -61,6 +67,8 @@ class Token {
         creativeOwner.hashCode ^
         rentedBy.hashCode ^
         ownershipLicenseRequests.hashCode ^
-        creativeLicenseRequests.hashCode;
+        creativeLicenseRequests.hashCode ^
+        royaltyOwnershipTransfer.hashCode ^
+        royaltyRental.hashCode;
   }
 }

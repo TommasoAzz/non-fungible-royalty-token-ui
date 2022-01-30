@@ -68,8 +68,11 @@ class ERC1190Marketplace {
       completer.complete(contractAddress);
     });
 
-    final tx =
-        await contract.send("deployNewCollection", [name, symbol, baseURI]);
+    final tx = await contract.send("deployNewCollection", [
+      name,
+      symbol,
+      baseURI,
+    ]);
     await tx.wait();
 
     return await completer.future;
@@ -107,10 +110,13 @@ class ERC1190Marketplace {
   ) async {
     _logger.v("getOwnershipLicenseTransferRequests");
 
-    return await contract.call<List<EthAddress>>(
+    final requests = (await contract.call<List<dynamic>>(
       "getOwnershipLicenseTransferRequests",
       [collectionAddress, tokenId],
-    );
+    ))
+        .map((addr) => addr as String)
+        .toList();
+    return requests;
   }
 
   Future<List<EthAddress>> getCreativeLicenseTransferRequests(
@@ -119,9 +125,13 @@ class ERC1190Marketplace {
   ) async {
     _logger.v("getCreativeLicenseTransferRequests");
 
-    return await contract.call<List<EthAddress>>(
+    final requests = (await contract.call<List<dynamic>>(
       "getCreativeLicenseTransferRequests",
       [collectionAddress, tokenId],
-    );
+    ))
+        .map((addr) => addr as String)
+        .toList();
+
+    return requests;
   }
 }

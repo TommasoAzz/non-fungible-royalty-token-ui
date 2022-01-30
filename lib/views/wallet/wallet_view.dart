@@ -26,7 +26,7 @@ class _WalletViewState extends State<WalletView> {
   }
 
   void update() {
-    if(mounted) {
+    if (mounted) {
       setState(() {});
     }
   }
@@ -55,7 +55,7 @@ class _WalletViewState extends State<WalletView> {
           if (isConnected)
             Text(
               "Connected with account: ${vm.loggedAccount}",
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 20),
             ),
           if (!isConnected)
             ElevatedButton(
