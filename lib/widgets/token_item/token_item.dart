@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/views/token_settings/token_settings_view.dart';
 import '../../views/rent_token/rent_token_view.dart';
 import 'token_info.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/models/token.dart';
 import '../../business_logic/viewmodel/marketplace_vm.dart';
-import '../submittable_form_field/submittable_form_field.dart';
 import '../../locator.dart';
 
 class TokenItem extends StatefulWidget {
@@ -118,79 +118,44 @@ class _TokenItemState extends State<TokenItem> {
     );
   }
 
-  Future<void> openDialogSettings() => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          content: Column(
-            children: [
-              if (widget.isOwner)
-                SizedBox(
-                  width: 500,
-                  child: SubmittableFormField(
-                    formKey: setOwnershipLicensePriceKey,
-                    inputLabel: "Set Ownership License price",
-                    validate: _validateNumberField,
-                    save: _saveOwnershipLicensePriceInputField,
-                    submit: _submitOwnershipLicensePrice,
-                    uploadingData: uploadingOwnershipPrice,
-                    dataUploaded: ownershipPriceUploaded,
-                  ),
-                ),
-              if (widget.isOwner)
-                SizedBox(
-                  width: 500,
-                  child: SubmittableFormField(
-                    formKey: setRentalPriceKey,
-                    inputLabel: "Set Rental price per second",
-                    validate: _validateNumberField,
-                    save: _saveRentalPricePerSecondInputField,
-                    submit: _submitRentalPrice,
-                    uploadingData: uploadingRentalPrice,
-                    dataUploaded: rentalPriceUploaded,
-                  ),
-                ),
-              if (widget.isOwner)
-                SizedBox(
-                  width: 500,
-                  child: SubmittableFormField(
-                    formKey: transferOwnershipLicenseKey,
-                    inputLabel: "Transfer Ownership License to",
-                    validate: _validateAddressField,
-                    save: _saveTransferOwnershipLicenseInputField,
-                    submit: _submitTransferOwnershipLicense,
-                    uploadingData: uploadingTransferOwnership,
-                    dataUploaded: transferOwnershipUploaded,
-                  ),
-                ),
-              if (widget.isCreativeOwner)
-                SizedBox(
-                    width: 500,
-                    child: SubmittableFormField(
-                      formKey: setCreativeLicensePriceKey,
-                      inputLabel: "Set Creative License price",
-                      validate: _validateNumberField,
-                      save: _saveCreativeLicensePriceInputField,
-                      submit: _submitCreativeLicensePrice,
-                      dataUploaded: creativePriceUploaded,
-                      uploadingData: uploadingCreativePrice,
-                    )),
-              if (widget.isCreativeOwner)
-                SizedBox(
-                  width: 500,
-                  child: SubmittableFormField(
-                    formKey: transferCreativeLicenseKey,
-                    inputLabel: "Transfer Creative License to",
-                    validate: _validateAddressField,
-                    save: _saveTransferCreativeLicenseInputField,
-                    submit: _submitTransferCreativeLicense,
-                    dataUploaded: transferCreativeUploaded,
-                    uploadingData: uploadingTransferCreative,
-                  ),
-                ),
-            ],
-          ),
+  Future<void> openDialogSettings() async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: TokenSettingsView(
+          validateAddressField: _validateAddressField,
+          validateNumberField: _validateNumberField,
+          isCreativeOwner: widget.isCreativeOwner,
+          isOwner: widget.isOwner,
+          setCreativeLicensePriceKey: setCreativeLicensePriceKey,
+          setOwnershipLicensePriceKey: setOwnershipLicensePriceKey,
+          setRentalPriceKey: setRentalPriceKey,
+          transferCreativeLicenseKey: transferCreativeLicenseKey,
+          transferOwnershipLicenseKey: transferOwnershipLicenseKey,
+          saveCreativeLicensePriceInputField: _saveCreativeLicensePriceInputField,
+          saveOwnershipLicensePriceInputField: _saveOwnershipLicensePriceInputField,
+          saveRentalPricePerSecondInputField: _saveRentalPricePerSecondInputField,
+          saveTransferCreativeLicenseInputField: _saveTransferCreativeLicenseInputField,
+          saveTransferOwnershipLicenseInputField: _saveTransferOwnershipLicenseInputField,
+          submitCreativeLicensePrice: _submitCreativeLicensePrice,
+          submitOwnershipLicensePrice: _submitOwnershipLicensePrice,
+          submitRentalPrice: _submitRentalPrice,
+          submitTransferCreativeLicense: _submitTransferCreativeLicense,
+          submitTransferOwnershipLicense: _submitTransferOwnershipLicense,
+          creativePriceUploaded: creativePriceUploaded,
+          ownershipPriceUploaded: ownershipPriceUploaded,
+          rentalPriceUploaded: rentalPriceUploaded,
+          transferCreativeUploaded: transferCreativeUploaded,
+          transferOwnershipUploaded: transferOwnershipUploaded,
+          uploadingCreativePrice: uploadingCreativePrice,
+          uploadingOwnershipPrice: uploadingOwnershipPrice,
+          uploadingRentalPrice: uploadingRentalPrice,
+          uploadingTransferCreative: uploadingTransferCreative,
+          uploadingTransferOwnership: uploadingTransferOwnership,
         ),
-      );
+      ),
+    );
+  }
 
   void _saveOwnershipLicensePriceInputField(final String? number) =>
       _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0;

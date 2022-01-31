@@ -28,12 +28,12 @@ class SubmittableFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      child: Row(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            width: 250,
+            width: MediaQuery.of(context).size.width * 0.8,
             child: form.FormField(
               inputLabel: inputLabel,
               validationCallback: validate,
@@ -41,7 +41,7 @@ class SubmittableFormField extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            child: Column(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
