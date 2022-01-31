@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../constants/app_colors.dart';
 
-class RentView extends StatelessWidget {
+class RentTokenView extends StatelessWidget {
   final String title;
   final Future<void> Function() submitRent;
   final void Function(DateTime, int) updateRentalData;
@@ -14,7 +14,7 @@ class RentView extends StatelessWidget {
   final DateTime? expirationDate;
   final int rentExpirationDateInMillis;
 
-  const RentView({
+  const RentTokenView({
     Key? key,
     required this.title,
     required this.rented,

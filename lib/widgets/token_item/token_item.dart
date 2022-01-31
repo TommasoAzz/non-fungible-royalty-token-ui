@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../views/rent/rent_view.dart';
+import '../../views/rent_token/rent_token_view.dart';
 import 'token_info.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/models/token.dart';
@@ -105,7 +105,7 @@ class _TokenItemState extends State<TokenItem> {
   Future<void> openRent() async {
     await showDialog(
       context: context,
-      builder: (context) => RentView(
+      builder: (context) => RentTokenView(
         title: 'Rent this token',
         rented: rented,
         renting: renting,
