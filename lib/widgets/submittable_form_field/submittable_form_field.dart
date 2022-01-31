@@ -33,7 +33,7 @@ class SubmittableFormField extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            width: 500,
+            width: 250,
             child: form.FormField(
               inputLabel: inputLabel,
               validationCallback: validate,

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/widgets/alert_dialog_rent/alert_dialog_rent.dart';
 import 'token_info.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/models/token.dart';
@@ -87,7 +88,8 @@ class _TokenItemState extends State<TokenItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   if (widget.token.rentalPricePerSecond > 0)
-                    ElevatedButton(onPressed: openRent, child: const Text("Rent")),
+                    ElevatedButton(
+                        onPressed: openRent, child: const Text("Rent")),
                   if (widget.isOwner || widget.isCreativeOwner)
                     ElevatedButton(
                       onPressed: openDialogSettings,
@@ -104,72 +106,15 @@ class _TokenItemState extends State<TokenItem> {
 
   Future<void> openRent() => showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Rent this token"),
-          content: Column(
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
-                  ),
-                  primary: primaryColor,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: primaryColor),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () => pickDate(context),
-                child: expirationDate == null
-                    ? const Text('Select date')
-                    : Text('Selected date: ${DateFormat('dd/MM/yy').format(expirationDate!)}'),
-              ),
-              rentExpirationDateInMillis == 0
-                  ? const Text("")
-                  : Text(
-                      "The cost for this rent is: ${rentExpirationDateInMillis * 1000 * _rentalPricePerSecond} ETH",
-                    ),
-              ElevatedButton(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (rented)
-                      const Text(
-                        "Submitted",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    if (rented) const Icon(Icons.check_box, size: 16),
-                    if (!rented)
-                      const Text(
-                        "Submit",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    if (renting) const SizedBox(width: 10),
-                    if (renting)
-                      const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(color: Colors.white),
-                      ),
-                  ],
-                ),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
-                  ),
-                  primary: primaryColor,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: primaryColor),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: _submitRent,
-              ),
-            ],
-          ),
+        builder: (context) => AlertDialogRent(
+          title: 'Rent this token',
+          expirationDate: expirationDate,
+          rentExpirationDateInMillis: rentExpirationDateInMillis,
+          rentalPricePerSecond: _rentalPricePerSecond,
+          rented: rented,
+          renting: renting,
+          pickDate: pickDate,
+          submitRent: _submitRent,
         ),
       );
 
@@ -185,7 +130,8 @@ class _TokenItemState extends State<TokenItem> {
     if (newDate == null) return;
     setState(() {
       expirationDate = newDate;
-      rentExpirationDateInMillis = (expirationDate!.difference(DateTime.now()).inMilliseconds);
+      rentExpirationDateInMillis =
+          (expirationDate!.difference(DateTime.now()).inMilliseconds);
     });
   }
 
