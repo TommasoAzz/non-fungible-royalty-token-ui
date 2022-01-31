@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/alert_dialog_rent/alert_dialog_rent.dart';
+import '../../views/rent/rent_view.dart';
 import 'token_info.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/models/token.dart';
@@ -88,8 +87,7 @@ class _TokenItemState extends State<TokenItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   if (widget.token.rentalPricePerSecond > 0)
-                    ElevatedButton(
-                        onPressed: openRent, child: const Text("Rent")),
+                    ElevatedButton(onPressed: openRent, child: const Text("Rent")),
                   if (widget.isOwner || widget.isCreativeOwner)
                     ElevatedButton(
                       onPressed: openDialogSettings,
@@ -104,35 +102,20 @@ class _TokenItemState extends State<TokenItem> {
     );
   }
 
-  Future<void> openRent() => showDialog(
-        context: context,
-        builder: (context) => AlertDialogRent(
-          title: 'Rent this token',
-          expirationDate: expirationDate,
-          rentExpirationDateInMillis: rentExpirationDateInMillis,
-          rentalPricePerSecond: _rentalPricePerSecond,
-          rented: rented,
-          renting: renting,
-          pickDate: pickDate,
-          submitRent: _submitRent,
-        ),
-      );
-
-  Future<void> pickDate(BuildContext context) async {
-    final initialDate = DateTime.now();
-    final newDate = await showDatePicker(
+  Future<void> openRent() async {
+    await showDialog(
       context: context,
-      initialDate: initialDate,
-      firstDate: initialDate,
-      lastDate: DateTime(initialDate.year + 5),
+      builder: (context) => RentView(
+        title: 'Rent this token',
+        rented: rented,
+        renting: renting,
+        submitRent: _submitRent,
+        updateRentalData: _updateRentalData,
+        rentalPricePerSecond: widget.token.rentalPricePerSecond,
+        expirationDate: expirationDate,
+        rentExpirationDateInMillis: rentExpirationDateInMillis,
+      ),
     );
-
-    if (newDate == null) return;
-    setState(() {
-      expirationDate = newDate;
-      rentExpirationDateInMillis =
-          (expirationDate!.difference(DateTime.now()).inMilliseconds);
-    });
   }
 
   Future<void> openDialogSettings() => showDialog(
@@ -542,6 +525,13 @@ class _TokenItemState extends State<TokenItem> {
     }
   }
 
+  void _updateRentalData(final DateTime expirationDate, final int rentExpirationDateInMillis) {
+    setState(() {
+      this.expirationDate = expirationDate;
+      this.rentExpirationDateInMillis = rentExpirationDateInMillis;
+    });
+  }
+
   Future<void> _submitRent() async {
     setState(() {
       renting = true;
@@ -564,7 +554,7 @@ class _TokenItemState extends State<TokenItem> {
         builder: (context) => AlertDialog(
           title: const Text('Token rented successfully'),
           content: Text(
-            'Token ${widget.token.id} is rented until $expirationDate ',
+            "Token ${widget.token.id} is rented until ${DateFormat('gg/MM/yy').format(expirationDate!)}.",
           ),
           actions: [
             ElevatedButton(

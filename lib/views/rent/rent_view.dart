@@ -1,35 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
+import '../../constants/app_colors.dart';
 
-class AlertDialogRent extends StatefulWidget {
+class RentView extends StatelessWidget {
   final String title;
-  final void Function() submitRent;
+  final Future<void> Function() submitRent;
+  final void Function(DateTime, int) updateRentalData;
   final double rentalPricePerSecond;
-  final void Function(BuildContext) pickDate;
 
-  bool rented;
-  bool renting;
-  int rentExpirationDateInMillis;
-  DateTime? expirationDate;
+  final bool rented;
+  final bool renting;
 
-  AlertDialogRent(
-      {Key? key,
-      required this.pickDate,
-      required this.title,
-      required this.expirationDate,
-      required this.rentExpirationDateInMillis,
-      required this.rented,
-      required this.renting,
-      required this.rentalPricePerSecond,
-      required this.submitRent})
-      : super(key: key);
+  final DateTime? expirationDate;
+  final int rentExpirationDateInMillis;
 
-  @override
-  _AlertDialogRentState createState() => _AlertDialogRentState();
-}
+  const RentView({
+    Key? key,
+    required this.title,
+    required this.rented,
+    required this.renting,
+    required this.rentalPricePerSecond,
+    required this.updateRentalData,
+    required this.submitRent,
+    required this.expirationDate,
+    this.rentExpirationDateInMillis = 0,
+  }) : super(key: key);
 
-class _AlertDialogRentState extends State<AlertDialogRent> {
+  Future<void> _pickDate(BuildContext context) async {
+    final initialDate = DateTime.now();
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: initialDate,
+      lastDate: DateTime(initialDate.year + 5),
+    );
+
+    if (newDate == null) return;
+
+    updateRentalData(newDate, (newDate.difference(DateTime.now()).inMilliseconds));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -51,35 +61,34 @@ class _AlertDialogRentState extends State<AlertDialogRent> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () => widget.pickDate(context),
-              child: widget.expirationDate == null
+              onPressed: () => _pickDate(context),
+              child: expirationDate == null
                   ? const Text('Select date')
-                  : Text(
-                      'Selected date: ${DateFormat('dd/MM/yy').format(widget.expirationDate!)}'),
+                  : Text('Selected date: ${DateFormat('dd/MM/yy').format(expirationDate!)}'),
             ),
-            widget.rentExpirationDateInMillis == 0
+            rentExpirationDateInMillis == 0
                 ? const Text("")
                 : Text(
-                    "The cost for this rent is: ${widget.rentExpirationDateInMillis * 1000 * widget.rentalPricePerSecond} ETH",
+                    "The cost for this rent is: ${rentExpirationDateInMillis * 1000 * rentalPricePerSecond} ETH.",
                   ),
             ElevatedButton(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (widget.rented)
+                  if (rented)
                     const Text(
                       "Submitted",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                  if (widget.rented) const Icon(Icons.check_box, size: 16),
-                  if (!widget.rented)
+                  if (rented) const Icon(Icons.check_box, size: 16),
+                  if (!rented)
                     const Text(
                       "Submit",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                  if (widget.renting) const SizedBox(width: 10),
-                  if (widget.renting)
+                  if (renting) const SizedBox(width: 10),
+                  if (renting)
                     const SizedBox(
                       height: 20,
                       width: 20,
@@ -98,29 +107,11 @@ class _AlertDialogRentState extends State<AlertDialogRent> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: widget.submitRent,
+              onPressed: submitRent,
             ),
           ],
         ),
       ),
     );
   }
-
-  // Future<void> pickDate(BuildContext context) async {
-  //   final initialDate = DateTime.now();
-  //   final newDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: initialDate,
-  //     firstDate: initialDate,
-  //     lastDate: DateTime(initialDate.year + 5),
-  //   );
-
-  //   if (newDate == null) return;
-  //   setState(() {
-  //     widget.expirationDate = newDate;
-  //     widget.rentExpirationDateInMillis =
-  //         (widget.expirationDate!.difference(DateTime.now()).inMilliseconds);
-  //   }
-  // );
-  //}
 }
