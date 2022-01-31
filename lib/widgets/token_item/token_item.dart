@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
 import 'token_info.dart';
 import '../../business_logic/models/collection.dart';
@@ -85,16 +86,11 @@ class _TokenItemState extends State<TokenItem> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        openRent();
-                      },
-                      child: const Text("Rent")),
+                  if (widget.token.rentalPricePerSecond > 0)
+                    ElevatedButton(onPressed: openRent, child: const Text("Rent")),
                   if (widget.isOwner || widget.isCreativeOwner)
                     ElevatedButton(
-                      onPressed: () {
-                        openDialogSettings();
-                      },
+                      onPressed: openDialogSettings,
                       child: const Text("Settings"),
                     ),
                 ],
@@ -106,10 +102,10 @@ class _TokenItemState extends State<TokenItem> {
     );
   }
 
-  Future openRent() => showDialog(
+  Future<void> openRent() => showDialog(
         context: context,
-        builder: (contex) => AlertDialog(
-          title: Text("Rent this token"),
+        builder: (context) => AlertDialog(
+          title: const Text("Rent this token"),
           content: Column(
             children: [
               ElevatedButton(
@@ -126,14 +122,14 @@ class _TokenItemState extends State<TokenItem> {
                 ),
                 onPressed: () => pickDate(context),
                 child: expirationDate == null
-                    ? Text('Select date')
-                    : Text(
-                        'Selected date: ${expirationDate!.day}/${expirationDate!.month}/${expirationDate!.year}'),
+                    ? const Text('Select date')
+                    : Text('Selected date: ${DateFormat('dd/MM/yy').format(expirationDate!)}'),
               ),
               rentExpirationDateInMillis == 0
-                  ? Text("")
+                  ? const Text("")
                   : Text(
-                      "The cost for this rent is: ${rentExpirationDateInMillis * 1000 * _rentalPricePerSecond} "),
+                      "The cost for this rent is: ${rentExpirationDateInMillis * 1000 * _rentalPricePerSecond} ETH",
+                    ),
               ElevatedButton(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -177,26 +173,25 @@ class _TokenItemState extends State<TokenItem> {
         ),
       );
 
-  Future pickDate(BuildContext context) async {
+  Future<void> pickDate(BuildContext context) async {
     final initialDate = DateTime.now();
     final newDate = await showDatePicker(
       context: context,
       initialDate: initialDate,
-      firstDate: DateTime(DateTime.now().year),
-      lastDate: DateTime(DateTime.now().year + 5),
+      firstDate: initialDate,
+      lastDate: DateTime(initialDate.year + 5),
     );
 
     if (newDate == null) return;
     setState(() {
       expirationDate = newDate;
-      rentExpirationDateInMillis =
-          (expirationDate!.difference(DateTime.now()).inMilliseconds);
+      rentExpirationDateInMillis = (expirationDate!.difference(DateTime.now()).inMilliseconds);
     });
   }
 
-  Future openDialogSettings() => showDialog(
+  Future<void> openDialogSettings() => showDialog(
         context: context,
-        builder: (contex) => AlertDialog(
+        builder: (context) => AlertDialog(
           content: Column(
             children: [
               if (widget.isOwner)
@@ -602,21 +597,20 @@ class _TokenItemState extends State<TokenItem> {
   }
 
   Future<void> _submitRent() async {
-    // if (!rentKey.currentState!.validate()) return;
-    // rentKey.currentState!.save();
-
     setState(() {
       renting = true;
     });
 
     try {
-      await marketplaceVM.rentAsset(widget.collection.address, widget.token.id,
-          rentExpirationDateInMillis);
+      await marketplaceVM.rentAsset(
+        widget.collection.address,
+        widget.token.id,
+        rentExpirationDateInMillis,
+      );
 
       setState(() {
         rented = true;
         renting = false;
-        //transferOwnershipLicenseKey.currentState!.reset();
       });
 
       await showDialog(
