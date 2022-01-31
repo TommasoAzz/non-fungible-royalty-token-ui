@@ -12,7 +12,10 @@ class CollectionItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).restorablePushNamed(
-          RouteManager.collection,
+          Uri(
+            path: RouteManager.collection,
+            queryParameters: {'addr': collection.address},
+          ).toString(),
           arguments: {
             'collection': collection.toMap(),
           },

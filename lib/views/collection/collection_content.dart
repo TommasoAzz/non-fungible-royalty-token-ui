@@ -20,48 +20,67 @@ class CollectionContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final marketplaceVM = locator<MarketplaceVM>();
     final collectionData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final collection = Collection.fromMap(collectionData['collection']);
 
-    return Column(
-      children: [
-        PageTitle(title: collection.name),
-        const SizedBox(height: 20),
-        Expanded(
-          child: FutureBuilder<List<Token>>(
-            future: marketplaceVM.getTokens(collection.address),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const Center(child: CircularProgressIndicator());
-              }
+    late Future<Collection> futureCollection;
+    if (collectionData['collection'] != null) {
+      futureCollection = Future.value(Collection.fromMap(collectionData['collection']));
+    } else if (collectionData['collection_address'] != null) {
+      futureCollection = marketplaceVM.getCollection(collectionData['collection_address']);
+    } else {
+      return const Text("Error loading the collection.");
+    }
 
-              if (snapshot.hasError) {
-                return Text("Error: ${snapshot.error}");
-              }
+    return FutureBuilder<Collection>(
+        future: futureCollection,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-              if (snapshot.data!.isEmpty) {
-                return const Text("There are no tokens for collection.");
-              }
+          final collection = snapshot.data!;
 
-              return GridView.count(
-                childAspectRatio: 0.8,
-                primary: false,
-                padding: EdgeInsets.all(padding),
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 10,
-                crossAxisCount: column,
-                children: snapshot.data!
-                    .map((token) => TokenItem(
-                          isCreativeOwner: token.creativeOwner.toLowerCase() == marketplaceVM.loggedAccount,
-                          isOwner: token.owner.toLowerCase() == marketplaceVM.loggedAccount,
-                          token: token,
-                          collection: collection,
-                        ))
-                    .toList(),
-              );
-            },
-          ),
-        ),
-      ],
-    );
+          return Column(
+            children: [
+              PageTitle(title: collection.name),
+              const SizedBox(height: 20),
+              Expanded(
+                child: FutureBuilder<List<Token>>(
+                  future: marketplaceVM.getTokens(collection.address),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState != ConnectionState.done) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    }
+
+                    if (snapshot.data!.isEmpty) {
+                      return const Text("There are no tokens for collection.");
+                    }
+
+                    return GridView.count(
+                      childAspectRatio: 0.8,
+                      primary: false,
+                      padding: EdgeInsets.all(padding),
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 10,
+                      crossAxisCount: column,
+                      children: snapshot.data!
+                          .map((token) => TokenItem(
+                                isCreativeOwner: token.creativeOwner.toLowerCase() ==
+                                    marketplaceVM.loggedAccount,
+                                isOwner: token.owner.toLowerCase() == marketplaceVM.loggedAccount,
+                                token: token,
+                                collection: collection,
+                              ))
+                          .toList(),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

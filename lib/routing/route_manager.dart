@@ -18,7 +18,8 @@ class RouteManager {
   static const String collection = "/collection";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name!.getRoutingData.route) {
+    final routingData = settings.name!.routingData;
+    switch (routingData.route) {
       case home:
         return _FadeRoute(const HomeView(), settings);
       case collections:
@@ -30,7 +31,19 @@ class RouteManager {
       case wallet:
         return _FadeRoute(const WalletView(), settings);
       case collection:
-        return _FadeRoute(const CollectionView(), settings);
+        final addr = routingData['addr'];
+        final args = {
+          'collection':
+              settings.arguments != null ? (settings.arguments as Map)['collection'] : null,
+          'collection_address': addr ?? (settings.arguments as Map)['collection']['address'],
+        };
+        return _FadeRoute(
+          const CollectionView(),
+          RouteSettings(
+            name: settings.name,
+            arguments: args,
+          ),
+        );
       default:
         return _FadeRoute(const ErrorView(), settings);
     }

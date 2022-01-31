@@ -109,6 +109,17 @@ class MarketplaceVM with ChangeNotifier {
     return collections;
   }
 
+  Future<Collection> getCollection(final String collectionAddress) async {
+    final contract = loadERC1190SmartContract(collectionAddress);
+    return Collection(
+      address: contract.address,
+      name: await contract.name,
+      symbol: await contract.symbol,
+      creator: await marketplaceContract.creatorOf(contract.address),
+      availableTokens: await contract.availableTokens,
+    );
+  }
+
   Future<Collection> deployNewCollection(
     final String name,
     final String symbol,
