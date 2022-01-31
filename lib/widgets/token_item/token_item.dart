@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/constants/app_colors.dart';
 import 'token_info.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/models/token.dart';
@@ -26,6 +29,11 @@ class TokenItem extends StatefulWidget {
 
 class _TokenItemState extends State<TokenItem> {
   final marketplaceVM = locator<MarketplaceVM>();
+
+  DateTime? expirationDate;
+  int rentExpirationDateInMillis = 0;
+  bool rented = false;
+  bool renting = false;
 
   final setOwnershipLicensePriceKey = GlobalKey<FormState>();
   bool ownershipPriceUploaded = false;
@@ -77,89 +85,188 @@ class _TokenItemState extends State<TokenItem> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: const Text("Rent")),
+                  ElevatedButton(
+                      onPressed: () {
+                        openRent();
+                      },
+                      child: const Text("Rent")),
                   if (widget.isOwner || widget.isCreativeOwner)
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        openDialogSettings();
+                      },
                       child: const Text("Settings"),
                     ),
                 ],
               ),
-              // Row(
-              //   mainAxisSize: MainAxisSize.min,
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     if (widget.isOwner)
-              //       SizedBox(
-              //           width: 500,
-              //           child: SubmittableFormField(
-              //             formKey: setOwnershipLicensePriceKey,
-              //             inputLabel: "Set Ownership License price",
-              //             validate: _validateNumberField,
-              //             save: _saveOwnershipLicensePriceInputField,
-              //             submit: _submitOwnershipLicensePrice,
-              //             uploadingData: uploadingOwnershipPrice,
-              //             dataUploaded: ownershipPriceUploaded,
-              //           )),
-              //     if (widget.isOwner)
-              //       SizedBox(
-              //         width: 500,
-              //         child: SubmittableFormField(
-              //           formKey: setRentalPriceKey,
-              //           inputLabel: "Set Rental price per second",
-              //           validate: _validateNumberField,
-              //           save: _saveRentalPricePerSecondInputField,
-              //           submit: _submitRentalPrice,
-              //           uploadingData: uploadingRentalPrice,
-              //           dataUploaded: rentalPriceUploaded,
-              //         ),
-              //       ),
-              //     if (widget.isOwner)
-              //       SizedBox(
-              //         width: 500,
-              //         child: SubmittableFormField(
-              //           formKey: transferOwnershipLicenseKey,
-              //           inputLabel: "Transfer Ownership License to",
-              //           validate: _validateAddressField,
-              //           save: _saveTransferOwnershipLicenseInputField,
-              //           submit: _submitTransferOwnershipLicense,
-              //           uploadingData: uploadingTransferOwnership,
-              //           dataUploaded: transferOwnershipUploaded,
-              //         ),
-              //       ),
-              //     if (widget.isCreativeOwner)
-              //       SizedBox(
-              //           width: 500,
-              //           child: SubmittableFormField(
-              //             formKey: setCreativeLicensePriceKey,
-              //             inputLabel: "Set Creative License price",
-              //             validate: _validateNumberField,
-              //             save: _saveCreativeLicensePriceInputField,
-              //             submit: _submitCreativeLicensePrice,
-              //             dataUploaded: creativePriceUploaded,
-              //             uploadingData: uploadingCreativePrice,
-              //           )),
-              //     if (widget.isCreativeOwner)
-              //       SizedBox(
-              //         width: 500,
-              //         child: SubmittableFormField(
-              //           formKey: transferCreativeLicenseKey,
-              //           inputLabel: "Transfer Creative License to",
-              //           validate: _validateAddressField,
-              //           save: _saveTransferCreativeLicenseInputField,
-              //           submit: _submitTransferCreativeLicense,
-              //           dataUploaded: transferCreativeUploaded,
-              //           uploadingData: uploadingTransferCreative,
-              //         ),
-              //       ),
-              //   ],
-              // ),
             ],
           ),
         ),
       ),
     );
   }
+
+  Future openRent() => showDialog(
+        context: context,
+        builder: (contex) => AlertDialog(
+          title: Text("Rent this token"),
+          content: Column(
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  primary: primaryColor,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: primaryColor),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () => pickDate(context),
+                child: expirationDate == null
+                    ? Text('Select date')
+                    : Text(
+                        'Selected date: ${expirationDate!.day}/${expirationDate!.month}/${expirationDate!.year}'),
+              ),
+              rentExpirationDateInMillis == 0
+                  ? Text("")
+                  : Text(
+                      "The cost for this rent is: ${rentExpirationDateInMillis * 1000 * _rentalPricePerSecond} "),
+              ElevatedButton(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (rented)
+                      const Text(
+                        "Submitted",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    if (rented) const Icon(Icons.check_box, size: 16),
+                    if (!rented)
+                      const Text(
+                        "Submit",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    if (renting) const SizedBox(width: 10),
+                    if (renting)
+                      const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(color: Colors.white),
+                      ),
+                  ],
+                ),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  primary: primaryColor,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: primaryColor),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: _submitRent,
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Future pickDate(BuildContext context) async {
+    final initialDate = DateTime.now();
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(DateTime.now().year),
+      lastDate: DateTime(DateTime.now().year + 5),
+    );
+
+    if (newDate == null) return;
+    setState(() {
+      expirationDate = newDate;
+      rentExpirationDateInMillis =
+          (expirationDate!.difference(DateTime.now()).inMilliseconds);
+    });
+  }
+
+  Future openDialogSettings() => showDialog(
+        context: context,
+        builder: (contex) => AlertDialog(
+          content: Column(
+            children: [
+              if (widget.isOwner)
+                SizedBox(
+                  width: 500,
+                  child: SubmittableFormField(
+                    formKey: setOwnershipLicensePriceKey,
+                    inputLabel: "Set Ownership License price",
+                    validate: _validateNumberField,
+                    save: _saveOwnershipLicensePriceInputField,
+                    submit: _submitOwnershipLicensePrice,
+                    uploadingData: uploadingOwnershipPrice,
+                    dataUploaded: ownershipPriceUploaded,
+                  ),
+                ),
+              if (widget.isOwner)
+                SizedBox(
+                  width: 500,
+                  child: SubmittableFormField(
+                    formKey: setRentalPriceKey,
+                    inputLabel: "Set Rental price per second",
+                    validate: _validateNumberField,
+                    save: _saveRentalPricePerSecondInputField,
+                    submit: _submitRentalPrice,
+                    uploadingData: uploadingRentalPrice,
+                    dataUploaded: rentalPriceUploaded,
+                  ),
+                ),
+              if (widget.isOwner)
+                SizedBox(
+                  width: 500,
+                  child: SubmittableFormField(
+                    formKey: transferOwnershipLicenseKey,
+                    inputLabel: "Transfer Ownership License to",
+                    validate: _validateAddressField,
+                    save: _saveTransferOwnershipLicenseInputField,
+                    submit: _submitTransferOwnershipLicense,
+                    uploadingData: uploadingTransferOwnership,
+                    dataUploaded: transferOwnershipUploaded,
+                  ),
+                ),
+              if (widget.isCreativeOwner)
+                SizedBox(
+                    width: 500,
+                    child: SubmittableFormField(
+                      formKey: setCreativeLicensePriceKey,
+                      inputLabel: "Set Creative License price",
+                      validate: _validateNumberField,
+                      save: _saveCreativeLicensePriceInputField,
+                      submit: _submitCreativeLicensePrice,
+                      dataUploaded: creativePriceUploaded,
+                      uploadingData: uploadingCreativePrice,
+                    )),
+              if (widget.isCreativeOwner)
+                SizedBox(
+                  width: 500,
+                  child: SubmittableFormField(
+                    formKey: transferCreativeLicenseKey,
+                    inputLabel: "Transfer Creative License to",
+                    validate: _validateAddressField,
+                    save: _saveTransferCreativeLicenseInputField,
+                    submit: _submitTransferCreativeLicense,
+                    dataUploaded: transferCreativeUploaded,
+                    uploadingData: uploadingTransferCreative,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
 
   void _saveOwnershipLicensePriceInputField(final String? number) =>
       _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0;
@@ -475,6 +582,63 @@ class _TokenItemState extends State<TokenItem> {
       setState(() {
         transferOwnershipUploaded = false;
         uploadingTransferOwnership = false;
+      });
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Operation not successful'),
+          content: Text(
+            'The operation was not completed. An error occurred: $exc',
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('Okay'),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  Future<void> _submitRent() async {
+    // if (!rentKey.currentState!.validate()) return;
+    // rentKey.currentState!.save();
+
+    setState(() {
+      renting = true;
+    });
+
+    try {
+      await marketplaceVM.rentAsset(widget.collection.address, widget.token.id,
+          rentExpirationDateInMillis);
+
+      setState(() {
+        rented = true;
+        renting = false;
+        //transferOwnershipLicenseKey.currentState!.reset();
+      });
+
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Token rented successfully'),
+          content: Text(
+            'Token ${widget.token.id} is rented until $expirationDate ',
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('Okay'),
+            )
+          ],
+        ),
+      );
+      //ignore: avoid_catches_without_on_clauses
+    } catch (exc) {
+      setState(() {
+        rented = false;
+        renting = false;
       });
       await showDialog(
         context: context,
