@@ -106,21 +106,21 @@ class ERC1190Tradable {
     return await completer.future;
   }
 
-  Future<void> setOwnershipLicensePrice(final int tokenId, final int priceInWei) async {
+  Future<void> setOwnershipLicensePrice(final int tokenId, final BigInt priceInWei) async {
     _logger.v("setOwnershipLicensePrice");
 
     final tx = await contract.send("setOwnershipLicensePrice", [tokenId, priceInWei]);
     await tx.wait();
   }
 
-  Future<void> setCreativeLicensePrice(final int tokenId, final int priceInWei) async {
+  Future<void> setCreativeLicensePrice(final int tokenId, final BigInt priceInWei) async {
     _logger.v("setCreativeLicensePrice");
 
     final tx = await contract.send("setCreativeLicensePrice", [tokenId, priceInWei]);
     await tx.wait();
   }
 
-  Future<void> setRentalPrice(final int tokenId, final int priceInWei) async {
+  Future<void> setRentalPrice(final int tokenId, final BigInt priceInWei) async {
     _logger.v("setRentalPrice");
 
     final tx = await contract.send("setRentalPrice", [tokenId, priceInWei]);

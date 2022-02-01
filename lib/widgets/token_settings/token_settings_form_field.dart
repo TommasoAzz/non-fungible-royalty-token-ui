@@ -41,6 +41,10 @@ class _TokenSettingsFormFieldState extends State<TokenSettingsFormField> {
   }
 
   Future<void> _submit() async {
+    if (!_form.currentState!.validate()) return;
+
+    _form.currentState!.save();
+
     setState(() {
       updating = true;
     });

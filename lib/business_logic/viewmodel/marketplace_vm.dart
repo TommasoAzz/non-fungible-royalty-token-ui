@@ -1,12 +1,11 @@
 import 'dart:convert' show json;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import '../../business_logic/models/token.dart';
 
+import '../../business_logic/models/token.dart';
 import '../../business_logic/contracts/erc1190_tradable.dart';
 import '../../business_logic/models/collection.dart';
-
 import '../../business_logic/contracts/erc1190_marketplace.dart';
 import '../../logger/logger.dart';
 
@@ -29,6 +28,8 @@ class MarketplaceVM with ChangeNotifier {
 
   String _account;
 
+  final BigInt Function(double) toWei;
+
   MarketplaceVM({
     required Future<void> Function() connect,
     required bool Function() connected,
@@ -36,6 +37,7 @@ class MarketplaceVM with ChangeNotifier {
     required this.loadERC1190SmartContract,
     required this.httpClient,
     required this.ipfsUrl,
+    required this.toWei,
   })  : _connect = connect,
         _connected = connected,
         _account = account;
@@ -82,16 +84,14 @@ class MarketplaceVM with ChangeNotifier {
     _marketplaceSmartContractLoaded = false;
   }
 
-  Future<List<Collection>> getCollections(
-      [final String collectionOwner = ""]) async {
+  Future<List<Collection>> getCollections([final String collectionOwner = ""]) async {
     _logger.v("getCollections");
 
     final collectionAddresses = <String>[];
     if (collectionOwner.isEmpty) {
       collectionAddresses.addAll(await marketplaceContract.allCollections);
     } else {
-      collectionAddresses
-          .addAll(await marketplaceContract.collectionsOf(collectionOwner));
+      collectionAddresses.addAll(await marketplaceContract.collectionsOf(collectionOwner));
     }
 
     final contracts = collectionAddresses.map(loadERC1190SmartContract);
@@ -136,8 +136,7 @@ class MarketplaceVM with ChangeNotifier {
       symbol,
       "https://ipfs.io/ipfs/",
     );
-    _logger.i(
-        "Deployed collection. Deployed smart contract at address: $contractAddress.");
+    _logger.i("Deployed collection. Deployed smart contract at address: $contractAddress.");
 
     final collection = loadERC1190SmartContract(contractAddress);
     final creator = await marketplaceContract.creatorOf(contractAddress);
@@ -151,8 +150,7 @@ class MarketplaceVM with ChangeNotifier {
       request.files.add(http.MultipartFile.fromBytes("path", fileBytes));
       final ipfsResponse = await request.send();
       if (ipfsResponse.statusCode == 200) {
-        _logger.i(
-            "Deployed file with path = $fileBlobURI to IPFS. Minting the relative token.");
+        _logger.i("Deployed file with path = $fileBlobURI to IPFS. Minting the relative token.");
         final ipfsResponseBodyJson = json.decode(
           await ipfsResponse.stream.bytesToString(),
         ) as Map<String, dynamic>;
@@ -199,22 +197,18 @@ class MarketplaceVM with ChangeNotifier {
           id: tokenId,
           uri: await contract.tokenURI(tokenId),
           ownershipLicensePrice: await contract.ownershipPriceOf(tokenId),
-          creativeLicensePrice:
-              await contract.creativeOwnershipPriceOf(tokenId),
+          creativeLicensePrice: await contract.creativeOwnershipPriceOf(tokenId),
           rentalPricePerSecond: await contract.rentalPriceOf(tokenId),
           owner: await contract.ownerOf(tokenId),
           creativeOwner: await contract.creativeOwnerOf(tokenId),
           rentedBy: await contract.rentersOf(tokenId),
-          royaltyOwnershipTransfer:
-              await contract.royaltyForOwnershipTransfer(tokenId),
+          royaltyOwnershipTransfer: await contract.royaltyForOwnershipTransfer(tokenId),
           royaltyRental: await contract.royaltyForRental(tokenId),
-          creativeLicenseRequests:
-              await marketplaceContract.getCreativeLicenseTransferRequests(
+          creativeLicenseRequests: await marketplaceContract.getCreativeLicenseTransferRequests(
             collectionAddress,
             tokenId,
           ),
-          ownershipLicenseRequests:
-              await marketplaceContract.getOwnershipLicenseTransferRequests(
+          ownershipLicenseRequests: await marketplaceContract.getOwnershipLicenseTransferRequests(
             collectionAddress,
             tokenId,
           ),
@@ -270,7 +264,9 @@ class MarketplaceVM with ChangeNotifier {
 
     final contract = loadERC1190SmartContract(collectionAddress);
 
-    final priceInWei = (priceInEth * 1e18).toInt();
+    final priceInWei = toWei(priceInEth);
+
+    _logger.i("Prince in ETH: $priceInEth, price in WEI: $priceInWei");
 
     await contract.setOwnershipLicensePrice(tokenId, priceInWei);
   }
@@ -284,7 +280,9 @@ class MarketplaceVM with ChangeNotifier {
 
     final contract = loadERC1190SmartContract(collectionAddress);
 
-    final priceInWei = (priceInEth * 1e18).toInt();
+    final priceInWei = toWei(priceInEth);
+
+    _logger.i("Prince in ETH: $priceInEth, price in WEI: $priceInWei");
 
     await contract.setCreativeLicensePrice(tokenId, priceInWei);
   }
@@ -298,7 +296,9 @@ class MarketplaceVM with ChangeNotifier {
 
     final contract = loadERC1190SmartContract(collectionAddress);
 
-    final priceInWei = (priceInEth * 1e18).toInt();
+    final priceInWei = toWei(priceInEth);
+
+    _logger.i("Prince in ETH: $priceInEth, price in WEI: $priceInWei");
 
     await contract.setRentalPrice(tokenId, priceInWei);
   }

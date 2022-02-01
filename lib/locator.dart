@@ -1,6 +1,7 @@
 import 'dart:convert' show json;
 
 import 'package:flutter/services.dart';
+import 'package:flutter_web3/flutter_web3.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'business_logic/exception/wallet_not_loaded_exception.dart';
@@ -94,6 +95,7 @@ void setupLocator() {
       loadERC1190SmartContract: contractLoader.loadERC1190Tradable,
       httpClient: http.Client(),
       ipfsUrl: locator<String>(instanceName: "ipfs"),
+      toWei: (eth) => EthUtils.parseEther(eth.toString()).toBigInt,
     );
 
     connector.addListener(() {

@@ -112,18 +112,21 @@ class _TokenItemState extends State<TokenItem> {
 
   String? _validateAddressField(final String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter a value';
+      return 'Please enter a value.';
     } else if (EthUtils.isAddress(value)) {
-      return 'Please enter a valide address ';
+      return 'Please enter a valid address.';
     }
     return null;
   }
 
   String? _validateNumberField(final String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please enter a value';
-    } else if (double.tryParse(value) != null && double.tryParse(value)! < 0) {
-      return 'Please enter a positive value ';
+      return 'Please enter a value.';
+    } else {
+      final parsed = double.tryParse(value);
+      if (parsed != null && parsed < 0) {
+        return 'Please enter a positive value.';
+      }
     }
     return null;
   }

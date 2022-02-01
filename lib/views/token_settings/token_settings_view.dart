@@ -48,7 +48,9 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
             ),
             child: TokenSettingsFormField(
               inputLabel: "Set ownership license price (ETH)",
-              save: (number) => _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0,
+              save: (number) => setState(() {
+                _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0;
+              }),
               validate: widget.validateNumberField,
               successDescription: "Ownership license price updated successfully.",
               updateToken: () async => await vm.setOwnershipLicensePrice(
@@ -65,7 +67,9 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
             ),
             child: TokenSettingsFormField(
               inputLabel: "Set rental price (ETH/second)",
-              save: (number) => _rentalPricePerSecond = double.tryParse(number ?? '') ?? 0,
+              save: (number) => setState(() {
+                _rentalPricePerSecond = double.tryParse(number ?? '') ?? 0;
+              }),
               validate: widget.validateNumberField,
               successDescription: "Rental price per second updated successfully.",
               updateToken: () async => await vm.setRentalPrice(
@@ -82,7 +86,9 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
             ),
             child: TokenSettingsFormField(
               inputLabel: "Transfer ownership license",
-              save: (address) => _transferOwnershipLicenseTo = address ?? '',
+              save: (address) => setState(() {
+                _transferOwnershipLicenseTo = address ?? '';
+              }),
               validate: widget.validateAddressField,
               successDescription: "Ownership license transferred successfully.",
               updateToken: () async => await vm.transferOwnershipLicense(
@@ -99,7 +105,9 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
             ),
             child: TokenSettingsFormField(
               inputLabel: "Set creative license price (ETH)",
-              save: (number) => _creativeLicensePrice = double.tryParse(number ?? '') ?? 0,
+              save: (number) => setState(() {
+                _creativeLicensePrice = double.tryParse(number ?? '') ?? 0;
+              }),
               validate: widget.validateNumberField,
               successDescription: "Creative license price updated successfully.",
               updateToken: () async => await vm.setCreativeLicensePrice(
@@ -116,7 +124,9 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
             ),
             child: TokenSettingsFormField(
               inputLabel: "Transfer creative license",
-              save: (address) => _transferCreativeLicenseTo = address ?? '',
+              save: (address) => setState(() {
+                _transferCreativeLicenseTo = address ?? '';
+              }),
               validate: widget.validateAddressField,
               successDescription: "Creative license transferred successfully.",
               updateToken: () async => await vm.transferCreativeLicense(
