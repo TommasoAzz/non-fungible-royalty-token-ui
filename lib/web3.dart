@@ -203,7 +203,7 @@ const contractABI = """[
     }
   ]""";
 
-void web3() async {
+Future<void> web3() async {
   if (!Ethereum.isSupported) {
     print("Wallet not available");
     return;

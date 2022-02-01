@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_web3/flutter_web3.dart';
 import 'package:intl/intl.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/views/token_settings/token_settings_view.dart';
+import '../../views/token_settings/token_settings_view.dart';
 import '../../views/rent_token/rent_token_view.dart';
 import 'token_info.dart';
 import '../../business_logic/models/collection.dart';
@@ -112,7 +113,7 @@ class _TokenItemState extends State<TokenItem> {
   String? _validateAddressField(final String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a value';
-    } else if (value.length != 42 && value[0] != '0' && value[1] != 'x') {
+    } else if (EthUtils.isAddress(value)) {
       return 'Please enter a valide address ';
     }
     return null;
