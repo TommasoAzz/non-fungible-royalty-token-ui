@@ -59,11 +59,25 @@ class _TokenItemState extends State<TokenItem> {
                 showCreativeOwnershipRequests: widget.isCreativeOwner,
                 showOwnershipRequests: widget.isOwner,
               ),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   if (widget.token.rentalPricePerSecond > 0)
-                    ElevatedButton(onPressed: openRent, child: const Text("Rent")),
+                    ElevatedButton(
+                        onPressed: openRent, child: const Text("Rent")),
+                  if (!widget.isOwner &&
+                      widget.token.ownershipLicensePrice != 0)
+                    ElevatedButton(
+                      onPressed: obtainOwnershipLicense,
+                      child: const Text("Obtain ownership license"),
+                    ),
+                  if (!widget.isCreativeOwner &&
+                      widget.token.creativeLicensePrice != 0)
+                    ElevatedButton(
+                      onPressed: obtainCreativeLicense,
+                      child: const Text("Obtain creative license"),
+                    ),
                   if (widget.isOwner || widget.isCreativeOwner)
                     ElevatedButton(
                       onPressed: openDialogSettings,
@@ -131,11 +145,102 @@ class _TokenItemState extends State<TokenItem> {
     return null;
   }
 
-  void _updateRentalData(final DateTime expirationDate, final int rentExpirationDateInMillis) {
+  void _updateRentalData(
+      final DateTime expirationDate, final int rentExpirationDateInMillis) {
     setState(() {
       this.expirationDate = expirationDate;
       this.rentExpirationDateInMillis = rentExpirationDateInMillis;
     });
+  }
+
+  Future<void> obtainOwnershipLicense() async {
+    try {
+      await marketplaceVM.obtainOwnershipLicense(
+        widget.collection.address,
+        widget.token.id,
+      );
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Ownership license obtained successfully'),
+          content: Text(
+            "Ownership license of token ${widget.token.id} was obtained.",
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('Okay'),
+            )
+          ],
+        ),
+      );
+      //ignore: avoid_catches_without_on_clauses
+    } catch (exc) {
+      setState(() {
+        rented = false;
+        renting = false;
+      });
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Operation not successful'),
+          content: Text(
+            'The operation was not completed. An error occurred: $exc',
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('Okay'),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  Future<void> obtainCreativeLicense() async {
+    try {
+      await marketplaceVM.obtainCreativeLicense(
+        widget.collection.address,
+        widget.token.id,
+      );
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Creative license obtained successfully'),
+          content: Text(
+            "Creative license of token ${widget.token.id} was obtained.",
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('Okay'),
+            )
+          ],
+        ),
+      );
+      //ignore: avoid_catches_without_on_clauses
+    } catch (exc) {
+      setState(() {
+        rented = false;
+        renting = false;
+      });
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Operation not successful'),
+          content: Text(
+            'The operation was not completed. An error occurred: $exc',
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              child: const Text('Okay'),
+            )
+          ],
+        ),
+      );
+    }
   }
 
   Future<void> _submitRent() async {

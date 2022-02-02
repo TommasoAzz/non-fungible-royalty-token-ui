@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../constants/app_colors.dart';
 
-class RentTokenView extends StatelessWidget {
+class RentTokenView extends StatefulWidget {
   final String title;
   final Future<void> Function() submitRent;
   final void Function(DateTime, int) updateRentalData;
@@ -26,6 +26,11 @@ class RentTokenView extends StatelessWidget {
     this.rentExpirationDateInMillis = 0,
   }) : super(key: key);
 
+  @override
+  State<RentTokenView> createState() => _RentTokenViewState();
+}
+
+class _RentTokenViewState extends State<RentTokenView> {
   Future<void> _pickDate(BuildContext context) async {
     final initialDate = DateTime.now();
     final newDate = await showDatePicker(
@@ -37,7 +42,8 @@ class RentTokenView extends StatelessWidget {
 
     if (newDate == null) return;
 
-    updateRentalData(newDate, (newDate.difference(DateTime.now()).inMilliseconds));
+    widget.updateRentalData(
+        newDate, (newDate.difference(DateTime.now()).inMilliseconds));
   }
 
   @override
@@ -62,33 +68,34 @@ class RentTokenView extends StatelessWidget {
                 ),
               ),
               onPressed: () => _pickDate(context),
-              child: expirationDate == null
+              child: widget.expirationDate == null
                   ? const Text('Select date')
-                  : Text('Selected date: ${DateFormat('dd/MM/yy').format(expirationDate!)}'),
+                  : Text(
+                      'Selected date: ${DateFormat('dd/MM/yy').format(widget.expirationDate!)}'),
             ),
-            rentExpirationDateInMillis == 0
+            widget.rentExpirationDateInMillis == 0
                 ? const Text("")
                 : Text(
-                    "The cost for this rent is: ${rentExpirationDateInMillis * 1000 * rentalPricePerSecond} ETH.",
+                    "The cost for this rent is: ${widget.rentExpirationDateInMillis * 1000 * widget.rentalPricePerSecond} ETH.",
                   ),
             ElevatedButton(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (rented)
+                  if (widget.rented)
                     const Text(
                       "Submitted",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                  if (rented) const Icon(Icons.check_box, size: 16),
-                  if (!rented)
+                  if (widget.rented) const Icon(Icons.check_box, size: 16),
+                  if (!widget.rented)
                     const Text(
                       "Submit",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                  if (renting) const SizedBox(width: 10),
-                  if (renting)
+                  if (widget.renting) const SizedBox(width: 10),
+                  if (widget.renting)
                     const SizedBox(
                       height: 20,
                       width: 20,
@@ -107,7 +114,7 @@ class RentTokenView extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: submitRent,
+              onPressed: widget.submitRent,
             ),
           ],
         ),
