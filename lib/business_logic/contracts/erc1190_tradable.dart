@@ -130,13 +130,23 @@ class ERC1190Tradable {
   Future<void> rentAsset(final int tokenId, final int rentExpirationDateInMillis) async {
     _logger.v("rentAsset");
 
-    // TODO(TommasoAzz): Wait for event generation.
+    final completer = Completer<void>();
+
+    contract.once("AssetRented", (renter, tokenId, rentExpirationDateInMillis, _) {
+      _logger.i("Event: AssetRented");
+      _logger.i("- renter: ${dartify(renter)}");
+      _logger.i("- tokenId: ${dartify(tokenId)}");
+      _logger.i("- rentExpirationDateInMillis: ${dartify(rentExpirationDateInMillis)}");
+      completer.complete();
+    });
 
     final tx = await contract.send("rentAsset(uint256,uint256)", [
       tokenId,
       rentExpirationDateInMillis,
     ]);
     await tx.wait();
+
+    await completer.future;
   }
 
   Future<void> transferOwnershipLicense(final int tokenId, final EthAddress to) async {

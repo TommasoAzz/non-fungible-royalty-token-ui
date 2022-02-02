@@ -80,11 +80,22 @@ class ERC1190Marketplace {
   ) async {
     _logger.v("requireOwnershipLicenseTransferApproval");
 
+    final completer = Completer<void>();
+
+    contract.once("LicenseRequestSent", (account, tokenId, _) {
+      _logger.i("Event: LicenseRequestSent");
+      _logger.i("- account: ${dartify(account)}");
+      _logger.i("- tokenId: ${dartify(tokenId)}");
+      completer.complete();
+    });
+
     final tx = await contract.send(
       "requireOwnershipLicenseTransferApproval",
       [collectionAddress, tokenId],
     );
     await tx.wait();
+
+    await completer.future;
   }
 
   Future<void> requireCreativeLicenseTransferApproval(
@@ -93,11 +104,22 @@ class ERC1190Marketplace {
   ) async {
     _logger.v("requireCreativeLicenseTransferApproval");
 
+    final completer = Completer<void>();
+
+    contract.once("LicenseRequestSent", (account, tokenId, _) {
+      _logger.i("Event: LicenseRequestSent");
+      _logger.i("- account: ${dartify(account)}");
+      _logger.i("- tokenId: ${dartify(tokenId)}");
+      completer.complete();
+    });
+
     final tx = await contract.send(
       "requireCreativeLicenseTransferApproval",
       [collectionAddress, tokenId],
     );
     await tx.wait();
+
+    await completer.future;
   }
 
   Future<List<EthAddress>> getOwnershipLicenseTransferRequests(
