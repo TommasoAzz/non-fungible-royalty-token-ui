@@ -37,8 +37,8 @@ class _RentTokenViewState extends State<RentTokenView> {
     );
     final newTime = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay(
-            hour: DateTime.now().hour, minute: DateTime.now().minute));
+        initialTime:
+            TimeOfDay(hour: initialDate.hour, minute: initialDate.minute));
 
     if (newDate == null || newTime == null) return;
 
@@ -51,6 +51,7 @@ class _RentTokenViewState extends State<RentTokenView> {
 
   @override
   Widget build(BuildContext context) {
+    final currentDateTime = DateTime.now().millisecondsSinceEpoch;
     return Column(
       children: [
         ElevatedButton(
@@ -66,16 +67,16 @@ class _RentTokenViewState extends State<RentTokenView> {
             ),
           ),
           onPressed: () => _pickDate(context),
-          child: selectedEndRentalDateMillis == 0
+          child: selectedEndRentalDateMillis < currentDateTime
               ? const Text('Select date')
               : Text(
                   'Selected date: ${DateFormat('dd/MM/yy HH:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedEndRentalDateMillis))}',
                 ),
         ),
-        selectedEndRentalDateMillis == 0
+        selectedEndRentalDateMillis < currentDateTime
             ? const SelectableText("")
             : SelectableText(
-                "The cost for this rent is: ${(selectedEndRentalDateMillis - DateTime.now().millisecondsSinceEpoch) * 1000 * widget.rentalPricePerSecond} ETH.",
+                "The cost for this rent is: ${(selectedEndRentalDateMillis - currentDateTime) * 0.001 * widget.rentalPricePerSecond} ETH.",
               ),
         ElevatedButton(
           child: Column(

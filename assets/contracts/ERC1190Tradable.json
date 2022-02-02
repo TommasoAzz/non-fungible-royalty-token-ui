@@ -29571,7 +29571,7 @@
             "implemented": true,
             "kind": "function",
             "modifiers": [],
-            "name": "obtainOwnershipLicense",
+            "name": "OwnershipLicense",
             "nameLocation": "7734:22:8",
             "nodeType": "FunctionDefinition",
             "parameters": {
