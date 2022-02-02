@@ -19,13 +19,16 @@ class CollectionContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final marketplaceVM = locator<MarketplaceVM>();
-    final collectionData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final collectionData =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     late Future<Collection> futureCollection;
     if (collectionData['collection'] != null) {
-      futureCollection = Future.value(Collection.fromMap(collectionData['collection']));
+      futureCollection =
+          Future.value(Collection.fromMap(collectionData['collection']));
     } else if (collectionData['collection_address'] != null) {
-      futureCollection = marketplaceVM.getCollection(collectionData['collection_address']);
+      futureCollection =
+          marketplaceVM.getCollection(collectionData['collection_address']);
     } else {
       return const SelectableText("Error loading the collection.");
     }
@@ -56,11 +59,12 @@ class CollectionContent extends StatelessWidget {
                     }
 
                     if (snapshot.data!.isEmpty) {
-                      return const SelectableText("There are no tokens for collection.");
+                      return const SelectableText(
+                          "There are no tokens for collection.");
                     }
 
                     return GridView.count(
-                      childAspectRatio: 0.8,
+                      childAspectRatio: 0.75,
                       primary: false,
                       padding: EdgeInsets.all(padding),
                       crossAxisSpacing: 20,
@@ -68,9 +72,11 @@ class CollectionContent extends StatelessWidget {
                       crossAxisCount: column,
                       children: snapshot.data!
                           .map((token) => TokenItem(
-                                isCreativeOwner: token.creativeOwner.toLowerCase() ==
+                                isCreativeOwner:
+                                    token.creativeOwner.toLowerCase() ==
+                                        marketplaceVM.loggedAccount,
+                                isOwner: token.owner.toLowerCase() ==
                                     marketplaceVM.loggedAccount,
-                                isOwner: token.owner.toLowerCase() == marketplaceVM.loggedAccount,
                                 token: token,
                                 collection: collection,
                               ))

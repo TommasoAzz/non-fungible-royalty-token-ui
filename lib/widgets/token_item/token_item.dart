@@ -63,28 +63,43 @@ class _TokenItemState extends State<TokenItem> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  if (widget.token.rentalPricePerSecond > 0)
-                    ElevatedButton(
-                        onPressed: openRent, child: const Text("Rent")),
-                  SizedBox(height: 20),
-                  if (!widget.isOwner && widget.token.ownershipLicensePrice > 0)
-                    ElevatedButton(
-                      onPressed: obtainOwnershipLicense,
-                      child: const Text("Obtain ownership license"),
-                    ),
-                  SizedBox(height: 20),
-                  if (!widget.isCreativeOwner &&
-                      widget.token.creativeLicensePrice > 0)
-                    ElevatedButton(
-                      onPressed: obtainCreativeLicense,
-                      child: const Text("Obtain creative license"),
-                    ),
-                  SizedBox(height: 20),
-                  if (widget.isOwner || widget.isCreativeOwner)
-                    ElevatedButton(
-                      onPressed: openDialogSettings,
-                      child: const Text("Settings"),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      if (widget.token.rentalPricePerSecond > 0)
+                        ElevatedButton(
+                            onPressed: openRent, child: const Text("Rent")),
+                      if (widget.token.rentalPricePerSecond > 0)
+                        SizedBox(width: 20),
+                      if (widget.isOwner || widget.isCreativeOwner)
+                        ElevatedButton(
+                          onPressed: openDialogSettings,
+                          child: const Text("Settings"),
+                        ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (!widget.isOwner &&
+                          widget.token.ownershipLicensePrice > 0)
+                        ElevatedButton(
+                          onPressed: obtainOwnershipLicense,
+                          child: const Text("Request ownership"),
+                        ),
+                      if (!widget.isOwner &&
+                          widget.token.ownershipLicensePrice > 0)
+                        SizedBox(width: 20),
+                      if (!widget.isCreativeOwner &&
+                          widget.token.creativeLicensePrice > 0)
+                        ElevatedButton(
+                          onPressed: obtainCreativeLicense,
+                          child: const Text("Request creative"),
+                        ),
+                    ],
+                  ),
                 ],
               ),
             ],
