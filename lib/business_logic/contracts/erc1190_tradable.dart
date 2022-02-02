@@ -132,7 +132,8 @@ class ERC1190Tradable {
 
     // TODO(TommasoAzz): Wait for event generation.
 
-    final tx = await contract.send("rentAsset", [tokenId, rentExpirationDateInMillis]);
+    final tx =
+        await contract.send("rentAsset(uint256,uint256)", [tokenId, rentExpirationDateInMillis]);
     await tx.wait();
   }
 
@@ -149,7 +150,7 @@ class ERC1190Tradable {
       completer.complete();
     });
 
-    final tx = await contract.send("transferOwnershipLicense", [tokenId, to]);
+    final tx = await contract.send("transferOwnershipLicense(uint256,address)", [tokenId, to]);
     await tx.wait();
 
     await completer.future;
@@ -187,7 +188,7 @@ class ERC1190Tradable {
       completer.complete();
     });
 
-    final tx = await contract.send("transferCreativeLicense", [tokenId, to]);
+    final tx = await contract.send("transferCreativeLicense(uint256,address)", [tokenId, to]);
     await tx.wait();
 
     await completer.future;
