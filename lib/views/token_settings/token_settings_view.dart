@@ -52,7 +52,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                 _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0;
               }),
               validate: widget.validateNumberField,
-              successDescription: "Ownership license price updated successfully.",
+              successDescription:
+                  "Ownership license price updated successfully.",
               updateToken: () async => await vm.setOwnershipLicensePrice(
                 widget.collectionAddress,
                 widget.tokenId,
@@ -71,7 +72,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                 _rentalPricePerSecond = double.tryParse(number ?? '') ?? 0;
               }),
               validate: widget.validateNumberField,
-              successDescription: "Rental price per second updated successfully.",
+              successDescription:
+                  "Rental price per second updated successfully.",
               updateToken: () async => await vm.setRentalPrice(
                 widget.collectionAddress,
                 widget.tokenId,
@@ -109,7 +111,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                 _creativeLicensePrice = double.tryParse(number ?? '') ?? 0;
               }),
               validate: widget.validateNumberField,
-              successDescription: "Creative license price updated successfully.",
+              successDescription:
+                  "Creative license price updated successfully.",
               updateToken: () async => await vm.setCreativeLicensePrice(
                 widget.collectionAddress,
                 widget.tokenId,
