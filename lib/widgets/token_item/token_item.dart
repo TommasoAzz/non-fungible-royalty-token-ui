@@ -58,19 +58,19 @@ class _TokenItemState extends State<TokenItem> {
               showCreativeOwnershipRequests: widget.isCreativeOwner,
               showOwnershipRequests: widget.isOwner,
             ),
-            const SizedBox(height: 10),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 10),
                     if (widget.token.rentalPricePerSecond > 0)
                       ElevatedButton(
-                          onPressed: openRent, child: const Text("Rent")),
-                    if (widget.token.rentalPricePerSecond > 0)
-                      SizedBox(width: 20),
+                        onPressed: openRent,
+                        child: const Text("Rent"),
+                      ),
+                    if (widget.token.rentalPricePerSecond > 0) const SizedBox(width: 20),
                     if (widget.isOwner || widget.isCreativeOwner)
                       ElevatedButton(
                         onPressed: openDialogSettings,
@@ -78,21 +78,18 @@ class _TokenItemState extends State<TokenItem> {
                       ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (!widget.isOwner &&
-                        widget.token.ownershipLicensePrice > 0)
+                    if (!widget.isOwner && widget.token.ownershipLicensePrice > 0)
                       ElevatedButton(
                         onPressed: obtainOwnershipLicense,
                         child: const Text("Request ownership"),
                       ),
-                    if (!widget.isOwner &&
-                        widget.token.ownershipLicensePrice > 0)
-                      SizedBox(width: 20),
-                    if (!widget.isCreativeOwner &&
-                        widget.token.creativeLicensePrice > 0)
+                    if (!widget.isOwner && widget.token.ownershipLicensePrice > 0)
+                      const SizedBox(width: 20),
+                    if (!widget.isCreativeOwner && widget.token.creativeLicensePrice > 0)
                       ElevatedButton(
                         onPressed: obtainCreativeLicense,
                         child: const Text("Request creative"),
@@ -159,8 +156,7 @@ class _TokenItemState extends State<TokenItem> {
     return null;
   }
 
-  void _updateRentalData(
-      final DateTime expirationDate, final int rentExpirationDateInMillis) {
+  void _updateRentalData(final DateTime expirationDate, final int rentExpirationDateInMillis) {
     setState(() {
       this.expirationDate = expirationDate;
       this.rentExpirationDateInMillis = rentExpirationDateInMillis;
@@ -176,8 +172,7 @@ class _TokenItemState extends State<TokenItem> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title:
-              const SelectableText('Ownership license obtained successfully'),
+          title: const SelectableText('Ownership license obtained successfully'),
           content: SelectableText(
             "Ownership license of token ${widget.token.id} was obtained.",
           ),
