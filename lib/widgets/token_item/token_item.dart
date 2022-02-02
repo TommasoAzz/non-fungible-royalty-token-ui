@@ -59,7 +59,7 @@ class _TokenItemState extends State<TokenItem> {
                 showCreativeOwnershipRequests: widget.isCreativeOwner,
                 showOwnershipRequests: widget.isOwner,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -92,15 +92,13 @@ class _TokenItemState extends State<TokenItem> {
   Future<void> openRent() async {
     await showDialog(
       context: context,
-      builder: (context) => RentTokenView(
-        title: 'Rent this token',
-        rented: rented,
-        renting: renting,
-        submitRent: _submitRent,
-        updateRentalData: _updateRentalData,
-        rentalPricePerSecond: widget.token.rentalPricePerSecond,
-        expirationDate: expirationDate,
-        rentExpirationDateInMillis: rentExpirationDateInMillis,
+      builder: (context) => AlertDialog(
+        title: const Text("Rent the token"),
+        content: RentTokenView(
+          collectionAddress: widget.collection.address,
+          tokenId: widget.token.id,
+          rentalPricePerSecond: widget.token.rentalPricePerSecond,
+        ),
       ),
     );
   }
@@ -109,6 +107,7 @@ class _TokenItemState extends State<TokenItem> {
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        title: const Text("Token settings"),
         content: TokenSettingsView(
           validateAddressField: _validateAddressField,
           validateNumberField: _validateNumberField,

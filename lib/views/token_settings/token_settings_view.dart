@@ -30,6 +30,7 @@ class TokenSettingsView extends StatefulWidget {
 }
 
 class _TokenSettingsViewState extends State<TokenSettingsView> {
+  final vm = locator<MarketplaceVM>();
   double _ownershipLicensePrice = 0;
   double _rentalPricePerSecond = 0;
   double _creativeLicensePrice = 0;
@@ -38,7 +39,6 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = locator<MarketplaceVM>();
     return Column(
       children: [
         if (widget.isOwner)

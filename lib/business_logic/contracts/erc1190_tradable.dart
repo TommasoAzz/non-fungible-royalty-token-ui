@@ -130,6 +130,8 @@ class ERC1190Tradable {
   Future<void> rentAsset(final int tokenId, final int rentExpirationDateInMillis) async {
     _logger.v("rentAsset");
 
+    // TODO(TommasoAzz): Wait for event generation.
+
     final tx = await contract.send("rentAsset", [tokenId, rentExpirationDateInMillis]);
     await tx.wait();
   }
