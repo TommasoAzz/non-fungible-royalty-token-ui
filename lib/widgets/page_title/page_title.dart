@@ -9,7 +9,7 @@ class PageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Text(
+      child: SelectableText(
         title.toUpperCase(),
         textAlign: TextAlign.left,
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),

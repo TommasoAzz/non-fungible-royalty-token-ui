@@ -17,7 +17,7 @@ class MarketplaceBanner extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            SelectableText(
               'WELCOME TO ERC1190 MARKETPLACE',
               style: TextStyle(
                 fontWeight: FontWeight.w800,
@@ -30,7 +30,7 @@ class MarketplaceBanner extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Text(
+            SelectableText(
               'Project on the ERC-1190 proposal "Non-Fungible Royalty Token". Made for the course "Blockchain and Cryptocurrencies", University of Bologna, A.Y. 2021/2022.',
               style: TextStyle(
                 fontSize: descriptionSize,

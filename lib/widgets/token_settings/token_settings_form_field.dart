@@ -60,8 +60,8 @@ class _TokenSettingsFormFieldState extends State<TokenSettingsFormField> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Operation successfull'),
-          content: Text(widget.successDescription),
+          title: const SelectableText('Operation successfull'),
+          content: SelectableText(widget.successDescription),
           actions: [
             ElevatedButton(
               onPressed: Navigator.of(context).pop,
@@ -79,8 +79,8 @@ class _TokenSettingsFormFieldState extends State<TokenSettingsFormField> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Operation not successful'),
-          content: Text(
+          title: const SelectableText('Operation not successful'),
+          content: SelectableText(
             'The operation was not completed. An error occurred: $exc',
           ),
           actions: [

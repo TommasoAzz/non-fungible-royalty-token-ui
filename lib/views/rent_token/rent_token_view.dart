@@ -42,8 +42,7 @@ class _RentTokenViewState extends State<RentTokenView> {
 
     if (newDate == null) return;
 
-    widget.updateRentalData(
-        newDate, (newDate.difference(DateTime.now()).inMilliseconds));
+    widget.updateRentalData(newDate, (newDate.difference(DateTime.now()).inMilliseconds));
   }
 
   @override
@@ -52,7 +51,7 @@ class _RentTokenViewState extends State<RentTokenView> {
       width: 500,
       height: 700,
       child: AlertDialog(
-        title: const Text("Rent this token"),
+        title: const SelectableText("Rent this token"),
         content: Column(
           children: [
             ElevatedButton(
@@ -71,11 +70,12 @@ class _RentTokenViewState extends State<RentTokenView> {
               child: widget.expirationDate == null
                   ? const Text('Select date')
                   : Text(
-                      'Selected date: ${DateFormat('dd/MM/yy').format(widget.expirationDate!)}'),
+                      'Selected date: ${DateFormat('dd/MM/yy').format(widget.expirationDate!)}',
+                    ),
             ),
             widget.rentExpirationDateInMillis == 0
-                ? const Text("")
-                : Text(
+                ? const SelectableText("")
+                : SelectableText(
                     "The cost for this rent is: ${widget.rentExpirationDateInMillis * 1000 * widget.rentalPricePerSecond} ETH.",
                   ),
             ElevatedButton(

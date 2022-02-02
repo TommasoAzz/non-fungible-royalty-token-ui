@@ -64,16 +64,13 @@ class _TokenItemState extends State<TokenItem> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   if (widget.token.rentalPricePerSecond > 0)
-                    ElevatedButton(
-                        onPressed: openRent, child: const Text("Rent")),
-                  if (!widget.isOwner &&
-                      widget.token.ownershipLicensePrice != 0)
+                    ElevatedButton(onPressed: openRent, child: const Text("Rent")),
+                  if (!widget.isOwner && widget.token.ownershipLicensePrice != 0)
                     ElevatedButton(
                       onPressed: obtainOwnershipLicense,
                       child: const Text("Obtain ownership license"),
                     ),
-                  if (!widget.isCreativeOwner &&
-                      widget.token.creativeLicensePrice != 0)
+                  if (!widget.isCreativeOwner && widget.token.creativeLicensePrice != 0)
                     ElevatedButton(
                       onPressed: obtainCreativeLicense,
                       child: const Text("Obtain creative license"),
@@ -127,7 +124,7 @@ class _TokenItemState extends State<TokenItem> {
   String? _validateAddressField(final String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter a value.';
-    } else if (EthUtils.isAddress(value)) {
+    } else if (!EthUtils.isAddress(value)) {
       return 'Please enter a valid address.';
     }
     return null;
@@ -145,8 +142,7 @@ class _TokenItemState extends State<TokenItem> {
     return null;
   }
 
-  void _updateRentalData(
-      final DateTime expirationDate, final int rentExpirationDateInMillis) {
+  void _updateRentalData(final DateTime expirationDate, final int rentExpirationDateInMillis) {
     setState(() {
       this.expirationDate = expirationDate;
       this.rentExpirationDateInMillis = rentExpirationDateInMillis;
@@ -162,8 +158,8 @@ class _TokenItemState extends State<TokenItem> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Ownership license obtained successfully'),
-          content: Text(
+          title: const SelectableText('Ownership license obtained successfully'),
+          content: SelectableText(
             "Ownership license of token ${widget.token.id} was obtained.",
           ),
           actions: [
@@ -183,8 +179,8 @@ class _TokenItemState extends State<TokenItem> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Operation not successful'),
-          content: Text(
+          title: const SelectableText('Operation not successful'),
+          content: SelectableText(
             'The operation was not completed. An error occurred: $exc',
           ),
           actions: [
@@ -207,8 +203,8 @@ class _TokenItemState extends State<TokenItem> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Creative license obtained successfully'),
-          content: Text(
+          title: const SelectableText('Creative license obtained successfully'),
+          content: SelectableText(
             "Creative license of token ${widget.token.id} was obtained.",
           ),
           actions: [
@@ -228,8 +224,8 @@ class _TokenItemState extends State<TokenItem> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Operation not successful'),
-          content: Text(
+          title: const SelectableText('Operation not successful'),
+          content: SelectableText(
             'The operation was not completed. An error occurred: $exc',
           ),
           actions: [
@@ -263,8 +259,8 @@ class _TokenItemState extends State<TokenItem> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Token rented successfully'),
-          content: Text(
+          title: const SelectableText('Token rented successfully'),
+          content: SelectableText(
             "Token ${widget.token.id} is rented until ${DateFormat('gg/MM/yy').format(expirationDate!)}.",
           ),
           actions: [
@@ -284,8 +280,8 @@ class _TokenItemState extends State<TokenItem> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Operation not successful'),
-          content: Text(
+          title: const SelectableText('Operation not successful'),
+          content: SelectableText(
             'The operation was not completed. An error occurred: $exc',
           ),
           actions: [

@@ -27,11 +27,11 @@ class CollectionsContent extends StatelessWidget {
               }
 
               if (snapshot.hasError) {
-                return Text("Error: ${snapshot.error}");
+                return SelectableText("Error: ${snapshot.error}");
               }
 
               if (snapshot.data!.isEmpty) {
-                return const Text("There are no collections.");
+                return const SelectableText("There are no collections.");
               }
 
               return GridView.count(

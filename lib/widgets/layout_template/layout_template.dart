@@ -35,7 +35,7 @@ class LayoutTemplate extends StatelessWidget {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return Column(
                       children: const [
-                        Text(
+                        SelectableText(
                           "ERC1190 Marketplace can only be used by logging in with your wallet.",
                           textAlign: TextAlign.center,
                         ),
@@ -46,7 +46,7 @@ class LayoutTemplate extends StatelessWidget {
                   }
 
                   if (snapshot.hasError) {
-                    return Text(
+                    return SelectableText(
                       "Error while connecting to the wallet: ${snapshot.error}",
                       textAlign: TextAlign.center,
                     );

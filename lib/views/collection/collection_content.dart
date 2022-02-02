@@ -27,7 +27,7 @@ class CollectionContent extends StatelessWidget {
     } else if (collectionData['collection_address'] != null) {
       futureCollection = marketplaceVM.getCollection(collectionData['collection_address']);
     } else {
-      return const Text("Error loading the collection.");
+      return const SelectableText("Error loading the collection.");
     }
 
     return FutureBuilder<Collection>(
@@ -52,11 +52,11 @@ class CollectionContent extends StatelessWidget {
                     }
 
                     if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}");
+                      return SelectableText("Error: ${snapshot.error}");
                     }
 
                     if (snapshot.data!.isEmpty) {
-                      return const Text("There are no tokens for collection.");
+                      return const SelectableText("There are no tokens for collection.");
                     }
 
                     return GridView.count(

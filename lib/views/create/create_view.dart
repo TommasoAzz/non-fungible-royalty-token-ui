@@ -85,13 +85,13 @@ class _CreateViewState extends State<CreateView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         if (collectionUploaded)
-                          const Text(
+                          const SelectableText(
                             "Submitted",
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         if (collectionUploaded) const Icon(Icons.check_box, size: 16),
                         if (!collectionUploaded)
-                          const Text(
+                          const SelectableText(
                             "Submit",
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
@@ -180,14 +180,14 @@ class _CreateViewState extends State<CreateView> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Successful deploy'),
-          content: Text(
+          title: const SelectableText('Successful deploy'),
+          content: SelectableText(
             'Collection ${collection.name} (${collection.symbol}) was deployed successfully with ${collection.availableTokens} initial tokens.',
           ),
           actions: [
             ElevatedButton(
               onPressed: Navigator.of(context).pop,
-              child: const Text('Okay'),
+              child: const SelectableText('Okay'),
             )
           ],
         ),
@@ -201,14 +201,14 @@ class _CreateViewState extends State<CreateView> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Deploy not successful'),
-          content: Text(
+          title: const SelectableText('Deploy not successful'),
+          content: SelectableText(
             'The collection was not deployed. An error occurred: $exc',
           ),
           actions: [
             ElevatedButton(
               onPressed: Navigator.of(context).pop,
-              child: const Text('Okay'),
+              child: const SelectableText('Okay'),
             )
           ],
         ),

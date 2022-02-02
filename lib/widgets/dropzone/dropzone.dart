@@ -24,14 +24,14 @@ class _DropzoneState extends State<Dropzone> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        const SelectableText(
           "Upload",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         const SizedBox(
           height: 8,
         ),
-        Text(
+        SelectableText(
           "Uploaded files: $numberFileUploaded",
           style: const TextStyle(fontSize: 16),
         ),
@@ -54,7 +54,7 @@ class _DropzoneState extends State<Dropzone> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Icons.cloud_upload, size: 80, color: Colors.white),
-                    const Text(
+                    const SelectableText(
                       "Drop file here",
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),

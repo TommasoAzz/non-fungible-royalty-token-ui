@@ -38,8 +38,8 @@ class _WalletViewState extends State<WalletView> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text("Error while connecting to the wallet"),
-          content: Text(exc.toString()),
+          title: const SelectableText("Error while connecting to the wallet"),
+          content: SelectableText(exc.toString()),
         ),
       );
     }
@@ -53,14 +53,14 @@ class _WalletViewState extends State<WalletView> {
         children: [
           const PageTitle(title: "wallet"),
           if (isConnected)
-            Text(
+            SelectableText(
               "Connected with account: ${vm.loggedAccount}",
               style: const TextStyle(fontSize: 20),
             ),
           if (!isConnected)
             ElevatedButton(
               onPressed: _connectToWallet,
-              child: const Text("Connect to wallet"),
+              child: const SelectableText("Connect to wallet"),
             ),
           const SizedBox(
             height: 20,

@@ -33,7 +33,7 @@ class CollectionItem extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              Text(
+              SelectableText(
                 "${collection.name} (${collection.symbol})".toUpperCase(),
                 style: const TextStyle(
                   fontSize: 18,
@@ -45,7 +45,7 @@ class CollectionItem extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              Text(
+              SelectableText(
                 "Created by:\n${collection.creator}",
                 style: const TextStyle(
                   fontSize: 14,
@@ -56,7 +56,7 @@ class CollectionItem extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              Text(
+              SelectableText(
                 "${collection.availableTokens} tokens",
                 style: const TextStyle(
                   fontSize: 14,

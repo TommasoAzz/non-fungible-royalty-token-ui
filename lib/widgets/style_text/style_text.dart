@@ -7,13 +7,13 @@ class StyleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-        title,
-        textAlign: TextAlign.left,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w200,
-        ),
+    return SelectableText(
+      title,
+      textAlign: TextAlign.left,
+      style: const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w200,
+      ),
     );
   }
 }
