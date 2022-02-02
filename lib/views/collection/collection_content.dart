@@ -60,7 +60,7 @@ class CollectionContent extends StatelessWidget {
                     }
 
                     return GridView.count(
-                      childAspectRatio: 0.8,
+                      childAspectRatio: 0.65,
                       primary: false,
                       padding: EdgeInsets.all(padding),
                       crossAxisSpacing: 20,

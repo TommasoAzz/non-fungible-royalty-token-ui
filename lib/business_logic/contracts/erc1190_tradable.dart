@@ -132,8 +132,10 @@ class ERC1190Tradable {
 
     // TODO(TommasoAzz): Wait for event generation.
 
-    final tx =
-        await contract.send("rentAsset(uint256,uint256)", [tokenId, rentExpirationDateInMillis]);
+    final tx = await contract.send("rentAsset(uint256,uint256)", [
+      tokenId,
+      rentExpirationDateInMillis,
+    ]);
     await tx.wait();
   }
 
@@ -288,5 +290,11 @@ class ERC1190Tradable {
     await tx.wait();
 
     await completer.future;
+  }
+
+  Future<String> getApproved(final int tokenId) async {
+    _logger.v("getApproved");
+
+    return await contract.call<EthAddress>("getApproved");
   }
 }

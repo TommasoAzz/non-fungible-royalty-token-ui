@@ -326,4 +326,38 @@ class MarketplaceVM with ChangeNotifier {
 
     await contract.setRentalPrice(tokenId, priceInWei);
   }
+
+  Future<void> requireOwnershipLicenseTransferApproval(
+    final String collectionAddress,
+    final int tokenId,
+  ) async {
+    _logger.v("requireOwnershipLicenseTransferApproval");
+
+    await marketplaceContract.requireOwnershipLicenseTransferApproval(collectionAddress, tokenId);
+  }
+
+  Future<void> requireCreativeLicenseTransferApproval(
+    final String collectionAddress,
+    final int tokenId,
+  ) async {
+    _logger.v("requireCreativeLicenseTransferApproval");
+
+    await marketplaceContract.requireCreativeLicenseTransferApproval(collectionAddress, tokenId);
+  }
+
+  Future<void> approve(final String collectionAddress, final int tokenId, final String to) async {
+    _logger.v("approve");
+
+    final contract = loadERC1190SmartContract(collectionAddress);
+
+    await contract.approve(to, tokenId);
+  }
+
+  Future<bool> getApproved(final String collectionAddress, final int tokenId) async {
+    _logger.v("getApproved");
+
+    final contract = loadERC1190SmartContract(collectionAddress);
+
+    return _account == (await contract.getApproved(tokenId));
+  }
 }
