@@ -35,11 +35,17 @@ class _RentTokenViewState extends State<RentTokenView> {
       firstDate: initialDate,
       lastDate: DateTime(initialDate.year + 5),
     );
+    final newTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay(
+            hour: DateTime.now().hour, minute: DateTime.now().minute));
 
-    if (newDate == null) return;
+    if (newDate == null || newTime == null) return;
 
     setState(() {
-      selectedEndRentalDateMillis = newDate.millisecondsSinceEpoch;
+      selectedEndRentalDateMillis = DateTime(newDate.year, newDate.month,
+              newDate.day, newTime.hour, newTime.minute)
+          .millisecondsSinceEpoch;
     });
   }
 
@@ -63,7 +69,7 @@ class _RentTokenViewState extends State<RentTokenView> {
           child: selectedEndRentalDateMillis == 0
               ? const Text('Select date')
               : Text(
-                  'Selected date: ${DateFormat('dd/MM/yy').format(DateTime.fromMillisecondsSinceEpoch(selectedEndRentalDateMillis))}',
+                  'Selected date: ${DateFormat('dd/MM/yy HH:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedEndRentalDateMillis))}',
                 ),
         ),
         selectedEndRentalDateMillis == 0
