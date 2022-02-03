@@ -23,26 +23,37 @@ class TokenInfo extends StatelessWidget {
         StyleText(title: "Owner: ${token.owner}"),
         StyleText(title: "Rented by: ${token.rentedBy.length} people"),
         if (token.ownershipLicensePrice > 0)
-          StyleText(title: "Ownership license: ${token.ownershipLicensePrice} ETH"),
+          StyleText(
+              title: "Ownership license: ${token.ownershipLicensePrice} ETH"),
         if (token.ownershipLicensePrice == 0)
           const StyleText(title: "Ownership license: not on sale"),
         if (token.creativeLicensePrice > 0)
-          StyleText(title: "Creative license: ${token.creativeLicensePrice} ETH"),
+          StyleText(
+              title: "Creative license: ${token.creativeLicensePrice} ETH"),
         if (token.creativeLicensePrice == 0)
           const StyleText(title: "Creative license: not on sale"),
         if (token.rentalPricePerSecond > 0)
           StyleText(title: "Rental: ${token.rentalPricePerSecond} ETH/sec"),
-        if (token.rentalPricePerSecond == 0) const StyleText(title: "Rental: not rentable"),
-        StyleText(title: "Royalty for ownership transfer: ${token.royaltyOwnershipTransfer}%"),
+        if (token.rentalPricePerSecond == 0)
+          const StyleText(title: "Rental: not rentable"),
+        StyleText(
+            title:
+                "Royalty for ownership transfer: ${token.royaltyOwnershipTransfer}%"),
         StyleText(title: "Royalty for rental: ${token.royaltyRental}%"),
-        // if (showOwnershipRequests && token.ownershipLicenseRequests.isNotEmpty)
-        //   StyleText(title: "Ownership requests from: ${token.ownershipLicenseRequests}"),
-        // if (showOwnershipRequests && token.ownershipLicenseRequests.isEmpty)
-        //   const StyleText(title: "No ownership requests available."),
-        // if (showCreativeOwnershipRequests && token.ownershipLicenseRequests.isNotEmpty)
-        //   StyleText(title: "Creative requests from: ${token.creativeLicenseRequests}"),
-        // if (showCreativeOwnershipRequests && token.ownershipLicenseRequests.isEmpty)
-        //   const StyleText(title: "No creative ownership requests available."),
+        if (showOwnershipRequests && token.ownershipLicenseRequests.isNotEmpty)
+          StyleText(
+              title:
+                  "Ownership requests from: ${token.ownershipLicenseRequests}"),
+        if (showOwnershipRequests && token.ownershipLicenseRequests.isEmpty)
+          const StyleText(title: "No ownership requests available."),
+        if (showCreativeOwnershipRequests &&
+            token.ownershipLicenseRequests.isNotEmpty)
+          StyleText(
+              title:
+                  "Creative requests from: ${token.creativeLicenseRequests}"),
+        if (showCreativeOwnershipRequests &&
+            token.ownershipLicenseRequests.isEmpty)
+          const StyleText(title: "No creative ownership requests available."),
       ],
     );
   }
