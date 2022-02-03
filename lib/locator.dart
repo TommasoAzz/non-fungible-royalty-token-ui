@@ -96,6 +96,7 @@ void setupLocator() {
       httpClient: http.Client(),
       ipfsUrl: locator<String>(instanceName: "ipfs"),
       toWei: (eth) => EthUtils.parseEther(eth.toString()).toBigInt,
+      fixAddress: (addr) => EthUtils.getAddress(addr),
     );
 
     connector.addListener(() {

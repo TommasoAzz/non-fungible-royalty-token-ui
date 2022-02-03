@@ -305,6 +305,6 @@ class ERC1190Tradable {
   Future<String> getApproved(final int tokenId) async {
     _logger.v("getApproved");
 
-    return await contract.call<EthAddress>("getApproved");
+    return await contract.call<EthAddress>("getApproved", [tokenId]);
   }
 }

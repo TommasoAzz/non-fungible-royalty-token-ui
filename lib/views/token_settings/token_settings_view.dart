@@ -15,6 +15,9 @@ class TokenSettingsView extends StatefulWidget {
   final String collectionAddress;
   final int tokenId;
 
+  final List<String> creativeLicenseRequests;
+  final List<String> ownershipLicenseRequests;
+
   const TokenSettingsView({
     Key? key,
     required this.validateNumberField,
@@ -23,6 +26,8 @@ class TokenSettingsView extends StatefulWidget {
     required this.isOwner,
     required this.collectionAddress,
     required this.tokenId,
+    required this.creativeLicenseRequests,
+    required this.ownershipLicenseRequests,
   }) : super(key: key);
 
   @override
@@ -52,8 +57,7 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                 _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0;
               }),
               validate: widget.validateNumberField,
-              successDescription:
-                  "Ownership license price updated successfully.",
+              successDescription: "Ownership license price updated successfully.",
               updateToken: () async => await vm.setOwnershipLicensePrice(
                 widget.collectionAddress,
                 widget.tokenId,
@@ -72,13 +76,27 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                 _rentalPricePerSecond = double.tryParse(number ?? '') ?? 0;
               }),
               validate: widget.validateNumberField,
-              successDescription:
-                  "Rental price per second updated successfully.",
+              successDescription: "Rental price per second updated successfully.",
               updateToken: () async => await vm.setRentalPrice(
                 widget.collectionAddress,
                 widget.tokenId,
                 _rentalPricePerSecond,
               ),
+            ),
+          ),
+        if (widget.isOwner && widget.ownershipLicenseRequests.isNotEmpty)
+          ListView.builder(
+            itemCount: widget.ownershipLicenseRequests.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, i) => OutlinedButton(
+              onPressed: () async {
+                await vm.approve(
+                  widget.collectionAddress,
+                  widget.tokenId,
+                  widget.ownershipLicenseRequests[i],
+                );
+              },
+              child: Text(widget.ownershipLicenseRequests[i]),
             ),
           ),
         if (widget.isOwner)
@@ -111,13 +129,27 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                 _creativeLicensePrice = double.tryParse(number ?? '') ?? 0;
               }),
               validate: widget.validateNumberField,
-              successDescription:
-                  "Creative license price updated successfully.",
+              successDescription: "Creative license price updated successfully.",
               updateToken: () async => await vm.setCreativeLicensePrice(
                 widget.collectionAddress,
                 widget.tokenId,
                 _creativeLicensePrice,
               ),
+            ),
+          ),
+        if (widget.isCreativeOwner && widget.creativeLicenseRequests.isNotEmpty)
+          ListView.builder(
+            itemCount: widget.creativeLicenseRequests.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, i) => OutlinedButton(
+              onPressed: () async {
+                await vm.approve(
+                  widget.collectionAddress,
+                  widget.tokenId,
+                  widget.creativeLicenseRequests[i],
+                );
+              },
+              child: Text(widget.creativeLicenseRequests[i]),
             ),
           ),
         if (widget.isCreativeOwner)

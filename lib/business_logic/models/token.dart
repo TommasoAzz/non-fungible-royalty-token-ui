@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
 
 typedef EthAddress = String;
 
@@ -15,6 +15,7 @@ class Token {
   final List<EthAddress> creativeLicenseRequests;
   final int royaltyOwnershipTransfer;
   final int royaltyRental;
+  final String approved;
 
   Token({
     required this.id,
@@ -29,16 +30,18 @@ class Token {
     this.creativeLicenseRequests = const [],
     required this.royaltyOwnershipTransfer,
     required this.royaltyRental,
+    required this.approved,
   });
 
   @override
   String toString() {
-    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, royaltyOwnershipTransfer: $royaltyOwnershipTransfer, royaltyRental: $royaltyRental)';
+    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, royaltyOwnershipTransfer: $royaltyOwnershipTransfer, royaltyRental: $royaltyRental, approved: $approved)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
 
     return other is Token &&
         other.id == id &&
@@ -52,7 +55,8 @@ class Token {
         listEquals(other.ownershipLicenseRequests, ownershipLicenseRequests) &&
         listEquals(other.creativeLicenseRequests, creativeLicenseRequests) &&
         other.royaltyOwnershipTransfer == royaltyOwnershipTransfer &&
-        other.royaltyRental == royaltyRental;
+        other.royaltyRental == royaltyRental &&
+        other.approved == approved;
   }
 
   @override
@@ -68,6 +72,7 @@ class Token {
         ownershipLicenseRequests.hashCode ^
         creativeLicenseRequests.hashCode ^
         royaltyOwnershipTransfer.hashCode ^
-        royaltyRental.hashCode;
+        royaltyRental.hashCode ^
+        approved.hashCode;
   }
 }
