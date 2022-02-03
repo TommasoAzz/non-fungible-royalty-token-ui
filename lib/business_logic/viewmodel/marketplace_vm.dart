@@ -214,6 +214,7 @@ class MarketplaceVM with ChangeNotifier {
             collectionAddress,
             tokenId,
           ),
+          approved: await contract.getApproved(tokenId),
         ),
       );
     }
@@ -358,6 +359,6 @@ class MarketplaceVM with ChangeNotifier {
 
     final contract = loadERC1190SmartContract(collectionAddress);
 
-    return _account == (await contract.getApproved(tokenId));
+    return _account == (await contract.getApproved(tokenId)).toLowerCase();
   }
 }

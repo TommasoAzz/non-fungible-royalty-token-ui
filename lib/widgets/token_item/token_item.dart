@@ -82,25 +82,55 @@ class _TokenItemState extends State<TokenItem> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (!widget.isOwner && widget.token.ownershipLicensePrice > 0)
+                    if (!widget.isOwner &&
+                        widget.token.ownershipLicensePrice > 0 &&
+                        widget.token.approved.toLowerCase() != marketplaceVM.loggedAccount)
                       ElevatedButton(
-                        onPressed: () => marketplaceVM
-                            .requireOwnershipLicenseTransferApproval(
-                          widget.collection.address,
-                          widget.token.id,
-                        ),
+                        onPressed: () async {
+                          await marketplaceVM.requireOwnershipLicenseTransferApproval(
+                            widget.collection.address,
+                            widget.token.id,
+                          );
+                        },
                         child: const Text("Request ownership"),
+                      ),
+                    if (!widget.isOwner &&
+                        widget.token.ownershipLicensePrice > 0 &&
+                        widget.token.approved.toLowerCase() == marketplaceVM.loggedAccount)
+                      ElevatedButton(
+                        onPressed: () async {
+                          await marketplaceVM.obtainOwnershipLicense(
+                            widget.collection.address,
+                            widget.token.id,
+                          );
+                        },
+                        child: const Text("Obtain ownership"),
                       ),
                     if (!widget.isOwner && widget.token.ownershipLicensePrice > 0)
                       const SizedBox(width: 20),
-                    if (!widget.isCreativeOwner && widget.token.creativeLicensePrice > 0)
+                    if (!widget.isCreativeOwner &&
+                        widget.token.creativeLicensePrice > 0 &&
+                        widget.token.approved.toLowerCase() != marketplaceVM.loggedAccount)
                       ElevatedButton(
-                        onPressed: () => marketplaceVM
-                            .requireCreativeLicenseTransferApproval(
-                          widget.collection.address,
-                          widget.token.id,
-                        ),
+                        onPressed: () async {
+                          await marketplaceVM.requireCreativeLicenseTransferApproval(
+                            widget.collection.address,
+                            widget.token.id,
+                          );
+                        },
                         child: const Text("Request creative"),
+                      ),
+                    if (!widget.isCreativeOwner &&
+                        widget.token.creativeLicensePrice > 0 &&
+                        widget.token.approved.toLowerCase() == marketplaceVM.loggedAccount)
+                      ElevatedButton(
+                        onPressed: () async {
+                          await marketplaceVM.obtainCreativeLicense(
+                            widget.collection.address,
+                            widget.token.id,
+                          );
+                        },
+                        child: const Text("Obtain creative"),
                       ),
                   ],
                 ),
@@ -138,6 +168,8 @@ class _TokenItemState extends State<TokenItem> {
           isOwner: widget.isOwner,
           collectionAddress: widget.collection.address,
           tokenId: widget.token.id,
+          creativeLicenseRequests: widget.token.creativeLicenseRequests,
+          ownershipLicenseRequests: widget.token.ownershipLicenseRequests,
         ),
       ),
     );
