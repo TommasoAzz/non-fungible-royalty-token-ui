@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/token.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/horizontal_token_list/horizontal_token_list.dart';
-import 'package:non_fungible_royalty_token_marketplace_ui/widgets/token_item/token_item.dart';
-import '../../business_logic/models/collection.dart';
-import '../../business_logic/viewmodel/marketplace_vm.dart';
-import '../../locator.dart';
-import '../horizontal_collection_list/horizontal_collection_list.dart';
+import '../../business_logic/models/token.dart';
+import '../horizontal_token_list/horizontal_token_list.dart';
 
 class ProfileTokenList extends StatelessWidget {
   final String title;

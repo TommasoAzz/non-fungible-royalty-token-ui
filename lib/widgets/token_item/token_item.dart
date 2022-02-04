@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_web3/flutter_web3.dart';
-import 'package:intl/intl.dart';
 import '../../views/token_settings/token_settings_view.dart';
 import '../../views/rent_token/rent_token_view.dart';
 import 'token_info.dart';
@@ -196,13 +195,6 @@ class _TokenItemState extends State<TokenItem> {
     return null;
   }
 
-  void _updateRentalData(final DateTime expirationDate, final int rentExpirationDateInMillis) {
-    setState(() {
-      this.expirationDate = expirationDate;
-      this.rentExpirationDateInMillis = rentExpirationDateInMillis;
-    });
-  }
-
   Future<void> obtainOwnershipLicense() async {
     try {
       await marketplaceVM.obtainOwnershipLicense(
@@ -260,62 +252,6 @@ class _TokenItemState extends State<TokenItem> {
           title: const SelectableText('Creative license obtained successfully'),
           content: SelectableText(
             "Creative license of token ${widget.token.id} was obtained.",
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: Navigator.of(context).pop,
-              child: const Text('Okay'),
-            )
-          ],
-        ),
-      );
-      //ignore: avoid_catches_without_on_clauses
-    } catch (exc) {
-      setState(() {
-        rented = false;
-        renting = false;
-      });
-      await showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const SelectableText('Operation not successful'),
-          content: SelectableText(
-            'The operation was not completed. An error occurred: $exc',
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: Navigator.of(context).pop,
-              child: const Text('Okay'),
-            )
-          ],
-        ),
-      );
-    }
-  }
-
-  Future<void> _submitRent() async {
-    setState(() {
-      renting = true;
-    });
-
-    try {
-      await marketplaceVM.rentAsset(
-        widget.collection.address,
-        widget.token.id,
-        rentExpirationDateInMillis,
-      );
-
-      setState(() {
-        rented = true;
-        renting = false;
-      });
-
-      await showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const SelectableText('Token rented successfully'),
-          content: SelectableText(
-            "Token ${widget.token.id} is rented until ${DateFormat('gg/MM/yy').format(expirationDate!)}.",
           ),
           actions: [
             ElevatedButton(
