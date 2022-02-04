@@ -37,7 +37,7 @@ class TokenSettingsView extends StatefulWidget {
 class _TokenSettingsViewState extends State<TokenSettingsView> {
   final vm = locator<MarketplaceVM>();
   double _ownershipLicensePrice = 0;
-  double _rentalPricePerSecond = 0;
+  double _rentalPricePerHour = 0;
   double _creativeLicensePrice = 0;
   String _transferOwnershipLicenseTo = '';
   String _transferCreativeLicenseTo = '';
@@ -71,16 +71,16 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
               maxWidth: max(480, MediaQuery.of(context).size.width * 0.8),
             ),
             child: TokenSettingsFormField(
-              inputLabel: "Set rental price (ETH/second)",
+              inputLabel: "Set rental price (ETH/hour)",
               save: (number) => setState(() {
-                _rentalPricePerSecond = double.tryParse(number ?? '') ?? 0;
+                _rentalPricePerHour = double.tryParse(number ?? '') ?? 0;
               }),
               validate: widget.validateNumberField,
-              successDescription: "Rental price per second updated successfully.",
+              successDescription: "Rental price updated successfully.",
               updateToken: () async => await vm.setRentalPrice(
                 widget.collectionAddress,
                 widget.tokenId,
-                _rentalPricePerSecond,
+                _rentalPricePerHour / 3600,
               ),
             ),
           ),

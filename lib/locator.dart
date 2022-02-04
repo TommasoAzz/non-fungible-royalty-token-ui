@@ -95,7 +95,7 @@ void setupLocator() {
       loadERC1190SmartContract: contractLoader.loadERC1190Tradable,
       httpClient: http.Client(),
       ipfsUrl: locator<String>(instanceName: "ipfs"),
-      toWei: (eth) => EthUtils.parseEther(eth.toString()).toBigInt,
+      toWei: (eth) => EthUtils.parseEther(eth.toStringAsFixed(20)).toBigInt,
       fixAddress: (addr) => EthUtils.getAddress(addr),
     );
 
