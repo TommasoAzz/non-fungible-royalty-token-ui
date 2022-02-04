@@ -156,13 +156,13 @@ class MarketplaceVM with ChangeNotifier {
         ) as Map<String, dynamic>;
         final fileName = ipfsResponseBodyJson['Name'];
         final fileHash = ipfsResponseBodyJson['Hash'];
-        final tokenId = await collection.mint(
+        await collection.mint(
           creator,
           "$fileHash?filename=$fileName",
           royaltyForRental,
           royaltyForOwnershipTransfer,
         );
-        _logger.i("Minted token $tokenId");
+        _logger.i("Token minted!");
       } else {
         _logger.e(
           "Could not deploy file with path = $fileBlobURI to IPFS. Not minting the relative token.",

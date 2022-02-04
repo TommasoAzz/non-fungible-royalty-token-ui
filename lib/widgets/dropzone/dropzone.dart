@@ -62,7 +62,7 @@ class _DropzoneState extends State<Dropzone> {
                     ElevatedButton.icon(
                       icon: const Icon(Icons.search, size: 25),
                       label: const Text(
-                        "Choose file",
+                        "Choose files",
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(

@@ -85,13 +85,13 @@ class _CreateViewState extends State<CreateView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         if (collectionUploaded)
-                          const SelectableText(
+                          const Text(
                             "Submitted",
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         if (collectionUploaded) const Icon(Icons.check_box, size: 16),
                         if (!collectionUploaded)
-                          const SelectableText(
+                          const Text(
                             "Submit",
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
@@ -187,7 +187,7 @@ class _CreateViewState extends State<CreateView> {
           actions: [
             ElevatedButton(
               onPressed: Navigator.of(context).pop,
-              child: const SelectableText('Okay'),
+              child: const Text('Okay'),
             )
           ],
         ),
@@ -208,7 +208,7 @@ class _CreateViewState extends State<CreateView> {
           actions: [
             ElevatedButton(
               onPressed: Navigator.of(context).pop,
-              child: const SelectableText('Okay'),
+              child: const Text('Okay'),
             )
           ],
         ),

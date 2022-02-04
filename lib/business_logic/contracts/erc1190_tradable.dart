@@ -71,7 +71,7 @@ class ERC1190Tradable {
     return royalty;
   }
 
-  Future<int> mint(
+  Future<void> mint(
     final String creator,
     final String file,
     int royaltyForRental,
@@ -79,7 +79,7 @@ class ERC1190Tradable {
   ) async {
     _logger.v("mint");
 
-    final completer = Completer<int>();
+    final completer = Completer<void>();
 
     contract.once("TokenMinted", (
       creator,
@@ -94,7 +94,7 @@ class ERC1190Tradable {
       _logger.i("- royaltyForOwnershipTransfer: ${dartify(royaltyForOwnershipTransfer)}");
       _logger.i("- tokenId: ${dartify(tokenId)}");
 
-      completer.complete(int.tryParse(dartify(tokenId).toString()) ?? -1); // TODO fix
+      completer.complete(); // TODO fix
     });
 
     final tx = await contract.send(
