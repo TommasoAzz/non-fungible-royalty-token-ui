@@ -19,8 +19,8 @@ class HorizontalTokenList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      shrinkWrap: true,
-      physics: const ClampingScrollPhysics(),
+      // shrinkWrap: true,
+      // physics: const ClampingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       itemCount: tokens.length,
       itemBuilder: (context, index) => TokenItem(

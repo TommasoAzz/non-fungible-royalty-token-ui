@@ -14,30 +14,43 @@ class ProfileView extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          const PageTitle(title: "My Profile"),
+          const PageTitle(title: "Profile"),
           const SizedBox(height: 20),
-          const ProfileCollectionList(title: "Created"),
-          const SizedBox(height: 20),
-          ProfileTokenList(
-            title: "Ownership license",
-            tokenList: marketplaceVM.getOwnedTokens(),
-            isCreativeOwner: false,
-            isOwner: true,
+          const PageTitle(title: "Created", fontSize: 24),
+          Container(
+            constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.3),
+            child: const ProfileCollectionList(),
           ),
           const SizedBox(height: 20),
-          ProfileTokenList(
-            title: "Creative license",
-            tokenList: marketplaceVM.getCreativeOwnedTokens(),
-            isCreativeOwner: true,
-            isOwner: false,
+          const PageTitle(title: "Ownership license", fontSize: 24),
+          Container(
+            constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.3),
+            child: ProfileTokenList(
+              tokenList: marketplaceVM.getOwnedTokens(),
+              isOwner: true,
+              isCreativeOwner: false,
+            ),
           ),
           const SizedBox(height: 20),
-          ProfileTokenList(
-            title: "Rented",
-            tokenList: marketplaceVM.getRentedTokens(),
-            isCreativeOwner: false,
-            isOwner: false,
-          )
+          const PageTitle(title: "Creative license", fontSize: 24),
+          Container(
+            constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.3),
+            child: ProfileTokenList(
+              tokenList: marketplaceVM.getCreativeOwnedTokens(),
+              isCreativeOwner: true,
+              isOwner: false,
+            ),
+          ),
+          const SizedBox(height: 20),
+          const PageTitle(title: "Rented", fontSize: 24),
+          Container(
+            constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.3),
+            child: ProfileTokenList(
+              tokenList: marketplaceVM.getRentedTokens(),
+              isCreativeOwner: false,
+              isOwner: false,
+            ),
+          ),
         ],
       ),
     );

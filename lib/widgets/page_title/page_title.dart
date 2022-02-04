@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class PageTitle extends StatelessWidget {
   final String title;
+  final double fontSize;
 
-  const PageTitle({Key? key, required this.title}) : super(key: key);
+  const PageTitle({Key? key, required this.title, this.fontSize = 32.0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,10 @@ class PageTitle extends StatelessWidget {
       child: SelectableText(
         title.toUpperCase(),
         textAlign: TextAlign.left,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: fontSize,
+        ),
       ),
     );
   }

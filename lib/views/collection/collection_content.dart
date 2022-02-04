@@ -73,9 +73,9 @@ class CollectionContent extends StatelessWidget {
                       children: snapshot.data!
                           .map((token) => TokenItem(
                                 isCreativeOwner:
-                                    token.creativeOwner.toLowerCase() ==
+                                    token.creativeOwner ==
                                         marketplaceVM.loggedAccount,
-                                isOwner: token.owner.toLowerCase() ==
+                                isOwner: token.owner ==
                                     marketplaceVM.loggedAccount,
                                 token: token,
                                 collection: collection,

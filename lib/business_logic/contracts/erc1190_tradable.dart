@@ -94,7 +94,7 @@ class ERC1190Tradable {
       _logger.i("- royaltyForOwnershipTransfer: ${dartify(royaltyForOwnershipTransfer)}");
       _logger.i("- tokenId: ${dartify(tokenId)}");
 
-      completer.complete(int.tryParse(dartify(tokenId).toString()) ?? -1);
+      completer.complete(int.tryParse(dartify(tokenId).toString()) ?? -1); // TODO fix
     });
 
     final tx = await contract.send(
