@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/business_logic/models/token.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/widgets/horizontal_token_list/horizontal_token_list.dart';
+import 'package:non_fungible_royalty_token_marketplace_ui/widgets/token_item/token_item.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/viewmodel/marketplace_vm.dart';
 import '../../locator.dart';
 import '../horizontal_collection_list/horizontal_collection_list.dart';
 
-class ProfileCollectionList extends StatelessWidget {
+class ProfileTokenList extends StatelessWidget {
   final String title;
+  final Future<List<Token>> tokenList;
+  final bool isCreativeOwner;
+  final bool isOwner;
 
-  const ProfileCollectionList({Key? key, required this.title})
-      : super(key: key);
+  const ProfileTokenList({
+    Key? key,
+    required this.title,
+    required this.tokenList,
+    required this.isCreativeOwner,
+    required this.isOwner,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final marketplaceVM = locator<MarketplaceVM>();
+    //final marketplaceVM = locator<MarketplaceVM>();
     return Column(
       children: [
         SelectableText(
@@ -21,8 +32,8 @@ class ProfileCollectionList extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         const SizedBox(height: 20),
-        FutureBuilder<List<Collection>>(
-          future: marketplaceVM.getCollections(marketplaceVM.loggedAccount),
+        FutureBuilder<List<Token>>(
+          future: tokenList,
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return const Center(child: CircularProgressIndicator());
@@ -33,10 +44,12 @@ class ProfileCollectionList extends StatelessWidget {
             }
 
             if (snapshot.data!.isEmpty) {
-              return const SelectableText("There are no collections.");
+              return const SelectableText("There are no tokens.");
             }
-            return HorizontalCollectionList(
-              entries: snapshot.data!,
+            return HorizontalTokenList(
+              tokens: snapshot.data!,
+              isCreativeOwner: isCreativeOwner,
+              isOwner: isOwner,
             );
           },
         ),

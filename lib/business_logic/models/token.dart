@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 
+import 'collection.dart';
+
 typedef EthAddress = String;
 
 class Token {
@@ -16,6 +18,7 @@ class Token {
   final int royaltyOwnershipTransfer;
   final int royaltyRental;
   final String approved;
+  final Collection collection;
 
   Token({
     required this.id,
@@ -31,11 +34,12 @@ class Token {
     required this.royaltyOwnershipTransfer,
     required this.royaltyRental,
     required this.approved,
+    required this.collection,
   });
 
   @override
   String toString() {
-    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, royaltyOwnershipTransfer: $royaltyOwnershipTransfer, royaltyRental: $royaltyRental, approved: $approved)';
+    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, royaltyOwnershipTransfer: $royaltyOwnershipTransfer, royaltyRental: $royaltyRental, approved: $approved, collection: $collection)';
   }
 
   @override
@@ -56,7 +60,8 @@ class Token {
         listEquals(other.creativeLicenseRequests, creativeLicenseRequests) &&
         other.royaltyOwnershipTransfer == royaltyOwnershipTransfer &&
         other.royaltyRental == royaltyRental &&
-        other.approved == approved;
+        other.approved == approved &&
+        other.collection == collection;
   }
 
   @override
@@ -73,6 +78,7 @@ class Token {
         creativeLicenseRequests.hashCode ^
         royaltyOwnershipTransfer.hashCode ^
         royaltyRental.hashCode ^
-        approved.hashCode;
+        approved.hashCode ^
+        collection.hashCode;
   }
 }

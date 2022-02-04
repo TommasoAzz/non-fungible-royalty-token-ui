@@ -87,7 +87,8 @@ class MarketplaceVM with ChangeNotifier {
     _marketplaceSmartContractLoaded = false;
   }
 
-  Future<List<Collection>> getCollections([final String collectionOwner = ""]) async {
+  Future<List<Collection>> getCollections(
+      [final String collectionOwner = ""]) async {
     _logger.v("getCollections");
 
     final collectionAddresses = <String>[];
@@ -133,7 +134,8 @@ class MarketplaceVM with ChangeNotifier {
       symbol,
       "https://ipfs.io/ipfs/",
     );
-    _logger.i("Deployed collection. Deployed smart contract at address: $contractAddress.");
+    _logger.i(
+        "Deployed collection. Deployed smart contract at address: $contractAddress.");
 
     final collection = loadERC1190SmartContract(contractAddress);
     final creator = await marketplaceContract.creatorOf(contractAddress);
@@ -147,7 +149,8 @@ class MarketplaceVM with ChangeNotifier {
       request.files.add(http.MultipartFile.fromBytes("path", fileBytes));
       final ipfsResponse = await request.send();
       if (ipfsResponse.statusCode == 200) {
-        _logger.i("Deployed file with path = $fileBlobURI to IPFS. Minting the relative token.");
+        _logger.i(
+            "Deployed file with path = $fileBlobURI to IPFS. Minting the relative token.");
         final ipfsResponseBodyJson = json.decode(
           await ipfsResponse.stream.bytesToString(),
         ) as Map<String, dynamic>;
@@ -176,23 +179,23 @@ class MarketplaceVM with ChangeNotifier {
     );
   }
 
-  Future<List<Token>> getTokens(final String collectionAddress) async {
+  Future<List<Token>> getTokens(final Collection collection) async {
     _logger.v("getTokens");
 
-    final contract = loadERC1190SmartContract(collectionAddress);
+    final contract = loadERC1190SmartContract(collection.address);
     final availableTokens = await contract.availableTokens;
 
     final tokens = <Token>[];
 
     for (int tokenId = 1; tokenId <= availableTokens; tokenId++) {
-      tokens.add(await getToken(collectionAddress, tokenId));
+      tokens.add(await getToken(collection, tokenId));
     }
 
     return tokens;
   }
 
-  Future<Token> getToken(final String collectionAddress, final int tokenId) async {
-    final contract = loadERC1190SmartContract(collectionAddress);
+  Future<Token> getToken(final Collection collection, final int tokenId) async {
+    final contract = loadERC1190SmartContract(collection.address);
     return Token(
       id: tokenId,
       uri: await contract.tokenURI(tokenId),
@@ -202,26 +205,31 @@ class MarketplaceVM with ChangeNotifier {
       owner: await contract.ownerOf(tokenId),
       creativeOwner: await contract.creativeOwnerOf(tokenId),
       rentedBy: await contract.rentersOf(tokenId),
-      royaltyOwnershipTransfer: await contract.royaltyForOwnershipTransfer(tokenId),
+      royaltyOwnershipTransfer:
+          await contract.royaltyForOwnershipTransfer(tokenId),
       royaltyRental: await contract.royaltyForRental(tokenId),
-      creativeLicenseRequests: await marketplaceContract.getCreativeLicenseTransferRequests(
-        collectionAddress,
+      creativeLicenseRequests:
+          await marketplaceContract.getCreativeLicenseTransferRequests(
+        collection.address,
         tokenId,
       ),
-      ownershipLicenseRequests: await marketplaceContract.getOwnershipLicenseTransferRequests(
-        collectionAddress,
+      ownershipLicenseRequests:
+          await marketplaceContract.getOwnershipLicenseTransferRequests(
+        collection.address,
         tokenId,
       ),
       approved: await contract.getApproved(tokenId),
+      collection: collection,
     );
   }
 
   Future<List<Token>> getOwnedTokens() async {
-    final collections = await marketplaceContract.allCollections;
+    final collectionAddresses = await marketplaceContract.allCollections;
     final ownedTokens = <Token>[];
-    for (final collection in collections) {
-      final contract = loadERC1190SmartContract(collection);
-      final availableTokens = await contract.availableTokens;
+    for (final addr in collectionAddresses) {
+      final contract = loadERC1190SmartContract(addr);
+      final collection = await getCollection(addr);
+      final availableTokens = collection.availableTokens;
       for (int tokenId = 1; tokenId <= availableTokens; tokenId++) {
         if (_account == (await contract.ownerOf(tokenId))) {
           ownedTokens.add(await getToken(collection, tokenId));
@@ -232,11 +240,12 @@ class MarketplaceVM with ChangeNotifier {
   }
 
   Future<List<Token>> getCreativeOwnedTokens() async {
-    final collections = await marketplaceContract.allCollections;
+    final collectionAddresses = await marketplaceContract.allCollections;
     final creativeOwnedTokens = <Token>[];
-    for (final collection in collections) {
-      final contract = loadERC1190SmartContract(collection);
-      final availableTokens = await contract.availableTokens;
+    for (final addr in collectionAddresses) {
+      final contract = loadERC1190SmartContract(addr);
+      final collection = await getCollection(addr);
+      final availableTokens = collection.availableTokens;
       for (int tokenId = 1; tokenId <= availableTokens; tokenId++) {
         if (_account == (await contract.creativeOwnerOf(tokenId))) {
           creativeOwnedTokens.add(await getToken(collection, tokenId));
@@ -247,11 +256,12 @@ class MarketplaceVM with ChangeNotifier {
   }
 
   Future<List<Token>> getRentedTokens() async {
-    final collections = await marketplaceContract.allCollections;
+    final collectionAddresses = await marketplaceContract.allCollections;
     final rentedTokens = <Token>[];
-    for (final collection in collections) {
-      final contract = loadERC1190SmartContract(collection);
-      final availableTokens = await contract.availableTokens;
+    for (final addr in collectionAddresses) {
+      final contract = loadERC1190SmartContract(addr);
+      final collection = await getCollection(addr);
+      final availableTokens = collection.availableTokens;
       for (int tokenId = 1; tokenId <= availableTokens; tokenId++) {
         if ((await contract.rentersOf(tokenId)).contains(_account)) {
           rentedTokens.add(await getToken(collection, tokenId));
@@ -373,7 +383,8 @@ class MarketplaceVM with ChangeNotifier {
   ) async {
     _logger.v("requireOwnershipLicenseTransferApproval");
 
-    await marketplaceContract.requireOwnershipLicenseTransferApproval(collectionAddress, tokenId);
+    await marketplaceContract.requireOwnershipLicenseTransferApproval(
+        collectionAddress, tokenId);
   }
 
   Future<void> requireCreativeLicenseTransferApproval(
@@ -382,10 +393,12 @@ class MarketplaceVM with ChangeNotifier {
   ) async {
     _logger.v("requireCreativeLicenseTransferApproval");
 
-    await marketplaceContract.requireCreativeLicenseTransferApproval(collectionAddress, tokenId);
+    await marketplaceContract.requireCreativeLicenseTransferApproval(
+        collectionAddress, tokenId);
   }
 
-  Future<void> approve(final String collectionAddress, final int tokenId, final String to) async {
+  Future<void> approve(final String collectionAddress, final int tokenId,
+      final String to) async {
     _logger.v("approve");
 
     final contract = loadERC1190SmartContract(collectionAddress);
@@ -393,7 +406,8 @@ class MarketplaceVM with ChangeNotifier {
     await contract.approve(to, tokenId);
   }
 
-  Future<bool> getApproved(final String collectionAddress, final int tokenId) async {
+  Future<bool> getApproved(
+      final String collectionAddress, final int tokenId) async {
     _logger.v("getApproved");
 
     final contract = loadERC1190SmartContract(collectionAddress);

@@ -48,7 +48,7 @@ class CollectionContent extends StatelessWidget {
               const SizedBox(height: 20),
               Expanded(
                 child: FutureBuilder<List<Token>>(
-                  future: marketplaceVM.getTokens(collection.address),
+                  future: marketplaceVM.getTokens(collection),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.done) {
                       return const Center(child: CircularProgressIndicator());
