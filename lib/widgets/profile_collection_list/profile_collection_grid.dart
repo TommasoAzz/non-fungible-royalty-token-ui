@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import '../../business_logic/models/collection.dart';
 import '../../business_logic/viewmodel/marketplace_vm.dart';
 import '../../locator.dart';
-import '../horizontal_collection_list/horizontal_collection_list.dart';
+import '../horizontal_collection_list/collection_grid.dart';
 
-class ProfileCollectionList extends StatelessWidget {
-  const ProfileCollectionList({
+class ProfileCollectionGrid extends StatelessWidget {
+  final int column;
+  final double padding;
+
+  const ProfileCollectionGrid({
     Key? key,
+    required this.column,
+    required this.padding,
   }) : super(key: key);
 
   @override
@@ -26,8 +31,10 @@ class ProfileCollectionList extends StatelessWidget {
         if (snapshot.data!.isEmpty) {
           return const SelectableText("There are no collections.");
         }
-        return HorizontalCollectionList(
-          entries: snapshot.data!,
+        return CollectionGrid(
+          collections: snapshot.data!,
+          column: column,
+          padding: padding,
         );
       },
     );
