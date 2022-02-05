@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 
 import 'collection.dart';
 
@@ -20,6 +19,8 @@ class Token {
   final int royaltyRental;
   final String approved;
   final Collection collection;
+  final List<EthAddress> currentRenters;
+  final List<EthAddress> expiredRenters;
 
   Token({
     required this.id,
@@ -36,16 +37,19 @@ class Token {
     required this.royaltyRental,
     required this.approved,
     required this.collection,
+    this.currentRenters = const [],
+    this.expiredRenters = const [],
   });
 
   @override
   String toString() {
-    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, royaltyOwnershipTransfer: $royaltyOwnershipTransfer, royaltyRental: $royaltyRental, approved: $approved, collection: $collection)';
+    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, royaltyOwnershipTransfer: $royaltyOwnershipTransfer, royaltyRental: $royaltyRental, approved: $approved, collection: $collection, currentRenters: $currentRenters, expiredRenters: $expiredRenters)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
 
     return other is Token &&
         other.id == id &&
@@ -61,7 +65,9 @@ class Token {
         other.royaltyOwnershipTransfer == royaltyOwnershipTransfer &&
         other.royaltyRental == royaltyRental &&
         other.approved == approved &&
-        other.collection == collection;
+        other.collection == collection &&
+        listEquals(other.currentRenters, currentRenters) &&
+        listEquals(other.expiredRenters, expiredRenters);
   }
 
   @override
@@ -79,6 +85,8 @@ class Token {
         royaltyOwnershipTransfer.hashCode ^
         royaltyRental.hashCode ^
         approved.hashCode ^
-        collection.hashCode;
+        collection.hashCode ^
+        currentRenters.hashCode ^
+        expiredRenters.hashCode;
   }
 }

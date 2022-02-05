@@ -40,6 +40,7 @@ class SubmittableFormField extends StatelessWidget {
               onSavedCallback: save,
             ),
           ),
+          const SizedBox(height: 10),
           ElevatedButton(
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -67,16 +68,20 @@ class SubmittableFormField extends StatelessWidget {
             ),
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 20,
+                horizontal: 10,
+                vertical: 10,
               ),
               primary: primaryColor,
               shape: RoundedRectangleBorder(
                 side: const BorderSide(color: primaryColor),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
               ),
             ),
-            onPressed: submit,
+            onPressed: () {
+              formKey.currentState!.validate();
+              formKey.currentState!.save();
+              submit();
+            },
           ),
         ],
       ),
