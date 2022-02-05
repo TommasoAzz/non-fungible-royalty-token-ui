@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../business_logic/viewmodel/marketplace_vm.dart';
@@ -46,77 +48,86 @@ class _RentTokenViewState extends State<RentTokenView> {
       selectedEndRentalDateMillis = DateTime(newDate.year, newDate.month,
               newDate.day, newTime.hour, newTime.minute)
           .millisecondsSinceEpoch;
+      print(selectedEndRentalDateMillis);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final currentDateTime = DateTime.now().millisecondsSinceEpoch;
-    return Column(
-      children: [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 20,
-            ),
-            primary: primaryColor,
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(color: primaryColor),
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          onPressed: () => _pickDate(context),
-          child: selectedEndRentalDateMillis < currentDateTime
-              ? const Text('Select date')
-              : Text(
-                  'Selected date: ${DateFormat('dd/MM/yy HH:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedEndRentalDateMillis))}',
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: max(420, MediaQuery.of(context).size.width * 0.8),
+        maxHeight: max(420, MediaQuery.of(context).size.height * 0.8),
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
                 ),
-        ),
-        selectedEndRentalDateMillis < currentDateTime
-            ? const SelectableText("")
-            : SelectableText(
-                "The cost for this rent is: ${(selectedEndRentalDateMillis - currentDateTime) * 0.001 * widget.rentalPricePerSecond} ETH.",
+                primary: primaryColor,
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
-        ElevatedButton(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (rented)
-                const Text(
-                  "Submitted",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-              if (rented) const Icon(Icons.check, size: 16),
-              if (!rented)
-                const Text(
-                  "Submit",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-              if (renting) const SizedBox(width: 10),
-              if (renting)
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(color: Colors.white),
-                ),
-            ],
-          ),
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 20,
+              onPressed: () => _pickDate(context),
+              child: selectedEndRentalDateMillis < currentDateTime
+                  ? const Text('Select date')
+                  : Text(
+                      'Selected date: ${DateFormat('dd/MM/yy HH:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedEndRentalDateMillis))}',
+                    ),
             ),
-            primary: primaryColor,
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(color: primaryColor),
-              borderRadius: BorderRadius.circular(10),
+            selectedEndRentalDateMillis < currentDateTime
+                ? const SelectableText("")
+                : SelectableText(
+                    "The cost for this rent is: ${(selectedEndRentalDateMillis - currentDateTime) * 0.001 * widget.rentalPricePerSecond} ETH.",
+                  ),
+            ElevatedButton(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (rented)
+                    const Text(
+                      "Submitted",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  if (rented) const Icon(Icons.check, size: 16),
+                  if (!rented)
+                    const Text(
+                      "Submit",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  if (renting) const SizedBox(width: 10),
+                  if (renting)
+                    const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ),
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
+                primary: primaryColor,
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(color: primaryColor),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: _rent,
             ),
-          ),
-          onPressed: _rent,
+          ],
         ),
-      ],
+      ),
     );
   }
 
