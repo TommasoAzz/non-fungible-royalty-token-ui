@@ -50,7 +50,7 @@ class SubmittableFormField extends StatelessWidget {
                     "Submitted",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
-                if (dataUploaded) const Icon(Icons.check_box, size: 16),
+                if (dataUploaded) const Icon(Icons.check, size: 16),
                 if (!dataUploaded)
                   const Text(
                     "Submit",

@@ -22,7 +22,7 @@ class CollectionItem extends StatelessWidget {
         );
       },
       child: Card(
-        color: Colors.blue[collection.availableTokens * 100],
+        color: Colors.blue[collection.availableTokens * 100 + 100],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 5,
         child: Column(

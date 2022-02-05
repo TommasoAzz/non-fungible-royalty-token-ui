@@ -35,6 +35,7 @@ class _TokenItemState extends State<TokenItem> {
   int rentExpirationDateInMillis = 0;
   bool rented = false;
   bool renting = false;
+  bool inProfile = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +55,6 @@ class _TokenItemState extends State<TokenItem> {
             ),
             TokenInfo(
               token: widget.token,
-              showCreativeOwnershipRequests: widget.isCreativeOwner,
-              showOwnershipRequests: widget.isOwner,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -69,7 +68,8 @@ class _TokenItemState extends State<TokenItem> {
                         onPressed: openRent,
                         child: const Text("Rent"),
                       ),
-                    if (widget.token.rentalPricePerSecond > 0) const SizedBox(width: 20),
+                    if (widget.token.rentalPricePerSecond > 0)
+                      const SizedBox(width: 20),
                     if (widget.isOwner || widget.isCreativeOwner)
                       ElevatedButton(
                         onPressed: openDialogSettings,
@@ -86,7 +86,8 @@ class _TokenItemState extends State<TokenItem> {
                         widget.token.approved != marketplaceVM.loggedAccount)
                       ElevatedButton(
                         onPressed: () async {
-                          await marketplaceVM.requireOwnershipLicenseTransferApproval(
+                          await marketplaceVM
+                              .requireOwnershipLicenseTransferApproval(
                             widget.collection.address,
                             widget.token.id,
                           );
@@ -105,14 +106,16 @@ class _TokenItemState extends State<TokenItem> {
                         },
                         child: const Text("Obtain ownership"),
                       ),
-                    if (!widget.isOwner && widget.token.ownershipLicensePrice > 0)
+                    if (!widget.isOwner &&
+                        widget.token.ownershipLicensePrice > 0)
                       const SizedBox(width: 20),
                     if (!widget.isCreativeOwner &&
                         widget.token.creativeLicensePrice > 0 &&
                         widget.token.approved != marketplaceVM.loggedAccount)
                       ElevatedButton(
                         onPressed: () async {
-                          await marketplaceVM.requireCreativeLicenseTransferApproval(
+                          await marketplaceVM
+                              .requireCreativeLicenseTransferApproval(
                             widget.collection.address,
                             widget.token.id,
                           );
@@ -204,7 +207,8 @@ class _TokenItemState extends State<TokenItem> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const SelectableText('Ownership license obtained successfully'),
+          title:
+              const SelectableText('Ownership license obtained successfully'),
           content: SelectableText(
             "Ownership license of token ${widget.token.id} was obtained.",
           ),

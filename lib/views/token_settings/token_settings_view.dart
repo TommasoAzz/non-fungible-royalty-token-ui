@@ -57,7 +57,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                 _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0;
               }),
               validate: widget.validateNumberField,
-              successDescription: "Ownership license price updated successfully.",
+              successDescription:
+                  "Ownership license price updated successfully.",
               updateToken: () async => await vm.setOwnershipLicensePrice(
                 widget.collectionAddress,
                 widget.tokenId,
@@ -100,6 +101,59 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
             ),
           ),
         if (widget.isOwner)
+          FutureBuilder<List<String>>(
+              future: vm.expiredRenters(
+                widget.collectionAddress,
+                widget.tokenId,
+              ),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return Container();
+                }
+
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, i) => OutlinedButton(
+                    onPressed: () async {
+                      await vm.updateEndRentalDate(
+                        widget.collectionAddress,
+                        widget.tokenId,
+                        snapshot.data![i],
+                      );
+                    },
+                    child: Text(snapshot.data![i]),
+                  ),
+                );
+              }),
+        if (widget.isOwner)
+          FutureBuilder<List<String>>(
+              future: vm.notExpiredRenters(
+                widget.collectionAddress,
+                widget.tokenId,
+              ),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return Container();
+                }
+
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, i) => SelectableText(
+                      " Renter: ${snapshot.data![i]}, end rental date: ${vm.getRentalDate(widget.collectionAddress, widget.tokenId, snapshot.data![i])}"),
+                ); //OutlinedButton(
+                //   onPressed: () async {
+                //     await vm.updateEndRentalDate(
+                //       widget.collectionAddress,
+                //       widget.tokenId,
+                //       snapshot.data![i],
+                //     );
+                //   },
+                //   child: Text(snapshot.data![i]),
+                // ),
+              }),
+        if (widget.isOwner)
           Container(
             constraints: BoxConstraints(
               maxWidth: max(480, MediaQuery.of(context).size.width * 0.8),
@@ -129,7 +183,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                 _creativeLicensePrice = double.tryParse(number ?? '') ?? 0;
               }),
               validate: widget.validateNumberField,
-              successDescription: "Creative license price updated successfully.",
+              successDescription:
+                  "Creative license price updated successfully.",
               updateToken: () async => await vm.setCreativeLicensePrice(
                 widget.collectionAddress,
                 widget.tokenId,

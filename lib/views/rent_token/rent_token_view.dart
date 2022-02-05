@@ -88,7 +88,7 @@ class _RentTokenViewState extends State<RentTokenView> {
                   "Submitted",
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
-              if (rented) const Icon(Icons.check_box, size: 16),
+              if (rented) const Icon(Icons.check, size: 16),
               if (!rented)
                 const Text(
                   "Submit",
