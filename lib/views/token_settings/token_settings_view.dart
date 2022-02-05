@@ -142,16 +142,7 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, i) => SelectableText(
                       " Renter: ${snapshot.data![i]}, end rental date: ${vm.getRentalDate(widget.collectionAddress, widget.tokenId, snapshot.data![i])}"),
-                ); //OutlinedButton(
-                //   onPressed: () async {
-                //     await vm.updateEndRentalDate(
-                //       widget.collectionAddress,
-                //       widget.tokenId,
-                //       snapshot.data![i],
-                //     );
-                //   },
-                //   child: Text(snapshot.data![i]),
-                // ),
+                );
               }),
         if (widget.isOwner)
           Container(
