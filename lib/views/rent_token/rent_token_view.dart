@@ -38,17 +38,24 @@ class _RentTokenViewState extends State<RentTokenView> {
       lastDate: DateTime(initialDate.year + 5),
     );
     final newTime = await showTimePicker(
-        context: context,
-        initialTime:
-            TimeOfDay(hour: initialDate.hour, minute: initialDate.minute));
+      context: context,
+      initialTime: TimeOfDay(
+        hour: initialDate.hour,
+        minute: initialDate.minute,
+      ),
+    );
 
     if (newDate == null || newTime == null) return;
 
     setState(() {
-      selectedEndRentalDateMillis = DateTime(newDate.year, newDate.month,
-              newDate.day, newTime.hour, newTime.minute)
-          .millisecondsSinceEpoch;
-      print(selectedEndRentalDateMillis);
+      print("Updated");
+      selectedEndRentalDateMillis = DateTime(
+        newDate.year,
+        newDate.month,
+        newDate.day,
+        newTime.hour,
+        newTime.minute,
+      ).millisecondsSinceEpoch;
     });
   }
 
