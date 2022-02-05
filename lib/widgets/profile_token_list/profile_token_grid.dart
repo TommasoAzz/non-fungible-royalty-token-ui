@@ -7,14 +7,10 @@ class ProfileTokenGrid extends StatelessWidget {
   final double padding;
 
   final Future<List<Token>> tokenList;
-  final bool isCreativeOwner;
-  final bool isOwner;
 
   const ProfileTokenGrid({
     Key? key,
     required this.tokenList,
-    required this.isCreativeOwner,
-    required this.isOwner,
     required this.column,
     required this.padding,
   }) : super(key: key);
@@ -38,8 +34,6 @@ class ProfileTokenGrid extends StatelessWidget {
         }
         return TokenGrid(
           tokens: snapshot.data!,
-          isCreativeOwner: isCreativeOwner,
-          isOwner: isOwner,
           column: column,
           padding: padding,
         );

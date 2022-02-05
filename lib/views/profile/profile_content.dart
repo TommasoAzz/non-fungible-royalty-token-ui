@@ -37,8 +37,6 @@ class ProfileContent extends StatelessWidget {
             constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.7),
             child: ProfileTokenGrid(
               tokenList: marketplaceVM.getOwnedTokens(),
-              isOwner: true,
-              isCreativeOwner: false,
               column: column,
               padding: padding,
             ),
@@ -49,8 +47,6 @@ class ProfileContent extends StatelessWidget {
             constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.7),
             child: ProfileTokenGrid(
               tokenList: marketplaceVM.getCreativeOwnedTokens(),
-              isCreativeOwner: true,
-              isOwner: false,
               column: column,
               padding: padding,
             ),
@@ -61,8 +57,6 @@ class ProfileContent extends StatelessWidget {
             constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.7),
             child: ProfileTokenGrid(
               tokenList: marketplaceVM.getRentedTokens(),
-              isCreativeOwner: false,
-              isOwner: false,
               column: column,
               padding: padding,
             ),
