@@ -5,11 +5,36 @@ import '../../widgets/page_title/page_title.dart';
 import '../../widgets/collection_item/collection_item.dart';
 import '../../locator.dart';
 
-class CollectionsContent extends StatelessWidget {
+class CollectionsContent extends StatefulWidget {
   const CollectionsContent({Key? key, required this.column, required this.padding})
       : super(key: key);
   final int column;
   final double padding;
+
+  @override
+  State<CollectionsContent> createState() => _CollectionsContentState();
+}
+
+class _CollectionsContentState extends State<CollectionsContent> {
+  final marketplaceVM = locator<MarketplaceVM>();
+
+  @override
+  void initState() {
+    super.initState();
+    marketplaceVM.addListener(update);
+  }
+
+  @override
+  void dispose() {
+    marketplaceVM.removeListener(update);
+    super.dispose();
+  }
+
+  void update() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +61,10 @@ class CollectionsContent extends StatelessWidget {
 
               return GridView.count(
                 primary: false,
-                padding: EdgeInsets.all(padding),
+                padding: EdgeInsets.all(widget.padding),
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 10,
-                crossAxisCount: column,
+                crossAxisCount: widget.column,
                 children: snapshot.data!
                     .map((collection) => CollectionItem(
                           collection: collection,

@@ -24,6 +24,25 @@ class RentTokenView extends StatefulWidget {
 
 class _RentTokenViewState extends State<RentTokenView> {
   final vm = locator<MarketplaceVM>();
+
+  @override
+  void initState() {
+    super.initState();
+    vm.addListener(update);
+  }
+
+  @override
+  void dispose() {
+    vm.removeListener(update);
+    super.dispose();
+  }
+
+  void update() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   int selectedEndRentalDateMillis = 0;
 
   bool rented = false;

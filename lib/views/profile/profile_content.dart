@@ -5,7 +5,7 @@ import '../../widgets/profile_token_list/profile_token_grid.dart';
 import '../../widgets/page_title/page_title.dart';
 import '../../widgets/profile_collection_list/profile_collection_grid.dart';
 
-class ProfileContent extends StatelessWidget {
+class ProfileContent extends StatefulWidget {
   final int column;
   final double padding;
 
@@ -16,8 +16,32 @@ class ProfileContent extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ProfileContent> createState() => _ProfileContentState();
+}
+
+class _ProfileContentState extends State<ProfileContent> {
+  final marketplaceVM = locator<MarketplaceVM>();
+
+  @override
+  void initState() {
+    super.initState();
+    marketplaceVM.addListener(update);
+  }
+
+  @override
+  void dispose() {
+    marketplaceVM.removeListener(update);
+    super.dispose();
+  }
+
+  void update() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final marketplaceVM = locator<MarketplaceVM>();
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -27,8 +51,8 @@ class ProfileContent extends StatelessWidget {
           Container(
             constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.45),
             child: ProfileCollectionGrid(
-              column: column,
-              padding: padding,
+              column: widget.column,
+              padding: widget.padding,
             ),
           ),
           const SizedBox(height: 20),
@@ -37,8 +61,8 @@ class ProfileContent extends StatelessWidget {
             constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.7),
             child: ProfileTokenGrid(
               tokenList: marketplaceVM.getOwnedTokens(),
-              column: column,
-              padding: padding,
+              column: widget.column,
+              padding: widget.padding,
             ),
           ),
           const SizedBox(height: 20),
@@ -47,8 +71,8 @@ class ProfileContent extends StatelessWidget {
             constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.7),
             child: ProfileTokenGrid(
               tokenList: marketplaceVM.getCreativeOwnedTokens(),
-              column: column,
-              padding: padding,
+              column: widget.column,
+              padding: widget.padding,
             ),
           ),
           const SizedBox(height: 20),
@@ -57,8 +81,8 @@ class ProfileContent extends StatelessWidget {
             constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.7),
             child: ProfileTokenGrid(
               tokenList: marketplaceVM.getRentedTokens(),
-              column: column,
-              padding: padding,
+              column: widget.column,
+              padding: widget.padding,
             ),
           ),
         ],

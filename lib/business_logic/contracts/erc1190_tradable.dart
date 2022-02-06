@@ -240,7 +240,13 @@ class ERC1190Tradable {
       completer.complete();
     });
 
-    final tx = await contract.send("obtainCreativeLicense", [tokenId]);
+    final tx = await contract.send(
+      "obtainCreativeLicense",
+      [tokenId],
+      TransactionOverride(
+        value: await contract.call<BigInt>("creativeOwnershipPriceOf", [tokenId]),
+      ),
+    );
     await tx.wait();
 
     await completer.future;

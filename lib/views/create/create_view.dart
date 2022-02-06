@@ -16,13 +16,31 @@ class CreateView extends StatefulWidget {
 }
 
 class _CreateViewState extends State<CreateView> {
+  final marketplaceVM = locator<MarketplaceVM>();
+
+  @override
+  void initState() {
+    super.initState();
+    marketplaceVM.addListener(update);
+  }
+
+  @override
+  void dispose() {
+    marketplaceVM.removeListener(update);
+    super.dispose();
+  }
+
+  void update() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   bool collectionUploaded = false;
 
   bool uploadingCollection = false;
 
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
-
-  final marketplaceVM = locator<MarketplaceVM>();
 
   String _name = '';
 
@@ -89,8 +107,7 @@ class _CreateViewState extends State<CreateView> {
                             "Submitted",
                             style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
-                        if (collectionUploaded)
-                          const Icon(Icons.check, size: 16),
+                        if (collectionUploaded) const Icon(Icons.check, size: 16),
                         if (!collectionUploaded)
                           const Text(
                             "Submit",
@@ -101,8 +118,7 @@ class _CreateViewState extends State<CreateView> {
                           const SizedBox(
                             height: 20,
                             width: 20,
-                            child:
-                                CircularProgressIndicator(color: Colors.white),
+                            child: CircularProgressIndicator(color: Colors.white),
                           ),
                       ],
                     ),
@@ -151,8 +167,7 @@ class _CreateViewState extends State<CreateView> {
   void _saveOwnershipTransferInputField(final double value) =>
       _ownershipTransferRoyalty = value.toInt();
 
-  void _saveRentalInputField(final double value) =>
-      _rentalRoyalty = value.toInt();
+  void _saveRentalInputField(final double value) => _rentalRoyalty = value.toInt();
 
   void _saveUrlFromDropzone(final String value) => _fileUrls.add(value);
 
