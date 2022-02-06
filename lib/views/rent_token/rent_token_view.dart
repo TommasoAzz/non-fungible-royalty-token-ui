@@ -73,8 +73,8 @@ class _RentTokenViewState extends State<RentTokenView> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
+                  horizontal: 10,
+                  vertical: 10,
                 ),
                 primary: primaryColor,
                 shape: RoundedRectangleBorder(
@@ -84,9 +84,13 @@ class _RentTokenViewState extends State<RentTokenView> {
               ),
               onPressed: _pickDate,
               child: selectedEndRentalDateMillis < currentDateTime
-                  ? const Text('Select date')
+                  ? const Text(
+                      'Select date',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    )
                   : Text(
                       'Selected date: ${DateFormat('dd/MM/yy HH:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedEndRentalDateMillis))}',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
             ),
             selectedEndRentalDateMillis < currentDateTime
