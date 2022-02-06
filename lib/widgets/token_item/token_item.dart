@@ -84,7 +84,8 @@ class _TokenItemState extends State<TokenItem> {
                   children: [
                     if (!widget.isOwner &&
                         widget.token.ownershipLicensePrice > 0 &&
-                        widget.token.approved != marketplaceVM.loggedAccount)
+                        widget.token.approvedByOwner !=
+                            marketplaceVM.loggedAccount)
                       ElevatedButton(
                         onPressed: () async {
                           await marketplaceVM
@@ -97,7 +98,8 @@ class _TokenItemState extends State<TokenItem> {
                       ),
                     if (!widget.isOwner &&
                         widget.token.ownershipLicensePrice > 0 &&
-                        widget.token.approved == marketplaceVM.loggedAccount)
+                        widget.token.approvedByOwner ==
+                            marketplaceVM.loggedAccount)
                       ElevatedButton(
                         onPressed: () async {
                           await marketplaceVM.obtainOwnershipLicense(
@@ -112,7 +114,8 @@ class _TokenItemState extends State<TokenItem> {
                       const SizedBox(width: 20),
                     if (!widget.isCreativeOwner &&
                         widget.token.creativeLicensePrice > 0 &&
-                        widget.token.approved != marketplaceVM.loggedAccount)
+                        widget.token.approvedByCreator !=
+                            marketplaceVM.loggedAccount)
                       ElevatedButton(
                         onPressed: () async {
                           await marketplaceVM
@@ -125,7 +128,8 @@ class _TokenItemState extends State<TokenItem> {
                       ),
                     if (!widget.isCreativeOwner &&
                         widget.token.creativeLicensePrice > 0 &&
-                        widget.token.approved == marketplaceVM.loggedAccount)
+                        widget.token.approvedByCreator ==
+                            marketplaceVM.loggedAccount)
                       ElevatedButton(
                         onPressed: () async {
                           await marketplaceVM.obtainCreativeLicense(
