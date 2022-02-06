@@ -64,7 +64,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0;
                 }),
                 validate: widget.validateNumberField,
-                successDescription: "Ownership license price updated successfully.",
+                successDescription:
+                    "Ownership license price updated successfully.",
                 updateToken: () async => await vm.setOwnershipLicensePrice(
                   widget.collectionAddress,
                   widget.tokenId,
@@ -97,6 +98,90 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.expiredRenters.isNotEmpty)
+              SizedBox(
+                width: max(480, MediaQuery.of(context).size.width * 0.8),
+                child: const Text(
+                  "Accounts with expired rentals",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.notExpiredRenters.isNotEmpty)
+              SizedBox(
+                width: max(480, MediaQuery.of(context).size.width * 0.8),
+                child: const Text(
+                  "Accounts with current rentals",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            if (widget.isOwner)
+              TokenSettingsFormField(
+                inputLabel: "Transfer ownership license",
+                save: (address) => setState(() {
+                  _transferOwnershipLicenseTo = address ?? '';
+                }),
+                validate: widget.validateAddressField,
+                successDescription:
+                    "Ownership license transferred successfully.",
+                updateToken: () async => await vm.transferOwnershipLicense(
+                  widget.collectionAddress,
+                  widget.tokenId,
+                  _transferOwnershipLicenseTo,
+                ),
+              ),
+            if (widget.isCreativeOwner)
+              TokenSettingsFormField(
+                inputLabel: "Set creative license price (ETH)",
+                save: (number) => setState(() {
+                  _creativeLicensePrice = double.tryParse(number ?? '') ?? 0;
+                }),
+                validate: widget.validateNumberField,
+                successDescription:
+                    "Creative license price updated successfully.",
+                updateToken: () async => await vm.setCreativeLicensePrice(
+                  widget.collectionAddress,
+                  widget.tokenId,
+                  _creativeLicensePrice,
+                ),
+              ),
+            if (widget.isCreativeOwner &&
+                widget.creativeLicenseRequests.isNotEmpty)
+              SizedBox(
+                width: max(480, MediaQuery.of(context).size.width * 0.8),
+                child: const Text(
+                  "Approve creative ownership license transfer requests",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            if (widget.isCreativeOwner)
+              TokenSettingsFormField(
+                inputLabel: "Transfer creative license",
+                save: (address) => setState(() {
+                  _transferCreativeLicenseTo = address ?? '';
+                }),
+                validate: widget.validateAddressField,
+                successDescription:
+                    "Creative license transferred successfully.",
+                updateToken: () async => await vm.transferCreativeLicense(
+                  widget.collectionAddress,
+                  widget.tokenId,
+                  _transferCreativeLicenseTo,
+                ),
+              ),
             if (widget.isOwner && widget.ownershipLicenseRequests.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
@@ -122,19 +207,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
-            if ((widget.isOwner || widget.isCreativeOwner) && widget.expiredRenters.isNotEmpty)
-              SizedBox(
-                width: max(480, MediaQuery.of(context).size.width * 0.8),
-                child: const Text(
-                  "Accounts with expired rentals",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            if ((widget.isOwner || widget.isCreativeOwner) && widget.expiredRenters.isNotEmpty)
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.expiredRenters.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
                 height: Theme.of(context).buttonTheme.height,
@@ -154,69 +228,20 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
-            if ((widget.isOwner || widget.isCreativeOwner) && widget.notExpiredRenters.isNotEmpty)
-              SizedBox(
-                width: max(480, MediaQuery.of(context).size.width * 0.8),
-                child: const Text(
-                  "Accounts with current rentals",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            if ((widget.isOwner || widget.isCreativeOwner) && widget.notExpiredRenters.isNotEmpty)
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.notExpiredRenters.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
                 height: Theme.of(context).buttonTheme.height,
                 child: ListView.builder(
                   itemCount: widget.notExpiredRenters.length,
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, i) => SelectableText(widget.notExpiredRenters[i]),
+                  itemBuilder: (context, i) =>
+                      SelectableText(widget.notExpiredRenters[i]),
                 ),
               ),
-            if (widget.isOwner)
-              TokenSettingsFormField(
-                inputLabel: "Transfer ownership license",
-                save: (address) => setState(() {
-                  _transferOwnershipLicenseTo = address ?? '';
-                }),
-                validate: widget.validateAddressField,
-                successDescription: "Ownership license transferred successfully.",
-                updateToken: () async => await vm.transferOwnershipLicense(
-                  widget.collectionAddress,
-                  widget.tokenId,
-                  _transferOwnershipLicenseTo,
-                ),
-              ),
-            if (widget.isCreativeOwner)
-              TokenSettingsFormField(
-                inputLabel: "Set creative license price (ETH)",
-                save: (number) => setState(() {
-                  _creativeLicensePrice = double.tryParse(number ?? '') ?? 0;
-                }),
-                validate: widget.validateNumberField,
-                successDescription: "Creative license price updated successfully.",
-                updateToken: () async => await vm.setCreativeLicensePrice(
-                  widget.collectionAddress,
-                  widget.tokenId,
-                  _creativeLicensePrice,
-                ),
-              ),
-            if (widget.isCreativeOwner && widget.creativeLicenseRequests.isNotEmpty)
-              SizedBox(
-                width: max(480, MediaQuery.of(context).size.width * 0.8),
-                child: const Text(
-                  "Approve creative ownership license transfer requests",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            if (widget.isCreativeOwner && widget.creativeLicenseRequests.isNotEmpty)
+            if (widget.isCreativeOwner &&
+                widget.creativeLicenseRequests.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
                 height: Theme.of(context).buttonTheme.height,
@@ -238,20 +263,6 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                     },
                     child: Text(widget.creativeLicenseRequests[i]),
                   ),
-                ),
-              ),
-            if (widget.isCreativeOwner)
-              TokenSettingsFormField(
-                inputLabel: "Transfer creative license",
-                save: (address) => setState(() {
-                  _transferCreativeLicenseTo = address ?? '';
-                }),
-                validate: widget.validateAddressField,
-                successDescription: "Creative license transferred successfully.",
-                updateToken: () async => await vm.transferCreativeLicense(
-                  widget.collectionAddress,
-                  widget.tokenId,
-                  _transferCreativeLicenseTo,
                 ),
               ),
           ],

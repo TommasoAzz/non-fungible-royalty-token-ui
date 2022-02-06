@@ -183,7 +183,7 @@ class _RentTokenViewState extends State<RentTokenView> {
         builder: (context) => AlertDialog(
           title: const SelectableText('Operation successful'),
           content: SelectableText(
-              "Token was rented successfully until ${DateFormat('dd/MM/yyyy hh:mm:ss').format(DateTime.fromMillisecondsSinceEpoch(selectedEndRentalDateMillis))}"),
+              "Token was rented successfully until ${DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.fromMillisecondsSinceEpoch(selectedEndRentalDateMillis))}"),
           actions: [
             ElevatedButton(
               onPressed: Navigator.of(context).pop,

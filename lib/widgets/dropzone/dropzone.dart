@@ -81,11 +81,14 @@ class _DropzoneState extends State<Dropzone> {
                         final events =
                             await controller.pickFiles(multiple: true);
                         for (final event in events) {
-                          await acceptFile(event);
+                          final mime = await controller.getFileMIME(event);
+                          if (mime.startsWith("image/")) {
+                            await acceptFile(event);
+                            setState(() {
+                              numberFileUploaded += 1;
+                            });
+                          }
                         }
-                        setState(() {
-                          numberFileUploaded += events.length;
-                        });
                       },
                     ),
                   ],
@@ -104,7 +107,9 @@ class _DropzoneState extends State<Dropzone> {
 
   Future<void> acceptFile(dynamic event) async {
     final name = event.name;
+
     final url = await controller.createFileUrl(event);
+
     print('Name: $name');
     print('Url: $url');
     widget.saveUrl(url);
