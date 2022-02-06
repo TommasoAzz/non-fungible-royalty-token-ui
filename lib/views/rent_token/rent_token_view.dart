@@ -152,7 +152,7 @@ class _RentTokenViewState extends State<RentTokenView> {
         widget.collectionAddress,
         widget.tokenId,
         DateTime.now().millisecondsSinceEpoch,
-        selectedEndRentalDateMillis - DateTime.now().millisecondsSinceEpoch,
+        selectedEndRentalDateMillis,
       );
       setState(() {
         rented = true;

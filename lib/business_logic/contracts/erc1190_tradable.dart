@@ -151,6 +151,10 @@ class ERC1190Tradable {
       completer.complete();
     });
 
+    final rentalPricePerSecond = await contract.call<BigInt>("rentalPriceOf", [tokenId]);
+    final rentalTotalSeconds = ((rentExpirationDateInMillis - rentStartingDateInMillis) * 0.001).toInt();
+    final weiToSend = rentalPricePerSecond * BigInt.from(rentalTotalSeconds);
+
     final tx = await contract.send(
       "rentAsset(uint256,uint256,uint256)",
       [
@@ -159,7 +163,7 @@ class ERC1190Tradable {
         rentExpirationDateInMillis,
       ],
       TransactionOverride(
-        value: await contract.call<BigInt>("rentalPriceOf", [tokenId]),
+        value: weiToSend,
         // gasLimit: BigInt.from(60000),
       ),
     );
@@ -337,10 +341,10 @@ class ERC1190Tradable {
     return await contract.call<EthAddress>("getApproved", [tokenId]);
   }
 
-  Future<int> getRentalDate(final int tokenId, final EthAddress renter) async {
+  Future<BigInt> getRentalDate(final int tokenId, final EthAddress renter) async {
     _logger.v("getRentalDate");
 
-    return await contract.call<int>("getRentalDate", [tokenId, renter]);
+    return await contract.call<BigInt>("getRentalDate", [tokenId, renter]);
   }
 
   Future<void> updateEndRentalDate(

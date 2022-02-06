@@ -173,9 +173,7 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                 child: ListView.builder(
                   itemCount: widget.notExpiredRenters.length,
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, i) => SelectableText(
-                    " Renter: ${widget.notExpiredRenters[i]}, end rental date: ${vm.getRentalDate(widget.collectionAddress, widget.tokenId, widget.notExpiredRenters[i])}",
-                  ),
+                  itemBuilder: (context, i) => SelectableText(widget.notExpiredRenters[i]),
                 ),
               ),
             if (widget.isOwner)
