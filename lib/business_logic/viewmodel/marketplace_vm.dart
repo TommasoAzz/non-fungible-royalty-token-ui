@@ -229,7 +229,8 @@ class MarketplaceVM with ChangeNotifier {
         collection.address,
         tokenId,
       ),
-      approved: await contract.getApproved(tokenId),
+      approvedByOwner: await contract.getApprovedOwnership(tokenId),
+      approvedByCreator: await contract.getApprovedCreative(tokenId),
       collection: collection,
       expiredRenters: await expiredRenters(collection.address, tokenId),
       currentRenters: await notExpiredRenters(collection.address, tokenId),
@@ -480,21 +481,39 @@ class MarketplaceVM with ChangeNotifier {
         collectionAddress, tokenId);
   }
 
-  Future<void> approve(final String collectionAddress, final int tokenId,
-      final String to) async {
+  Future<void> approveOwnership(final String collectionAddress,
+      final int tokenId, final String to) async {
     _logger.v("approve");
 
     final contract = loadERC1190SmartContract(collectionAddress);
 
-    await contract.approve(to, tokenId);
+    await contract.approveOwnership(to, tokenId);
   }
 
-  Future<bool> getApproved(
-      final String collectionAddress, final int tokenId) async {
-    _logger.v("getApproved");
+  Future<void> approveCreative(final String collectionAddress,
+      final int tokenId, final String to) async {
+    _logger.v("approve");
 
     final contract = loadERC1190SmartContract(collectionAddress);
 
-    return _account == (await contract.getApproved(tokenId));
+    await contract.approveCreative(to, tokenId);
+  }
+
+  Future<bool> getApprovedOwnership(
+      final String collectionAddress, final int tokenId) async {
+    _logger.v("getApprovedByOwner");
+
+    final contract = loadERC1190SmartContract(collectionAddress);
+
+    return _account == (await contract.getApprovedOwnership(tokenId));
+  }
+
+  Future<bool> getApprovedCreative(
+      final String collectionAddress, final int tokenId) async {
+    _logger.v("getApprovedByCreator");
+
+    final contract = loadERC1190SmartContract(collectionAddress);
+
+    return _account == (await contract.getApprovedCreative(tokenId));
   }
 }

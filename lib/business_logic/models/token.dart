@@ -17,7 +17,8 @@ class Token {
   final List<EthAddress> creativeLicenseRequests;
   final int royaltyOwnershipTransfer;
   final int royaltyRental;
-  final String approved;
+  final String approvedByOwner;
+  final String approvedByCreator;
   final Collection collection;
   final List<EthAddress> currentRenters;
   final List<EthAddress> expiredRenters;
@@ -35,7 +36,8 @@ class Token {
     this.creativeLicenseRequests = const [],
     required this.royaltyOwnershipTransfer,
     required this.royaltyRental,
-    required this.approved,
+    required this.approvedByOwner,
+    required this.approvedByCreator,
     required this.collection,
     this.currentRenters = const [],
     this.expiredRenters = const [],
@@ -43,7 +45,7 @@ class Token {
 
   @override
   String toString() {
-    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, royaltyOwnershipTransfer: $royaltyOwnershipTransfer, royaltyRental: $royaltyRental, approved: $approved, collection: $collection, currentRenters: $currentRenters, expiredRenters: $expiredRenters)';
+    return 'Token(id: $id, uri: $uri, ownershipLicensePrice: $ownershipLicensePrice, creativeLicensePrice: $creativeLicensePrice, rentalPricePerSecond: $rentalPricePerSecond, owner: $owner, creativeOwner: $creativeOwner, rentedBy: $rentedBy, ownershipLicenseRequests: $ownershipLicenseRequests, creativeLicenseRequests: $creativeLicenseRequests, royaltyOwnershipTransfer: $royaltyOwnershipTransfer, royaltyRental: $royaltyRental, approvedByOwner: $approvedByOwner, approvedByCreator: $approvedByCreator, collection: $collection, currentRenters: $currentRenters, expiredRenters: $expiredRenters)';
   }
 
   @override
@@ -64,7 +66,8 @@ class Token {
         listEquals(other.creativeLicenseRequests, creativeLicenseRequests) &&
         other.royaltyOwnershipTransfer == royaltyOwnershipTransfer &&
         other.royaltyRental == royaltyRental &&
-        other.approved == approved &&
+        other.approvedByOwner == approvedByOwner &&
+        other.approvedByCreator == approvedByCreator &&
         other.collection == collection &&
         listEquals(other.currentRenters, currentRenters) &&
         listEquals(other.expiredRenters, expiredRenters);
@@ -84,7 +87,8 @@ class Token {
         creativeLicenseRequests.hashCode ^
         royaltyOwnershipTransfer.hashCode ^
         royaltyRental.hashCode ^
-        approved.hashCode ^
+        approvedByOwner.hashCode ^
+        approvedByCreator.hashCode ^
         collection.hashCode ^
         currentRenters.hashCode ^
         expiredRenters.hashCode;

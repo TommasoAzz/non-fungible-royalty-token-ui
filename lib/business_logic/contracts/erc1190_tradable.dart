@@ -315,8 +315,8 @@ class ERC1190Tradable {
     return await contract.call<String>("tokenURI", [tokenId]);
   }
 
-  Future<void> approve(final EthAddress to, final int tokenId) async {
-    _logger.v("approve");
+  Future<void> approveOwnership(final EthAddress to, final int tokenId) async {
+    _logger.v("approvedByOwner");
 
     final completer = Completer<void>();
 
@@ -328,16 +328,41 @@ class ERC1190Tradable {
       completer.complete();
     });
 
-    final tx = await contract.send("approve", [to, tokenId]);
+    final tx = await contract.send("approveOwnership", [to, tokenId]);
     await tx.wait();
 
     await completer.future;
   }
 
-  Future<String> getApproved(final int tokenId) async {
+  Future<void> approveCreative(final EthAddress to, final int tokenId) async {
+    _logger.v("approvedByCreator");
+
+    final completer = Completer<void>();
+
+    contract.once('Approval', (owner, approved, tokenId, _) {
+      _logger.i("Event: Approval");
+      print("- owner: ${dartify(owner)}");
+      print("- approved: ${dartify(approved)}");
+      print("- tokenId: ${dartify(tokenId)}");
+      completer.complete();
+    });
+
+    final tx = await contract.send("approveCreative", [to, tokenId]);
+    await tx.wait();
+
+    await completer.future;
+  }
+
+  Future<String> getApprovedOwnership(final int tokenId) async {
     _logger.v("getApproved");
 
-    return await contract.call<EthAddress>("getApproved", [tokenId]);
+    return await contract.call<EthAddress>("getApprovedOwnership", [tokenId]);
+  }
+
+  Future<String> getApprovedCreative(final int tokenId) async {
+    _logger.v("getApproved");
+
+    return await contract.call<EthAddress>("getApprovedCreative", [tokenId]);
   }
 
   Future<int> getRentalDate(final int tokenId, final EthAddress renter) async {
