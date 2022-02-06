@@ -122,6 +122,34 @@ class ERC1190Marketplace {
     await completer.future;
   }
 
+  Future<void> removeOwnershipLicenseTransferApproval(
+    EthAddress collectionAddress,
+    int tokenId,
+    EthAddress toRemove,
+  ) async {
+    _logger.v("removeOwnershipLicenseTransferApproval");
+
+    final tx = await contract.send(
+      "removeOwnershipLicenseTransferApproval",
+      [collectionAddress, tokenId, toRemove],
+    );
+    await tx.wait();
+  }
+
+  Future<void> removeCreativeLicenseTransferApproval(
+    EthAddress collectionAddress,
+    int tokenId,
+    EthAddress toRemove,
+  ) async {
+    _logger.v("removeCreativeLicenseTransferApproval");
+
+    final tx = await contract.send(
+      "removeCreativeLicenseTransferApproval",
+      [collectionAddress, tokenId, toRemove],
+    );
+    await tx.wait();
+  }
+
   Future<List<EthAddress>> getOwnershipLicenseTransferRequests(
     EthAddress collectionAddress,
     int tokenId,

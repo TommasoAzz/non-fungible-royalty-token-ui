@@ -481,6 +481,28 @@ class MarketplaceVM with ChangeNotifier {
         collectionAddress, tokenId);
   }
 
+  Future<void> removeOwnershipLicenseTransferApproval(
+    final String collectionAddress,
+    final int tokenId,
+    final String toRemove,
+  ) async {
+    _logger.v("removeOwnershipLicenseTransferApproval");
+
+    await marketplaceContract.removeOwnershipLicenseTransferApproval(
+        collectionAddress, tokenId, toRemove);
+  }
+
+  Future<void> removeCreativeLicenseTransferApproval(
+    final String collectionAddress,
+    final int tokenId,
+    final String toRemove,
+  ) async {
+    _logger.v("removeCreativeLicenseTransferApproval");
+
+    await marketplaceContract.removeCreativeLicenseTransferApproval(
+        collectionAddress, tokenId, toRemove);
+  }
+
   Future<void> approve(final String collectionAddress, final int tokenId,
       final String to) async {
     _logger.v("approve");

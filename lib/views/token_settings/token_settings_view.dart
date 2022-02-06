@@ -108,10 +108,16 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, i) => OutlinedButton(
                     onPressed: () async {
+                      // TODO(dominego) Sostituisci con nuovo approveOwnership
                       await vm.approve(
                         widget.collectionAddress,
                         widget.tokenId,
                         widget.ownershipLicenseRequests[i],
+                      );
+                      await vm.removeOwnershipLicenseTransferApproval(
+                        widget.collectionAddress,
+                        widget.tokenId,
+                        widget.ownershipLicenseRequests[i]
                       );
                     },
                     child: Text(widget.ownershipLicenseRequests[i]),
@@ -216,10 +222,16 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, i) => OutlinedButton(
                     onPressed: () async {
+                      // TODO(dominego) Sostituisci con nuovo approveCreative
                       await vm.approve(
                         widget.collectionAddress,
                         widget.tokenId,
                         widget.creativeLicenseRequests[i],
+                      );
+                      await vm.removeCreativeLicenseTransferApproval(
+                        widget.collectionAddress,
+                        widget.tokenId,
+                        widget.ownershipLicenseRequests[i]
                       );
                     },
                     child: Text(widget.creativeLicenseRequests[i]),
