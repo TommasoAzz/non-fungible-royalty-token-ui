@@ -4,6 +4,8 @@ import 'collection.dart';
 
 typedef EthAddress = String;
 
+/// Represents a token (minted) for a collection representing a `ERC1190Tradable`
+/// smart contract.
 class Token {
   final int id;
   final String uri;
@@ -32,15 +34,15 @@ class Token {
     required this.owner,
     required this.creativeOwner,
     required this.rentedBy,
-    this.ownershipLicenseRequests = const [],
-    this.creativeLicenseRequests = const [],
+    required this.ownershipLicenseRequests,
+    required this.creativeLicenseRequests,
     required this.royaltyOwnershipTransfer,
     required this.royaltyRental,
     required this.approvedByOwner,
     required this.approvedByCreator,
     required this.collection,
-    this.currentRenters = const [],
-    this.expiredRenters = const [],
+    required this.currentRenters,
+    required this.expiredRenters,
   });
 
   @override

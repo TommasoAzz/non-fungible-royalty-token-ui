@@ -1,3 +1,4 @@
+/// Exception thrown when the user is not connected to a crypto wallet.
 class WalletNotLoadedException implements Exception {
   final String message;
 

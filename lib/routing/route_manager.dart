@@ -7,7 +7,7 @@ import '../views/collections/collections_view.dart';
 import '../views/home/home_view.dart';
 import '../views/profile/profile_view.dart';
 import '../views/wallet/wallet_view.dart';
-import '../extensions/string_extensions.dart';
+import 'string_extensions.dart';
 
 class RouteManager {
   static const String home = "/";

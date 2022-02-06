@@ -10,15 +10,12 @@ import 'business_logic/contracts/erc1190_tradable.dart';
 import 'business_logic/viewmodel/marketplace_vm.dart';
 import 'business_logic/connector/contract_loader.dart';
 import 'business_logic/connector/web3_connector.dart';
-import 'services/navigation_service.dart';
 
 GetIt locator = GetIt.instance;
 
 typedef JSON = Map<String, dynamic>;
 
 void setupLocator() {
-  /// Navigation service
-  locator.registerLazySingleton<NavigationService>(() => NavigationService());
 
   // /// Ethereum smart contract address to connect to (based on the network)
   // locator.registerSingleton<String>(

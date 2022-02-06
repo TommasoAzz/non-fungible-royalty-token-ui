@@ -5,6 +5,8 @@ import '../contracts/erc1190_tradable.dart';
 
 typedef EthAddress = String;
 
+/// Utility class for loading instances of [ERC1190Marketplace] and [ERC1190Tradable] contract wrappers.
+/// An active instance of [Web3Connector] in order for the contracts to be loaded.
 class ContractLoader {
   final _logger = getLogger("ContractLoader");
 
@@ -12,6 +14,7 @@ class ContractLoader {
 
   ContractLoader(this._web3connector);
 
+  /// Loads an instance of [ERC1190Marketplace] given a valid `ERC1190Marketplace` smart contract address.
   ERC1190Marketplace loadERC1190MarketplaceContract(final EthAddress address) {
     _logger.v("loadERC1190MarketplaceContract");
 
@@ -19,6 +22,7 @@ class ContractLoader {
     return ERC1190Marketplace(contract: contract);
   }
 
+  /// Loads an instance of [ERC1190Tradable] given a valid `ERC1190Tradable` smart contract address.
   ERC1190Tradable loadERC1190Tradable(final EthAddress address) {
     _logger.v("loadERC1190Tradable");
 

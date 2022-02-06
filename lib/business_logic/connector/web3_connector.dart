@@ -7,6 +7,7 @@ import '../../logger/logger.dart';
 
 typedef EthAddress = String;
 
+/// Allows to access the **Ethereum** blockchain via the JS libraries **Ethers.js**, **web3.js**, and many more.
 class Web3Connector with ChangeNotifier {
   final _logger = getLogger("Web3Connector");
 
@@ -16,6 +17,10 @@ class Web3Connector with ChangeNotifier {
 
   final List<EthAddress> _accounts = [];
 
+  /// Connects to the wallet available in the browser.
+  /// Notifies all listeners of this class when the accounts selected in the wallet change.
+  /// Throws a [WalletRejectedException] when the user denies access to their wallet.
+  /// Throws a [WalletNotSupportedException] when the browser can't have access to a wallet.
   Future<void> connectToWallet() async {
     _logger.v("connectToWallet");
 
@@ -58,11 +63,14 @@ class Web3Connector with ChangeNotifier {
     }
   }
 
+  /// Returns `true` when it is connected to a wallet, `false` otherwise.
   bool get connectedToWallet {
     _logger.v("connectedToWallet");
     return _walletConnected;
   }
 
+  /// Loads a contract from the blockchain and returns it.
+  /// If `connectedToWallet == false` this method throws a [WalletNotLoadedException].
   Contract loadContract(final EthAddress address, final String abi) {
     _logger.v("loadContract");
 
@@ -73,6 +81,7 @@ class Web3Connector with ChangeNotifier {
     return Contract(address, abi, _provider.getSigner());
   }
 
+  /// Returns the first acccount in the list of currently connected account to the website.
   EthAddress get firstAccount {
     _logger.v("firstAccount");
 

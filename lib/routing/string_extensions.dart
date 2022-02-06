@@ -1,4 +1,4 @@
-import '../business_logic/models/routing_data.dart';
+import 'routing_data.dart';
 
 extension StringExtension on String {
   RoutingData get routingData {

@@ -10,6 +10,7 @@ import '../../business_logic/contracts/erc1190_marketplace.dart';
 import '../../logger/logger.dart';
 import '../exception/ipfs_connection_exception.dart';
 
+/// ViewModel for accessing the business logic of the website from within the UI.
 class MarketplaceVM with ChangeNotifier {
   final _logger = getLogger("MarketplaceVM");
 
@@ -347,7 +348,8 @@ class MarketplaceVM with ChangeNotifier {
     final expired = <String>[];
 
     for (final renter in renters) {
-      if ((await getRentalDate(collectionAddress, tokenId, renter)).toInt() < date) {
+      final rentalDate = (await getRentalDate(collectionAddress, tokenId, renter)).toInt();
+      if (rentalDate < date) {
         expired.add(renter);
       }
     }
@@ -366,7 +368,8 @@ class MarketplaceVM with ChangeNotifier {
     final notExpired = <String>[];
 
     for (final renter in renters) {
-      if ((await getRentalDate(collectionAddress, tokenId, renter)).toInt() > date) {
+      final rentalDate = (await getRentalDate(collectionAddress, tokenId, renter)).toInt();
+      if (rentalDate > date) {
         notExpired.add(renter);
       }
     }
@@ -443,7 +446,7 @@ class MarketplaceVM with ChangeNotifier {
 
     final priceInWei = toWei(priceInEth);
 
-    _logger.i("Prince in ETH: $priceInEth, price in WEI: $priceInWei");
+    _logger.i("Price in ETH: $priceInEth, price in WEI: $priceInWei");
 
     await contract.setOwnershipLicensePrice(tokenId, priceInWei);
   }
@@ -459,7 +462,7 @@ class MarketplaceVM with ChangeNotifier {
 
     final priceInWei = toWei(priceInEth);
 
-    _logger.i("Prince in ETH: $priceInEth, price in WEI: $priceInWei");
+    _logger.i("Price in ETH: $priceInEth, price in WEI: $priceInWei");
 
     await contract.setCreativeLicensePrice(tokenId, priceInWei);
   }
@@ -475,7 +478,7 @@ class MarketplaceVM with ChangeNotifier {
 
     final priceInWei = toWei(priceInEth);
 
-    _logger.i("Prince in ETH: $priceInEth, price in WEI: $priceInWei");
+    _logger.i("Price in ETH: $priceInEth, price in WEI: $priceInWei");
 
     await contract.setRentalPrice(tokenId, priceInWei);
   }
@@ -506,7 +509,10 @@ class MarketplaceVM with ChangeNotifier {
     _logger.v("removeOwnershipLicenseTransferApproval");
 
     await marketplaceContract.removeOwnershipLicenseTransferApproval(
-        collectionAddress, tokenId, toRemove);
+      collectionAddress,
+      tokenId,
+      toRemove,
+    );
   }
 
   Future<void> removeCreativeLicenseTransferApproval(
@@ -517,11 +523,17 @@ class MarketplaceVM with ChangeNotifier {
     _logger.v("removeCreativeLicenseTransferApproval");
 
     await marketplaceContract.removeCreativeLicenseTransferApproval(
-        collectionAddress, tokenId, toRemove);
+      collectionAddress,
+      tokenId,
+      toRemove,
+    );
   }
 
   Future<void> approveOwnership(
-      final String collectionAddress, final int tokenId, final String to) async {
+    final String collectionAddress,
+    final int tokenId,
+    final String to,
+  ) async {
     _logger.v("approveOwnership");
 
     final contract = loadERC1190SmartContract(collectionAddress);
@@ -530,7 +542,10 @@ class MarketplaceVM with ChangeNotifier {
   }
 
   Future<void> approveCreativeOwnership(
-      final String collectionAddress, final int tokenId, final String to) async {
+    final String collectionAddress,
+    final int tokenId,
+    final String to,
+  ) async {
     _logger.v("approveCreativeOwnership");
 
     final contract = loadERC1190SmartContract(collectionAddress);

@@ -5,6 +5,8 @@ import '../../logger/logger.dart';
 
 typedef EthAddress = String;
 
+/// This class implements all the methods from the `ERC1190Marketplace`
+/// smart contract.
 class ERC1190Marketplace {
   final _logger = getLogger("ERC1190Marketplace");
 
@@ -18,6 +20,7 @@ class ERC1190Marketplace {
 
   String get address => contract.address;
 
+  /// Returns the original creator of the collection.
   Future<EthAddress> creatorOf(final EthAddress collectionAddress) async {
     _logger.v("creatorOf");
 
@@ -26,6 +29,7 @@ class ERC1190Marketplace {
     return creator;
   }
 
+  /// Returns all the collections stored in this smart contract.
   Future<List<EthAddress>> get allCollections async {
     _logger.v("allCollections");
 
@@ -36,6 +40,7 @@ class ERC1190Marketplace {
     return collections;
   }
 
+  /// Returns all the collections stored in this smart contract created by `collectionOwner`.
   Future<List<EthAddress>> collectionsOf(final EthAddress collectionOwner) async {
     _logger.v("collectionsOf");
 
@@ -46,6 +51,7 @@ class ERC1190Marketplace {
     return collections;
   }
 
+  /// Creates a new collection (instance of `ERC1190Tradable` smart contract) with the given arguments.
   Future<EthAddress> deployNewCollection(
     final String name,
     final String symbol,
@@ -74,6 +80,8 @@ class ERC1190Marketplace {
     return await completer.future;
   }
 
+  /// Sends a request to the collection addressed by `collectionAddress` to
+  /// buy the ownership license of token `tokenId`.
   Future<void> requireOwnershipLicenseTransferApproval(
     EthAddress collectionAddress,
     int tokenId,
@@ -98,6 +106,8 @@ class ERC1190Marketplace {
     await completer.future;
   }
 
+  /// Sends a request to the collection addressed by `collectionAddress` to
+  /// buy the creative ownership license of token `tokenId`.
   Future<void> requireCreativeLicenseTransferApproval(
     EthAddress collectionAddress,
     int tokenId,
@@ -122,6 +132,8 @@ class ERC1190Marketplace {
     await completer.future;
   }
 
+  /// Removes the request to the collection addressed by `collectionAddress` to
+  /// buy the ownership license of token `tokenId`.
   Future<void> removeOwnershipLicenseTransferApproval(
     EthAddress collectionAddress,
     int tokenId,
@@ -136,6 +148,8 @@ class ERC1190Marketplace {
     await tx.wait();
   }
 
+  /// Removes the request to the collection addressed by `collectionAddress` to
+  /// buy the creative ownership license of token `tokenId`.
   Future<void> removeCreativeLicenseTransferApproval(
     EthAddress collectionAddress,
     int tokenId,
@@ -150,6 +164,8 @@ class ERC1190Marketplace {
     await tx.wait();
   }
 
+  /// Retrieves all the requests received for buying the ownership license for
+  /// token `tokenId`.
   Future<List<EthAddress>> getOwnershipLicenseTransferRequests(
     EthAddress collectionAddress,
     int tokenId,
@@ -165,6 +181,8 @@ class ERC1190Marketplace {
     return requests;
   }
 
+  /// Retrieves all the requests received for buying the creative ownership
+  /// license for token `tokenId`.
   Future<List<EthAddress>> getCreativeLicenseTransferRequests(
     EthAddress collectionAddress,
     int tokenId,

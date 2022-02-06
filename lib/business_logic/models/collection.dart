@@ -1,3 +1,4 @@
+/// Represents a collection (i.e. an instance of a `ERC1190Tradable` smart contract)
 class Collection {
   final String address;
   final String name;
