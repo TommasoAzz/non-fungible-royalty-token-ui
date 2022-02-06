@@ -34,8 +34,7 @@ class ERC1190Tradable {
   Future<double> ownershipPriceOf(final int tokenId) async {
     _logger.v("ownershipPriceOf");
 
-    final ownershipPrice =
-        await contract.call<BigInt>("ownershipPriceOf", [tokenId]);
+    final ownershipPrice = await contract.call<BigInt>("ownershipPriceOf", [tokenId]);
 
     return ownershipPrice.toInt() / 1e18;
   }
@@ -43,8 +42,7 @@ class ERC1190Tradable {
   Future<double> creativeOwnershipPriceOf(final int tokenId) async {
     _logger.v("creativeOwnershipPriceOf");
 
-    final creativePrice =
-        await contract.call<BigInt>("creativeOwnershipPriceOf", [tokenId]);
+    final creativePrice = await contract.call<BigInt>("creativeOwnershipPriceOf", [tokenId]);
 
     return creativePrice.toInt() / 1e18;
   }
@@ -68,8 +66,7 @@ class ERC1190Tradable {
   Future<int> royaltyForOwnershipTransfer(final int tokenId) async {
     _logger.v("royaltyForOwnershipTransfer");
 
-    final royalty =
-        await contract.call<int>("royaltyForOwnershipTransfer", [tokenId]);
+    final royalty = await contract.call<int>("royaltyForOwnershipTransfer", [tokenId]);
 
     return royalty;
   }
@@ -94,8 +91,7 @@ class ERC1190Tradable {
       _logger.i("Event: TokenMinted");
       _logger.i("- creator: ${dartify(creator)}");
       _logger.i("- royaltyForRental: ${dartify(royaltyForRental)}");
-      _logger.i(
-          "- royaltyForOwnershipTransfer: ${dartify(royaltyForOwnershipTransfer)}");
+      _logger.i("- royaltyForOwnershipTransfer: ${dartify(royaltyForOwnershipTransfer)}");
       _logger.i("- tokenId: ${dartify(tokenId)}");
 
       completer.complete();
@@ -110,26 +106,21 @@ class ERC1190Tradable {
     return await completer.future;
   }
 
-  Future<void> setOwnershipLicensePrice(
-      final int tokenId, final BigInt priceInWei) async {
+  Future<void> setOwnershipLicensePrice(final int tokenId, final BigInt priceInWei) async {
     _logger.v("setOwnershipLicensePrice");
 
-    final tx =
-        await contract.send("setOwnershipLicensePrice", [tokenId, priceInWei]);
+    final tx = await contract.send("setOwnershipLicensePrice", [tokenId, priceInWei]);
     await tx.wait();
   }
 
-  Future<void> setCreativeLicensePrice(
-      final int tokenId, final BigInt priceInWei) async {
+  Future<void> setCreativeLicensePrice(final int tokenId, final BigInt priceInWei) async {
     _logger.v("setCreativeLicensePrice");
 
-    final tx =
-        await contract.send("setCreativeLicensePrice", [tokenId, priceInWei]);
+    final tx = await contract.send("setCreativeLicensePrice", [tokenId, priceInWei]);
     await tx.wait();
   }
 
-  Future<void> setRentalPrice(
-      final int tokenId, final BigInt priceInWei) async {
+  Future<void> setRentalPrice(final int tokenId, final BigInt priceInWei) async {
     _logger.v("setRentalPrice");
 
     final tx = await contract.send("setRentalPrice", [tokenId, priceInWei]);
@@ -152,7 +143,8 @@ class ERC1190Tradable {
     });
 
     final rentalPricePerSecond = await contract.call<BigInt>("rentalPriceOf", [tokenId]);
-    final rentalTotalSeconds = ((rentExpirationDateInMillis - rentStartingDateInMillis) * 0.001).toInt();
+    final rentalTotalSeconds =
+        ((rentExpirationDateInMillis - rentStartingDateInMillis) * 0.001).toInt();
     final weiToSend = rentalPricePerSecond * BigInt.from(rentalTotalSeconds);
 
     final tx = await contract.send(
@@ -172,8 +164,7 @@ class ERC1190Tradable {
     await completer.future;
   }
 
-  Future<void> transferOwnershipLicense(
-      final int tokenId, final EthAddress to) async {
+  Future<void> transferOwnershipLicense(final int tokenId, final EthAddress to) async {
     _logger.v("transferOwnershipLicense");
 
     final completer = Completer<void>();
@@ -186,8 +177,7 @@ class ERC1190Tradable {
       completer.complete();
     });
 
-    final tx = await contract
-        .send("transferOwnershipLicense(uint256,address)", [tokenId, to]);
+    final tx = await contract.send("transferOwnershipLicense(uint256,address)", [tokenId, to]);
     await tx.wait();
 
     await completer.future;
@@ -218,8 +208,7 @@ class ERC1190Tradable {
     await completer.future;
   }
 
-  Future<void> transferCreativeLicense(
-      final int tokenId, final EthAddress to) async {
+  Future<void> transferCreativeLicense(final int tokenId, final EthAddress to) async {
     _logger.v("transferCreativeLicense");
 
     final completer = Completer<void>();
@@ -232,8 +221,7 @@ class ERC1190Tradable {
       completer.complete();
     });
 
-    final tx = await contract
-        .send("transferCreativeLicense(uint256,address)", [tokenId, to]);
+    final tx = await contract.send("transferCreativeLicense(uint256,address)", [tokenId, to]);
     await tx.wait();
 
     await completer.future;
@@ -317,7 +305,7 @@ class ERC1190Tradable {
   }
 
   Future<void> approveOwnership(final EthAddress to, final int tokenId) async {
-    _logger.v("approvedByOwner");
+    _logger.v("approveOwnership");
 
     final completer = Completer<void>();
 
@@ -335,8 +323,8 @@ class ERC1190Tradable {
     await completer.future;
   }
 
-  Future<void> approveCreative(final EthAddress to, final int tokenId) async {
-    _logger.v("approvedByCreator");
+  Future<void> approveCreativeOwnership(final EthAddress to, final int tokenId) async {
+    _logger.v("approveCreativeOwnership");
 
     final completer = Completer<void>();
 
@@ -348,22 +336,22 @@ class ERC1190Tradable {
       completer.complete();
     });
 
-    final tx = await contract.send("approveCreative", [to, tokenId]);
+    final tx = await contract.send("approveCreativeOwnership", [to, tokenId]);
     await tx.wait();
 
     await completer.future;
   }
 
   Future<String> getApprovedOwnership(final int tokenId) async {
-    _logger.v("getApproved");
+    _logger.v("getApprovedOwnership");
 
     return await contract.call<EthAddress>("getApprovedOwnership", [tokenId]);
   }
 
-  Future<String> getApprovedCreative(final int tokenId) async {
-    _logger.v("getApproved");
+  Future<String> getApprovedCreativeOwnership(final int tokenId) async {
+    _logger.v("getApprovedCreativeOwnership");
 
-    return await contract.call<EthAddress>("getApprovedCreative", [tokenId]);
+    return await contract.call<EthAddress>("getApprovedCreativeOwnership", [tokenId]);
   }
 
   Future<BigInt> getRentalDate(final int tokenId, final EthAddress renter) async {
@@ -376,8 +364,7 @@ class ERC1190Tradable {
       final int tokenId, final int currentDate, final EthAddress renter) async {
     _logger.v("updateEndRentalDate");
 
-    final tx = await contract
-        .send("updateEndRentalDate", [tokenId, currentDate, renter]);
+    final tx = await contract.send("updateEndRentalDate", [tokenId, currentDate, renter]);
     await tx.wait();
   }
 }
