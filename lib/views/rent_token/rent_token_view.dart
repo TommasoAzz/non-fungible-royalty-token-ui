@@ -90,7 +90,7 @@ class _RentTokenViewState extends State<RentTokenView> {
                     )
                   : Text(
                       'Selected date: ${DateFormat('dd/MM/yy HH:mm').format(DateTime.fromMillisecondsSinceEpoch(selectedEndRentalDateMillis))}',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
                     ),
             ),
             selectedEndRentalDateMillis < currentDateTime
