@@ -347,11 +347,11 @@ class ERC1190Tradable {
   }
 
   Future<void> updateEndRentalDate(
-      final int tokenId, final int actualDate, final EthAddress renter) async {
+      final int tokenId, final int currentDate, final EthAddress renter) async {
     _logger.v("updateEndRentalDate");
 
     final tx = await contract
-        .send("updateEndRentalDate", [tokenId, actualDate, renter]);
+        .send("updateEndRentalDate", [tokenId, currentDate, renter]);
     await tx.wait();
   }
 }

@@ -304,14 +304,14 @@ class MarketplaceVM with ChangeNotifier {
   Future<void> updateEndRentalDate(
     final String collectionAddress,
     final int tokenId,
-    final int actualDate,
+    final int currentDate,
     final String renter,
   ) async {
     _logger.v("updateEndRentalDate");
 
     final contract = loadERC1190SmartContract(collectionAddress);
 
-    await contract.updateEndRentalDate(tokenId, actualDate, renter);
+    await contract.updateEndRentalDate(tokenId, currentDate, renter);
   }
 
   Future<List<String>> expiredRenters(
