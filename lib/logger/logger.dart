@@ -36,3 +36,7 @@ class _ConsoleLogPrinter extends LogPrinter {
 Logger getLogger(final String name) {
   return Logger(printer: _ConsoleLogPrinter(name));
 }
+
+void setLogLevel(final Level level) {
+  Logger.level = level;
+}

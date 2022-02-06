@@ -53,8 +53,7 @@ class _DropzoneState extends State<Dropzone> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.cloud_upload,
-                        size: 80, color: Colors.white),
+                    const Icon(Icons.cloud_upload, size: 80, color: Colors.white),
                     const SelectableText(
                       "Drop file here",
                       style: TextStyle(color: Colors.white, fontSize: 18),
@@ -78,17 +77,16 @@ class _DropzoneState extends State<Dropzone> {
                         ),
                       ),
                       onPressed: () async {
-                        final events =
-                            await controller.pickFiles(multiple: true);
+                        final events = await controller.pickFiles(multiple: true);
+                        int validFiles = 0;
                         for (final event in events) {
                           final mime = await controller.getFileMIME(event);
                           if (mime.startsWith("image/")) {
                             await acceptFile(event);
-                            setState(() {
-                              numberFileUploaded += 1;
-                            });
+                            validFiles++;
                           }
                         }
+                        setState(() => numberFileUploaded += validFiles);
                       },
                     ),
                   ],

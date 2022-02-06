@@ -15,29 +15,45 @@ class TokenInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        StyleText(title: "ID: ${token.id}"),
-        StyleText(title: "Owner: ${token.owner}"),
-        StyleText(title: "Rented by: ${token.rentedBy.length} people"),
+        StyleText(
+          title: "ID: ${token.id}",
+        ),
+        StyleText(
+          title: "Owner: ${token.owner}",
+        ),
+        StyleText(
+          title: "Rented by: ${token.rentedBy.length} people",
+        ),
         if (token.ownershipLicensePrice > 0)
           StyleText(
-              title: "Ownership license: ${token.ownershipLicensePrice} ETH"),
+            title: "Ownership license: ${token.ownershipLicensePrice} ETH",
+          ),
         if (token.ownershipLicensePrice == 0)
-          const StyleText(title: "Ownership license: not on sale"),
+          const StyleText(
+            title: "Ownership license: not on sale",
+          ),
         if (token.creativeLicensePrice > 0)
           StyleText(
-              title: "Creative license: ${token.creativeLicensePrice} ETH"),
+            title: "Creative license: ${token.creativeLicensePrice} ETH",
+          ),
         if (token.creativeLicensePrice == 0)
-          const StyleText(title: "Creative license: not on sale"),
+          const StyleText(
+            title: "Creative license: not on sale",
+          ),
         if (token.rentalPricePerSecond > 0)
           StyleText(
-              title: "Rental: ${token.rentalPricePerSecond * 3600} ETH/hour"),
+            title: "Rental: ${token.rentalPricePerSecond * 3600} ETH/hour",
+          ),
         if (token.rentalPricePerSecond == 0)
-          const StyleText(title: "Rental: not rentable"),
+          const StyleText(
+            title: "Rental: not rentable",
+          ),
         StyleText(
-          title:
-              "Royalty for ownership transfer: ${token.royaltyOwnershipTransfer}%",
+          title: "Royalty for ownership transfer: ${token.royaltyOwnershipTransfer}%",
         ),
-        StyleText(title: "Royalty for rental: ${token.royaltyRental}%"),
+        StyleText(
+          title: "Royalty for rental: ${token.royaltyRental}%",
+        ),
       ],
     );
   }

@@ -53,7 +53,7 @@ class _TokenItemState extends State<TokenItem> {
               ),
               child: Center(child: Image.network(widget.token.uri)),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TokenInfo(
               token: widget.token,
             ),

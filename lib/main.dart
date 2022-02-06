@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'logger/logger.dart';
 import 'routing/route_manager.dart';
 
 import 'locator.dart';
 
 void main() {
   setupLocator();
+  setLogLevel(Level.debug);
   runApp(const MyApp());
 }
 

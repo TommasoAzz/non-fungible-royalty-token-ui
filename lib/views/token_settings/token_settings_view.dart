@@ -131,7 +131,7 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   _transferCreativeLicenseTo,
                 ),
               ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             if (widget.isOwner && widget.ownershipLicenseRequests.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
@@ -169,7 +169,7 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             if ((widget.isOwner || widget.isCreativeOwner) &&
                 widget.expiredRenters.isNotEmpty)
               SizedBox(
@@ -204,7 +204,7 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             if ((widget.isOwner || widget.isCreativeOwner) &&
                 widget.notExpiredRenters.isNotEmpty)
               SizedBox(
@@ -230,7 +230,7 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                       SelectableText(widget.notExpiredRenters[i]),
                 ),
               ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             if (widget.isCreativeOwner &&
                 widget.creativeLicenseRequests.isNotEmpty)
               SizedBox(
