@@ -53,7 +53,8 @@ class _DropzoneState extends State<Dropzone> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.cloud_upload, size: 80, color: Colors.white),
+                    const Icon(Icons.cloud_upload,
+                        size: 80, color: Colors.white),
                     const SelectableText(
                       "Drop file here",
                       style: TextStyle(color: Colors.white, fontSize: 18),
@@ -63,7 +64,7 @@ class _DropzoneState extends State<Dropzone> {
                       icon: const Icon(Icons.search, size: 25),
                       label: const Text(
                         "Choose files",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
@@ -77,7 +78,8 @@ class _DropzoneState extends State<Dropzone> {
                         ),
                       ),
                       onPressed: () async {
-                        final events = await controller.pickFiles(multiple: true);
+                        final events =
+                            await controller.pickFiles(multiple: true);
                         for (final event in events) {
                           await acceptFile(event);
                         }

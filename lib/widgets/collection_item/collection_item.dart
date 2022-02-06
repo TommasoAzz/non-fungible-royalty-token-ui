@@ -22,7 +22,7 @@ class CollectionItem extends StatelessWidget {
         );
       },
       child: Card(
-        color: Colors.blue[collection.availableTokens * 100 + 100],
+        color: Colors.blue[collection.availableTokens * 100 + 300],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 5,
         child: Column(
@@ -36,7 +36,7 @@ class CollectionItem extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w200,
-                color: Colors.black,
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
@@ -48,7 +48,7 @@ class CollectionItem extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w200,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
             const SizedBox(
@@ -59,7 +59,7 @@ class CollectionItem extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w200,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
           ],

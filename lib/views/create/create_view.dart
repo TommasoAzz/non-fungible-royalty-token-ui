@@ -87,14 +87,14 @@ class _CreateViewState extends State<CreateView> {
                         if (collectionUploaded)
                           const Text(
                             "Submitted",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                         if (collectionUploaded)
                           const Icon(Icons.check, size: 16),
                         if (!collectionUploaded)
                           const Text(
                             "Submit",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                         if (uploadingCollection) const SizedBox(width: 10),
                         if (uploadingCollection)

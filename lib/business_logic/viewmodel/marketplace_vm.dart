@@ -144,7 +144,8 @@ class MarketplaceVM with ChangeNotifier {
       symbol,
       "https://ipfs.io/ipfs/",
     );
-    _logger.i("Deployed collection. Deployed smart contract at address: $contractAddress.");
+    _logger.i(
+        "Deployed collection. Deployed smart contract at address: $contractAddress.");
 
     final collection = loadERC1190SmartContract(contractAddress);
     final creator = await marketplaceContract.creatorOf(contractAddress);
@@ -158,7 +159,8 @@ class MarketplaceVM with ChangeNotifier {
       request.files.add(http.MultipartFile.fromBytes("path", fileBytes));
       final ipfsResponse = await request.send();
       if (ipfsResponse.statusCode == 200) {
-        _logger.i("Deployed file with path = $fileBlobURI to IPFS. Minting the relative token.");
+        _logger.i(
+            "Deployed file with path = $fileBlobURI to IPFS. Minting the relative token.");
         final ipfsResponseBodyJson = json.decode(
           await ipfsResponse.stream.bytesToString(),
         ) as Map<String, dynamic>;
@@ -214,13 +216,16 @@ class MarketplaceVM with ChangeNotifier {
       owner: await contract.ownerOf(tokenId),
       creativeOwner: await contract.creativeOwnerOf(tokenId),
       rentedBy: await contract.rentersOf(tokenId),
-      royaltyOwnershipTransfer: await contract.royaltyForOwnershipTransfer(tokenId),
+      royaltyOwnershipTransfer:
+          await contract.royaltyForOwnershipTransfer(tokenId),
       royaltyRental: await contract.royaltyForRental(tokenId),
-      creativeLicenseRequests: await marketplaceContract.getCreativeLicenseTransferRequests(
+      creativeLicenseRequests:
+          await marketplaceContract.getCreativeLicenseTransferRequests(
         collection.address,
         tokenId,
       ),
-      ownershipLicenseRequests: await marketplaceContract.getOwnershipLicenseTransferRequests(
+      ownershipLicenseRequests:
+          await marketplaceContract.getOwnershipLicenseTransferRequests(
         collection.address,
         tokenId,
       ),
@@ -299,16 +304,18 @@ class MarketplaceVM with ChangeNotifier {
   Future<void> updateEndRentalDate(
     final String collectionAddress,
     final int tokenId,
+    final int actualDate,
     final String renter,
   ) async {
     _logger.v("updateEndRentalDate");
 
     final contract = loadERC1190SmartContract(collectionAddress);
 
-    await contract.updateEndRentalDate(tokenId, renter);
+    await contract.updateEndRentalDate(tokenId, actualDate, renter);
   }
 
-  Future<List<String>> expiredRenters(final String collectionAddress, final int tokenId) async {
+  Future<List<String>> expiredRenters(
+      final String collectionAddress, final int tokenId) async {
     _logger.v("expiredRenters");
     final contract = loadERC1190SmartContract(collectionAddress);
 
@@ -326,7 +333,8 @@ class MarketplaceVM with ChangeNotifier {
     return expired;
   }
 
-  Future<List<String>> notExpiredRenters(final String collectionAddress, final int tokenId) async {
+  Future<List<String>> notExpiredRenters(
+      final String collectionAddress, final int tokenId) async {
     _logger.v("notExpiredRenters");
     final contract = loadERC1190SmartContract(collectionAddress);
 
@@ -347,13 +355,15 @@ class MarketplaceVM with ChangeNotifier {
   Future<void> rentAsset(
     final String collectionAddress,
     final int tokenId,
+    final int rentStartingDateInMillis,
     final int rentExpirationDateInMillis,
   ) async {
     _logger.v("rentAsset");
 
     final contract = loadERC1190SmartContract(collectionAddress);
 
-    await contract.rentAsset(tokenId, rentExpirationDateInMillis);
+    await contract.rentAsset(
+        tokenId, rentStartingDateInMillis, rentExpirationDateInMillis);
   }
 
   Future<void> obtainOwnershipLicense(
@@ -456,7 +466,8 @@ class MarketplaceVM with ChangeNotifier {
   ) async {
     _logger.v("requireOwnershipLicenseTransferApproval");
 
-    await marketplaceContract.requireOwnershipLicenseTransferApproval(collectionAddress, tokenId);
+    await marketplaceContract.requireOwnershipLicenseTransferApproval(
+        collectionAddress, tokenId);
   }
 
   Future<void> requireCreativeLicenseTransferApproval(
@@ -465,10 +476,12 @@ class MarketplaceVM with ChangeNotifier {
   ) async {
     _logger.v("requireCreativeLicenseTransferApproval");
 
-    await marketplaceContract.requireCreativeLicenseTransferApproval(collectionAddress, tokenId);
+    await marketplaceContract.requireCreativeLicenseTransferApproval(
+        collectionAddress, tokenId);
   }
 
-  Future<void> approve(final String collectionAddress, final int tokenId, final String to) async {
+  Future<void> approve(final String collectionAddress, final int tokenId,
+      final String to) async {
     _logger.v("approve");
 
     final contract = loadERC1190SmartContract(collectionAddress);
@@ -476,7 +489,8 @@ class MarketplaceVM with ChangeNotifier {
     await contract.approve(to, tokenId);
   }
 
-  Future<bool> getApproved(final String collectionAddress, final int tokenId) async {
+  Future<bool> getApproved(
+      final String collectionAddress, final int tokenId) async {
     _logger.v("getApproved");
 
     final contract = loadERC1190SmartContract(collectionAddress);

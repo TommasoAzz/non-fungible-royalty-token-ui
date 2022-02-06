@@ -121,8 +121,8 @@ class _RentTokenViewState extends State<RentTokenView> {
               ),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
+                  horizontal: 10,
+                  vertical: 10,
                 ),
                 primary: primaryColor,
                 shape: RoundedRectangleBorder(
@@ -147,6 +147,7 @@ class _RentTokenViewState extends State<RentTokenView> {
       await vm.rentAsset(
         widget.collectionAddress,
         widget.tokenId,
+        DateTime.now().millisecondsSinceEpoch,
         selectedEndRentalDateMillis - DateTime.now().millisecondsSinceEpoch,
       );
       setState(() {

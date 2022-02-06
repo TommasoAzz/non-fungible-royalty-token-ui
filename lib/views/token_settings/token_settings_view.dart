@@ -64,7 +64,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   _ownershipLicensePrice = double.tryParse(number ?? '') ?? 0;
                 }),
                 validate: widget.validateNumberField,
-                successDescription: "Ownership license price updated successfully.",
+                successDescription:
+                    "Ownership license price updated successfully.",
                 updateToken: () async => await vm.setOwnershipLicensePrice(
                   widget.collectionAddress,
                   widget.tokenId,
@@ -117,7 +118,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
-            if ((widget.isOwner || widget.isCreativeOwner) && widget.expiredRenters.isNotEmpty)
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.expiredRenters.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
                 child: const Text(
@@ -129,7 +131,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
-            if ((widget.isOwner || widget.isCreativeOwner) && widget.expiredRenters.isNotEmpty)
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.expiredRenters.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
                 height: Theme.of(context).buttonTheme.height,
@@ -141,6 +144,7 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                       await vm.updateEndRentalDate(
                         widget.collectionAddress,
                         widget.tokenId,
+                        DateTime.now().millisecondsSinceEpoch,
                         widget.expiredRenters[i],
                       );
                     },
@@ -148,7 +152,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
-            if ((widget.isOwner || widget.isCreativeOwner) && widget.notExpiredRenters.isNotEmpty)
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.notExpiredRenters.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
                 child: const Text(
@@ -160,7 +165,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
-            if ((widget.isOwner || widget.isCreativeOwner) && widget.notExpiredRenters.isNotEmpty)
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.notExpiredRenters.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
                 height: Theme.of(context).buttonTheme.height,
@@ -179,7 +185,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   _transferOwnershipLicenseTo = address ?? '';
                 }),
                 validate: widget.validateAddressField,
-                successDescription: "Ownership license transferred successfully.",
+                successDescription:
+                    "Ownership license transferred successfully.",
                 updateToken: () async => await vm.transferOwnershipLicense(
                   widget.collectionAddress,
                   widget.tokenId,
@@ -193,14 +200,16 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   _creativeLicensePrice = double.tryParse(number ?? '') ?? 0;
                 }),
                 validate: widget.validateNumberField,
-                successDescription: "Creative license price updated successfully.",
+                successDescription:
+                    "Creative license price updated successfully.",
                 updateToken: () async => await vm.setCreativeLicensePrice(
                   widget.collectionAddress,
                   widget.tokenId,
                   _creativeLicensePrice,
                 ),
               ),
-            if (widget.isCreativeOwner && widget.creativeLicenseRequests.isNotEmpty)
+            if (widget.isCreativeOwner &&
+                widget.creativeLicenseRequests.isNotEmpty)
               SizedBox(
                 width: max(480, MediaQuery.of(context).size.width * 0.8),
                 height: Theme.of(context).buttonTheme.height,
@@ -226,7 +235,8 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   _transferCreativeLicenseTo = address ?? '';
                 }),
                 validate: widget.validateAddressField,
-                successDescription: "Creative license transferred successfully.",
+                successDescription:
+                    "Creative license transferred successfully.",
                 updateToken: () async => await vm.transferCreativeLicense(
                   widget.collectionAddress,
                   widget.tokenId,
