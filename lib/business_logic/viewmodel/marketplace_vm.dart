@@ -123,14 +123,13 @@ class MarketplaceVM with ChangeNotifier {
     );
   }
 
-  Future<Collection> deployNewCollection(
-    final String name,
-    final String symbol,
+  Future<void> mintTokens(
+    final String contractAddress,
     final int royaltyForRental,
     final int royaltyForOwnershipTransfer, [
     final List<String> files = const [],
   ]) async {
-    _logger.v("deployNewCollection");
+    _logger.v("deployNewTokens");
 
     try {
       await http.post(Uri.parse("$ipfsUrl/api/v0/id"));
@@ -138,15 +137,6 @@ class MarketplaceVM with ChangeNotifier {
     } catch (connectionError) {
       throw const IpfsConnectionException();
     }
-
-    final contractAddress = await marketplaceContract.deployNewCollection(
-      name,
-      symbol,
-      "https://ipfs.io/ipfs/",
-    );
-    _logger.i(
-        "Deployed collection. Deployed smart contract at address: $contractAddress.");
-
     final collection = loadERC1190SmartContract(contractAddress);
     final creator = await marketplaceContract.creatorOf(contractAddress);
 
@@ -179,12 +169,42 @@ class MarketplaceVM with ChangeNotifier {
         );
       }
     }
+  }
+
+  Future<Collection> deployNewCollection(
+    final String name,
+    final String symbol,
+    final int royaltyForRental,
+    final int royaltyForOwnershipTransfer, [
+    final List<String> files = const [],
+  ]) async {
+    _logger.v("deployNewCollection");
+
+    try {
+      await http.post(Uri.parse("$ipfsUrl/api/v0/id"));
+      // ignore: avoid_catches_without_on_clauses
+    } catch (connectionError) {
+      throw const IpfsConnectionException();
+    }
+
+    final contractAddress = await marketplaceContract.deployNewCollection(
+      name,
+      symbol,
+      "https://ipfs.io/ipfs/",
+    );
+    _logger.i(
+        "Deployed collection. Deployed smart contract at address: $contractAddress.");
+
+    final collection = loadERC1190SmartContract(contractAddress);
+
+    await mintTokens(
+        contractAddress, royaltyForRental, royaltyForOwnershipTransfer);
 
     return Collection(
       address: collection.address,
       name: await collection.name,
       symbol: await collection.symbol,
-      creator: creator,
+      creator: await marketplaceContract.creatorOf(contractAddress),
       availableTokens: await collection.availableTokens,
     );
   }
