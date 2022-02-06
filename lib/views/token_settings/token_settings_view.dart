@@ -86,44 +86,6 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   _rentalPricePerHour / 3600,
                 ),
               ),
-            if (widget.isOwner && widget.ownershipLicenseRequests.isNotEmpty)
-              SizedBox(
-                width: max(480, MediaQuery.of(context).size.width * 0.8),
-                child: const Text(
-                  "Approve ownership license transfer requests",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            if ((widget.isOwner || widget.isCreativeOwner) &&
-                widget.expiredRenters.isNotEmpty)
-              SizedBox(
-                width: max(480, MediaQuery.of(context).size.width * 0.8),
-                child: const Text(
-                  "Accounts with expired rentals",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            if ((widget.isOwner || widget.isCreativeOwner) &&
-                widget.notExpiredRenters.isNotEmpty)
-              SizedBox(
-                width: max(480, MediaQuery.of(context).size.width * 0.8),
-                child: const Text(
-                  "Accounts with current rentals",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
             if (widget.isOwner)
               TokenSettingsFormField(
                 inputLabel: "Transfer ownership license",
@@ -154,19 +116,6 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   _creativeLicensePrice,
                 ),
               ),
-            if (widget.isCreativeOwner &&
-                widget.creativeLicenseRequests.isNotEmpty)
-              SizedBox(
-                width: max(480, MediaQuery.of(context).size.width * 0.8),
-                child: const Text(
-                  "Approve creative ownership license transfer requests",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
             if (widget.isCreativeOwner)
               TokenSettingsFormField(
                 inputLabel: "Transfer creative license",
@@ -180,6 +129,19 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   widget.collectionAddress,
                   widget.tokenId,
                   _transferCreativeLicenseTo,
+                ),
+              ),
+            SizedBox(height: 10),
+            if (widget.isOwner && widget.ownershipLicenseRequests.isNotEmpty)
+              SizedBox(
+                width: max(480, MediaQuery.of(context).size.width * 0.8),
+                child: const Text(
+                  "Approve ownership license transfer requests",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             if (widget.isOwner && widget.ownershipLicenseRequests.isNotEmpty)
@@ -207,6 +169,20 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
+            SizedBox(height: 10),
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.expiredRenters.isNotEmpty)
+              SizedBox(
+                width: max(480, MediaQuery.of(context).size.width * 0.8),
+                child: const Text(
+                  "Accounts with expired rentals",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
             if ((widget.isOwner || widget.isCreativeOwner) &&
                 widget.expiredRenters.isNotEmpty)
               SizedBox(
@@ -228,6 +204,20 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   ),
                 ),
               ),
+            SizedBox(height: 10),
+            if ((widget.isOwner || widget.isCreativeOwner) &&
+                widget.notExpiredRenters.isNotEmpty)
+              SizedBox(
+                width: max(480, MediaQuery.of(context).size.width * 0.8),
+                child: const Text(
+                  "Accounts with current rentals",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
             if ((widget.isOwner || widget.isCreativeOwner) &&
                 widget.notExpiredRenters.isNotEmpty)
               SizedBox(
@@ -238,6 +228,20 @@ class _TokenSettingsViewState extends State<TokenSettingsView> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, i) =>
                       SelectableText(widget.notExpiredRenters[i]),
+                ),
+              ),
+            SizedBox(height: 10),
+            if (widget.isCreativeOwner &&
+                widget.creativeLicenseRequests.isNotEmpty)
+              SizedBox(
+                width: max(480, MediaQuery.of(context).size.width * 0.8),
+                child: const Text(
+                  "Approve creative ownership license transfer requests",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             if (widget.isCreativeOwner &&
