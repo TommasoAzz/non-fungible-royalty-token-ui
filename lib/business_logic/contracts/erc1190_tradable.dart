@@ -142,15 +142,12 @@ class ERC1190Tradable {
 
     final completer = Completer<void>();
 
-    contract.once("AssetRented", (renter, tokenId, rentStartingDateInMillis,
-        rentExpirationDateInMillis, _) {
+    contract.once("AssetRented", (renter, tokenId, rentExpirationDateInMillis, _) {
       _logger.i("Event: AssetRented");
       _logger.i("- renter: ${dartify(renter)}");
       _logger.i("- tokenId: ${dartify(tokenId)}");
-      _logger.i(
-          "- rentExpirationDateInMillis: ${dartify(rentExpirationDateInMillis)}");
-      _logger.i(
-          "- rentExpirationDateInMillis: ${dartify(rentStartingDateInMillis)}");
+      _logger.i("- rentExpirationDateInMillis: ${dartify(rentExpirationDateInMillis)}");
+      _logger.i("- rentExpirationDateInMillis: ${dartify(rentStartingDateInMillis)}");
       completer.complete();
     });
 
@@ -163,7 +160,7 @@ class ERC1190Tradable {
       ],
       TransactionOverride(
         value: await contract.call<BigInt>("rentalPriceOf", [tokenId]),
-        gasLimit: BigInt.from(60000),
+        // gasLimit: BigInt.from(60000),
       ),
     );
     await tx.wait();

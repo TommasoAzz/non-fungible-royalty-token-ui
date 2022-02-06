@@ -29,7 +29,7 @@ class _RentTokenViewState extends State<RentTokenView> {
   bool rented = false;
   bool renting = false;
 
-  Future<void> _pickDate(BuildContext context) async {
+  Future<void> _pickDate() async {
     final initialDate = DateTime.now();
     final newDate = await showDatePicker(
       context: context,
@@ -37,6 +37,8 @@ class _RentTokenViewState extends State<RentTokenView> {
       firstDate: initialDate,
       lastDate: DateTime(initialDate.year + 5),
     );
+    if (newDate == null) return;
+
     final newTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay(
@@ -44,11 +46,9 @@ class _RentTokenViewState extends State<RentTokenView> {
         minute: initialDate.minute,
       ),
     );
-
-    if (newDate == null || newTime == null) return;
+    if (newTime == null) return;
 
     setState(() {
-      print("Updated");
       selectedEndRentalDateMillis = DateTime(
         newDate.year,
         newDate.month,
@@ -82,7 +82,7 @@ class _RentTokenViewState extends State<RentTokenView> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              onPressed: () => _pickDate(context),
+              onPressed: _pickDate,
               child: selectedEndRentalDateMillis < currentDateTime
                   ? const Text('Select date')
                   : Text(
