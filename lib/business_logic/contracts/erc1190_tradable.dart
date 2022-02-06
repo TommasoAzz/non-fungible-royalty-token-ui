@@ -142,17 +142,18 @@ class ERC1190Tradable {
 
     final completer = Completer<void>();
 
-    contract.once("AssetRented", (renter, tokenId, rentStartingDateInMillis,
-        rentExpirationDateInMillis, _) {
+    contract.once("AssetRented", (renter, tokenId, rentExpirationDateInMillis, _) {
       _logger.i("Event: AssetRented");
       _logger.i("- renter: ${dartify(renter)}");
       _logger.i("- tokenId: ${dartify(tokenId)}");
-      _logger.i(
-          "- rentExpirationDateInMillis: ${dartify(rentExpirationDateInMillis)}");
-      _logger.i(
-          "- rentExpirationDateInMillis: ${dartify(rentStartingDateInMillis)}");
+      _logger.i("- rentExpirationDateInMillis: ${dartify(rentExpirationDateInMillis)}");
+      _logger.i("- rentExpirationDateInMillis: ${dartify(rentStartingDateInMillis)}");
       completer.complete();
     });
+
+    final rentalPricePerSecond = await contract.call<BigInt>("rentalPriceOf", [tokenId]);
+    final rentalTotalSeconds = ((rentExpirationDateInMillis - rentStartingDateInMillis) * 0.001).toInt();
+    final weiToSend = rentalPricePerSecond * BigInt.from(rentalTotalSeconds);
 
     final tx = await contract.send(
       "rentAsset(uint256,uint256,uint256)",
@@ -162,8 +163,8 @@ class ERC1190Tradable {
         rentExpirationDateInMillis,
       ],
       TransactionOverride(
-        value: await contract.call<BigInt>("rentalPriceOf", [tokenId]),
-        gasLimit: BigInt.from(60000),
+        value: weiToSend,
+        // gasLimit: BigInt.from(60000),
       ),
     );
     await tx.wait();
@@ -365,10 +366,10 @@ class ERC1190Tradable {
     return await contract.call<EthAddress>("getApprovedCreative", [tokenId]);
   }
 
-  Future<int> getRentalDate(final int tokenId, final EthAddress renter) async {
+  Future<BigInt> getRentalDate(final int tokenId, final EthAddress renter) async {
     _logger.v("getRentalDate");
 
-    return await contract.call<int>("getRentalDate", [tokenId, renter]);
+    return await contract.call<BigInt>("getRentalDate", [tokenId, renter]);
   }
 
   Future<void> updateEndRentalDate(

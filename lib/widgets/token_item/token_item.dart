@@ -173,6 +173,8 @@ class _TokenItemState extends State<TokenItem> {
           tokenId: widget.token.id,
           creativeLicenseRequests: widget.token.creativeLicenseRequests,
           ownershipLicenseRequests: widget.token.ownershipLicenseRequests,
+          expiredRenters: widget.token.expiredRenters,
+          notExpiredRenters: widget.token.currentRenters,
         ),
       ),
     );

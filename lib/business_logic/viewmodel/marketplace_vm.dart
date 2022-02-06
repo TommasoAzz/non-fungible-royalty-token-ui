@@ -274,15 +274,17 @@ class MarketplaceVM with ChangeNotifier {
   Future<List<Token>> getRentedTokens() async {
     _logger.v("getRentedTokens");
     final collectionAddresses = await marketplaceContract.allCollections;
+    final currentDateTime = DateTime.now().millisecondsSinceEpoch;
     final rentedTokens = <Token>[];
     for (final addr in collectionAddresses) {
       final contract = loadERC1190SmartContract(addr);
       final collection = await getCollection(addr);
       final availableTokens = collection.availableTokens;
       for (int tokenId = 1; tokenId <= availableTokens; tokenId++) {
-        if ((await contract.rentersOf(tokenId)).contains(_account) &&
-            await contract.getRentalDate(tokenId, _account) >
-                DateTime.now().millisecondsSinceEpoch) {
+        final renters = await contract.rentersOf(tokenId);
+        final endRentalDate =
+            (await contract.getRentalDate(tokenId, _account)).toInt();
+        if (renters.contains(_account) && endRentalDate > currentDateTime) {
           rentedTokens.add(await getToken(collection, tokenId));
         }
       }
@@ -290,7 +292,7 @@ class MarketplaceVM with ChangeNotifier {
     return rentedTokens;
   }
 
-  Future<int> getRentalDate(
+  Future<BigInt> getRentalDate(
     final String collectionAddress,
     final int tokenId,
     final String renter,
@@ -327,7 +329,8 @@ class MarketplaceVM with ChangeNotifier {
     final expired = <String>[];
 
     for (final renter in renters) {
-      if ((await getRentalDate(collectionAddress, tokenId, renter)) < date) {
+      if ((await getRentalDate(collectionAddress, tokenId, renter)).toInt() <
+          date) {
         expired.add(renter);
       }
     }
@@ -346,7 +349,8 @@ class MarketplaceVM with ChangeNotifier {
     final notExpired = <String>[];
 
     for (final renter in renters) {
-      if ((await getRentalDate(collectionAddress, tokenId, renter)) > date) {
+      if ((await getRentalDate(collectionAddress, tokenId, renter)).toInt() >
+          date) {
         notExpired.add(renter);
       }
     }
