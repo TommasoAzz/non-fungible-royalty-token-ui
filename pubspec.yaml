@@ -16,8 +16,7 @@ dependencies:
   flutter_dropzone: ^3.0.5
   logger: ^1.1.0
   intl: ^0.17.0
-  flutter_web3: ^2.1.6
-  shared_preferences: ^2.0.12
+  flutter_web3: ^2.1.8
   http: ^0.13.4
   numberpicker: ^2.1.1
 
@@ -33,7 +32,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/log0.png
-    - assets/ape.png
     - assets/contracts/ERC1190Marketplace.json
     - assets/contracts/ERC1190Tradable.json
