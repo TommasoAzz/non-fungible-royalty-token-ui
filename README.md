@@ -1,16 +1,23 @@
-# non_fungible_royalty_token_marketplace_ui
+# non-fungible-royalty-token-ui
 
-A new Flutter project.
+A university project for implementing a marketplace of a slightly modified version of the ERC1190 proposal "Non-Fungible Royalty Token".
 
-## Getting Started
+Made for the course "Blockchain and Cryptocurrencies", University of Bologna, A.Y. 2021/2022.
 
-This project is a starting point for a Flutter application.
+This is part of the parent repository [non-fungible-royalty-token](https://github.com/TommasoAzz/non-fungible-royalty-token).
+Here is a website mocking the famous [OpenSea](https://opensea.io/) which allows to deploy new collections, tokens, manage licenses, rent tokens.
 
-A few resources to get you started if this is your first Flutter project:
+## Prerequisites and steps to continue developing this project
+### Requirements
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [Flutter](https://flutter.dev) (compulsory),
+- a crypto wallet, we advise [MetaMask](https://metamask.io/) (compulsory),
+- an [IPFS](https://ipfs.io/) node running in your local machine (compulsory for deploying new collections or mint/view tokens).
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Initial setup
+
+- `flutter pub get`
+
+### Other commands
+
+- View the website (development purposes): `flutter run -d web-server` (it needs the IPFS node on on your local machine and the wallet set to Rinkeby for utilizing the already deployed smart contract)
