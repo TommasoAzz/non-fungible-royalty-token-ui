@@ -47,16 +47,13 @@ class _CollectionContentState extends State<CollectionContent> {
   @override
   Widget build(BuildContext context) {
     final marketplaceVM = locator<MarketplaceVM>();
-    final collectionData =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final collectionData = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     late Future<Collection> futureCollection;
     if (collectionData['collection'] != null) {
-      futureCollection =
-          Future.value(Collection.fromMap(collectionData['collection']));
+      futureCollection = Future.value(Collection.fromMap(collectionData['collection']));
     } else if (collectionData['collection_address'] != null) {
-      futureCollection =
-          marketplaceVM.getCollection(collectionData['collection_address']);
+      futureCollection = marketplaceVM.getCollection(collectionData['collection_address']);
     } else {
       return const SelectableText("Error loading the collection.");
     }
@@ -92,8 +89,7 @@ class _CollectionContentState extends State<CollectionContent> {
                       }
 
                       if (snapshot.data!.isEmpty) {
-                        return const SelectableText(
-                            "There are no tokens for collection.");
+                        return const SelectableText("There are no tokens for collection.");
                       }
 
                       return GridView.count(
@@ -105,10 +101,9 @@ class _CollectionContentState extends State<CollectionContent> {
                         crossAxisCount: widget.column,
                         children: snapshot.data!
                             .map((token) => TokenItem(
-                                  isCreativeOwner: token.creativeOwner ==
-                                      marketplaceVM.loggedAccount,
-                                  isOwner: token.owner ==
-                                      marketplaceVM.loggedAccount,
+                                  isCreativeOwner:
+                                      token.creativeOwner == marketplaceVM.loggedAccount,
+                                  isOwner: token.owner == marketplaceVM.loggedAccount,
                                   token: token,
                                   collection: collection,
                                 ))
@@ -120,8 +115,7 @@ class _CollectionContentState extends State<CollectionContent> {
                 if (collection.creator == marketplaceVM.loggedAccount)
                   Padding(
                     padding: EdgeInsets.all(widget.padding),
-                    child:
-                        const PageTitle(title: "Add new tokens", fontSize: 24),
+                    child: const PageTitle(title: "Add new tokens", fontSize: 24),
                   ),
                 if (collection.creator == marketplaceVM.loggedAccount)
                   _AddTokens(
@@ -229,12 +223,13 @@ class _AddTokensState extends State<_AddTokens> {
   void _saveOwnershipTransferInputField(final double value) =>
       _ownershipTransferRoyalty = value.toInt();
 
-  void _saveRentalInputField(final double value) =>
-      _rentalRoyalty = value.toInt();
+  void _saveRentalInputField(final double value) => _rentalRoyalty = value.toInt();
 
   void _saveUrlFromDropzone(final String value) => _fileUrls.add(value);
 
   Future<void> _submitData(final Collection collection) async {
+    if (_fileUrls.isEmpty) return;
+
     setState(() {
       uploadingCollection = true;
     });
